@@ -1,0 +1,15 @@
+/*
+ *= require_self
+*/
+
+@import "compass";
+@import "compass/reset";
+@import "blueprint";
+@import "icons/*.png";
+@include all-icons-sprites;
+
+
+html, body {
+  background-color: #0cc;
+  color: #444;
+}

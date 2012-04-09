@@ -1,0 +1,8 @@
+<h1>Pollers</h1>
+<%= @pollers.length %>
+<ul>
+<% for poller in @pollers.models: %>
+  <li><%= poller.get('hostname') %></li>
+<% end %>
+</ul>
+
