@@ -1,8 +1,30 @@
 <h1>Pollers</h1>
-<%= @pollers.length %>
-<ul>
-<% for poller in @pollers.models: %>
-  <li><%= poller.get('hostname') %></li>
-<% end %>
-</ul>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Hostname</th>
+      <th>Port</th>
+      <th>State</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% for poller in @pollers.models: %>
+      <tr>
+         <td><%= poller.get('hostname') %></td>
+         <td><%= poller.get('port') %></td>
+         <td><%= poller.get('state') %></td>
+         <td><a href="#pollers/<%= poller.id %>" class="btn btn-mini">Show</a></td>
+         <td><a href="#pollers/<%= poller.id %>/edit" class="btn btn-mini">Edit</a></td>
+         <td><a href="#pollers/<%= poller.id %>" data-confirm="Are you sure?" data-method="destroy" class="btn btn-mini btn-danger">Destroy</a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
 

@@ -40,4 +40,15 @@ NetatlasRails::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'lvh.me:3000' }
   config.sass.style = :nested
+
 end
+  silence_warnings do
+    begin
+      require 'pry'
+      IRB = Pry
+    rescue LoadError => e
+      puts "Pry not installed"
+      puts e.inspect
+    end
+  end
+

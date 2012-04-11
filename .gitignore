@@ -13,4 +13,9 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+gems.tags
+tags
+.jhw-cache
+.sass-cache
+.rails_footnotes
 /public/assets

@@ -1,23 +1,39 @@
 class PollersController < ApplicationController
-  respond_to :json
-
+  respond_to :html, :json, :xml
   def index
-    respond_with Poller.all
+    @pollers = Poller.all
+    respond_with(@pollers)
   end
 
   def show
-    respond_with Poller.find(params[:id])
+    @poller = Poller.find(params[:id])
+    respond_with(@poller)
+  end
+
+  def new
+    @poller = Poller.new
+    respond_with(@poller)
+  end
+
+  def edit
+    @poller = Poller.find(params[:id])
   end
 
   def create
-    respond_with Poller.create(params[:poller])
+    @poller = Poller.new(params[:poller])
+    @poller.save
+    respond_with(@poller)
   end
 
   def update
-    respond_with Poller.update(params[:id], params[:entry])
+    @poller = Poller.find(params[:id])
+    @poller.update_attributes(params[:poller])
+    respond_with(@poller)
   end
 
   def destroy
-    respond_with Poller.destroy(params[:id])
+    @poller = Poller.find(params[:id])
+    @poller.destroy
+    respond_with(@poller)
   end
 end

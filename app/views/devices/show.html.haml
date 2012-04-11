@@ -1,0 +1,60 @@
+%p#notice= notice
+
+%p
+  %b Hostname:
+  = @device.hostname
+%p
+  %b Ip forwarding:
+  = @device.ip_forwarding
+%p
+  %b Os:
+  = @device.os
+%p
+  %b Os version:
+  = @device.os_version
+%p
+  %b Os type:
+  = @device.os_type
+%p
+  %b Os vendor:
+  = @device.os_vendor
+%p
+  %b Community:
+  = @device.community
+%p
+  %b Auth protocol:
+  = @device.auth_protocol
+%p
+  %b Auth password:
+  = @device.auth_password
+%p
+  %b Priv protocol:
+  = @device.priv_protocol
+%p
+  %b Priv password:
+  = @device.priv_password
+%p
+  %b Sys name:
+  = @device.sys_name
+%p
+  %b Sys description:
+  = @device.sys_description
+%p
+  %b Sys contact:
+  = @device.sys_contact
+%p
+  %b Sys location:
+  = @device.sys_location
+%p
+  %b Memory:
+  = @device.memory
+%p
+  %b Num cpus:
+  = @device.num_cpus
+%p
+  %b Snmp version:
+  = @device.snmp_version
+
+= link_to 'Edit', edit_device_path(@device)
+\|
+= link_to 'Back', devices_path

@@ -9,10 +9,13 @@ Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
-  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+  # Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
   require File.expand_path("../../config/environment", __FILE__)
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
   require 'rspec/rails'
   require 'rspec/autorun'
+  require 'capybara/rspec'
+  require 'database_cleaner'
   
   require 'declarative_authorization/maintenance'
   include Authorization::TestHelper
@@ -37,7 +40,21 @@ Spork.prefork do
     # examples within a transaction, remove the following line or assign false
     # instead of true.
     config.use_transactional_fixtures = true
-  
+
+    #config.before(:suite) do
+    #  DatabaseCleaner.strategy = :truncation
+    #end
+
+    #config.before(:each) do
+    #  DatabaseCleaner.start
+    #  DatabaseCleaner.clean
+    #end
+
+    config.after(:each) do
+      Warden.test_reset! 
+      #DatabaseCleaner.clean
+    end
+    #
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
@@ -49,6 +66,12 @@ Spork.prefork do
     config.filter_run :focus => true
     config.run_all_when_everything_filtered = true
 
+    Capybara.javascript_driver = :webkit
+
+    
+    def t(key)
+      I18n.t(key)
+    end
   end
 end
 
@@ -90,3 +113,6 @@ end
 
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+
+
+

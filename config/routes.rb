@@ -1,4 +1,8 @@
 NetatlasRails::Application.routes.draw do
+  resources :devices
+
+  resources :nodes
+
   resources :pollers
 
   devise_for :users

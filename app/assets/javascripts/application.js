@@ -12,10 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require bootstrap-dropdown
+//= require bootstrap-tooltip
+//= require bootstrap-popover
 //= require jquery.ui.all
 //= require underscore
 //= require backbone
-//= require sinon-1.3.2
 //
 //= require .//netatlas_rails
 //

@@ -1,0 +1,29 @@
+%h1 Listing pollers
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Hostname
+      %th Port
+      %th State
+      %th Queue username
+      %th Queue password
+      %th
+      %th
+      %th
+  
+  %tbody
+    - @pollers.each do |poller|
+      %tr
+        %td= poller.hostname
+        %td= poller.port
+        %td= poller.state
+        %td= poller.queue_username
+        %td= poller.queue_password
+        %td= link_to 'Show', poller, :class => 'btn btn-mini'
+        %td= link_to 'Edit', edit_poller_path(poller), :class => 'btn btn-mini'
+        %td= link_to 'Destroy', poller, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
+  
+%br
+
+= link_to 'New Poller', new_poller_path

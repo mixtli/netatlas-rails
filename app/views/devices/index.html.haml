@@ -1,0 +1,53 @@
+%h1 Listing devices
+
+%table
+  %tr
+    %th Hostname
+    %th Ip forwarding
+    %th Os
+    %th Os version
+    %th Os type
+    %th Os vendor
+    %th Community
+    %th Auth protocol
+    %th Auth password
+    %th Priv protocol
+    %th Priv password
+    %th Sys name
+    %th Sys description
+    %th Sys contact
+    %th Sys location
+    %th Memory
+    %th Num cpus
+    %th Snmp version
+    %th
+    %th
+    %th
+
+  - @devices.each do |device|
+    %tr
+      %td= device.hostname
+      %td= device.ip_forwarding
+      %td= device.os
+      %td= device.os_version
+      %td= device.os_type
+      %td= device.os_vendor
+      %td= device.community
+      %td= device.auth_protocol
+      %td= device.auth_password
+      %td= device.priv_protocol
+      %td= device.priv_password
+      %td= device.sys_name
+      %td= device.sys_description
+      %td= device.sys_contact
+      %td= device.sys_location
+      %td= device.memory
+      %td= device.num_cpus
+      %td= device.snmp_version
+      %td= link_to 'Show', device
+      %td= link_to 'Edit', edit_device_path(device)
+      %td= link_to 'Destroy', device, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Device', new_device_path
