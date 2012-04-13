@@ -5,7 +5,7 @@ class NetatlasRails.Routers.Pollers extends Backbone.Router
 
   initialize: ->
     @collection = new NetatlasRails.Collections.Pollers()
-    @collection.fetch()
+    #@collection.fetch()
 
   index: ->
     view = new NetatlasRails.Views.PollersIndex(collection: @collection)

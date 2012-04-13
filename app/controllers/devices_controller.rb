@@ -1,9 +1,10 @@
 class DevicesController < ApplicationController
-  #before_filter :authenticate_user!
+  before_filter :authenticate_user!
 
-  #filter_resource_access
+  filter_resource_access
 
-  #filter_access_to :datatable, :require => :read
+
+  filter_access_to :datatable, :require => :read
 
   def index
     @devices = Device.all
@@ -43,8 +44,6 @@ class DevicesController < ApplicationController
   end
 
   def datatable
-    #json = DevicesDatatable.new(view_context).to_json
-    #logger.debug json
     respond_to do |format|
       format.json { render json: DevicesDatatable.new(view_context)}
     end

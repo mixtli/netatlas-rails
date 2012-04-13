@@ -1,6 +1,7 @@
 class DevicesDatatable  
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
+
   def initialize(view)
     @view = view
   end
@@ -56,7 +57,7 @@ private
   end
 
   def sort_direction
-    params[:aSortDir_0] == 'desc' ? 'desc' : 'asc'
+    params[:sSortDir_0] == 'desc' ? 'desc' : 'asc'
   end
 
 end

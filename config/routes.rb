@@ -1,4 +1,6 @@
 NetatlasRails::Application.routes.draw do
+  devise_for :users
+  
   resources :devices do
     collection do
       get "datatable"
@@ -6,14 +8,11 @@ NetatlasRails::Application.routes.draw do
   end
 
   resources :nodes
-
   resources :pollers
 
-  devise_for :users
 
   mount JasmineRails::Engine => "/specs" unless Rails.env.production?
   get "main/index"
-
   root :to => "main#index"
 
 
