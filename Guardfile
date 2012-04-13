@@ -63,6 +63,7 @@ guard 'rspec', :version => 2, :cli => "--drb --color", :all_on_start => false, :
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
+  watch(%r{^app/datatables/(.+)_datatable\.rb$})      { |m| ["spec/requests/#{m[1]}_spec.rb", "spec/controllers/#{m[1]}_controller_spec.rb"] }
 end
 
 

@@ -13,34 +13,38 @@
 
 ActiveRecord::Schema.define(:version => 20120410120417) do
 
-  create_table "class_table_inheritance", :id => false, :force => true do |t|
-    t.string "parent_relation",      :null => false
-    t.string "child_aggregate_view", :null => false
-    t.string "child_relation",       :null => false
-  end
-
-  add_index "class_table_inheritance", ["child_aggregate_view"], :name => "class_table_inheritance_child_aggregate_view_key", :unique => true
-  add_index "class_table_inheritance", ["parent_relation", "child_aggregate_view"], :name => "class_table_inheritance_parent_relation_child_aggregate_vie_key", :unique => true
-
-  create_table "devices", :force => true do |t|
-    t.string  "hostname"
-    t.boolean "ip_forwarding"
-    t.string  "os"
-    t.string  "os_version"
-    t.string  "os_type"
-    t.string  "os_vendor"
-    t.string  "community"
-    t.string  "auth_protocol"
-    t.string  "auth_password"
-    t.string  "priv_protocol"
-    t.string  "priv_password"
-    t.string  "sys_name"
-    t.string  "sys_description"
-    t.string  "sys_contact"
-    t.string  "sys_location"
-    t.integer "memory"
-    t.integer "num_cpus"
-    t.string  "snmp_version"
+  create_table "devices", :id => false, :force => true do |t|
+    t.integer  "id",                                                   :null => false
+    t.string   "label",           :limit => 32,                        :null => false
+    t.text     "description"
+    t.string   "type",            :limit => 32
+    t.string   "state",           :limit => 16, :default => "unknown"
+    t.integer  "device_id"
+    t.integer  "snmp_index"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.integer  "deleter_id"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.datetime "deleted_at"
+    t.string   "hostname"
+    t.boolean  "ip_forwarding"
+    t.string   "os"
+    t.string   "os_version"
+    t.string   "os_type"
+    t.string   "os_vendor"
+    t.string   "community"
+    t.string   "auth_protocol"
+    t.string   "auth_password"
+    t.string   "priv_protocol"
+    t.string   "priv_password"
+    t.string   "sys_name"
+    t.string   "sys_description"
+    t.string   "sys_contact"
+    t.string   "sys_location"
+    t.integer  "memory"
+    t.integer  "num_cpus"
+    t.string   "snmp_version"
   end
 
   create_table "nodes", :force => true do |t|
@@ -99,39 +103,5 @@ ActiveRecord::Schema.define(:version => 20120410120417) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_view "view_devices", "SELECT nodes.id, nodes.label, nodes.description, nodes.type, nodes.state, nodes.device_id, nodes.snmp_index, nodes.creator_id, nodes.updater_id, nodes.deleter_id, nodes.created_at, nodes.updated_at, nodes.deleted_at, devices.hostname, devices.ip_forwarding, devices.os, devices.os_version, devices.os_type, devices.os_vendor, devices.community, devices.auth_protocol, devices.auth_password, devices.priv_protocol, devices.priv_password, devices.sys_name, devices.sys_description, devices.sys_contact, devices.sys_location, devices.memory, devices.num_cpus, devices.snmp_version FROM nodes, devices WHERE (nodes.id = devices.id);", :force => true do |v|
-    v.column :id
-    v.column :label
-    v.column :description
-    v.column :type
-    v.column :state
-    v.column :device_id
-    v.column :snmp_index
-    v.column :creator_id
-    v.column :updater_id
-    v.column :deleter_id
-    v.column :created_at
-    v.column :updated_at
-    v.column :deleted_at
-    v.column :hostname
-    v.column :ip_forwarding
-    v.column :os
-    v.column :os_version
-    v.column :os_type
-    v.column :os_vendor
-    v.column :community
-    v.column :auth_protocol
-    v.column :auth_password
-    v.column :priv_protocol
-    v.column :priv_password
-    v.column :sys_name
-    v.column :sys_description
-    v.column :sys_contact
-    v.column :sys_location
-    v.column :memory
-    v.column :num_cpus
-    v.column :snmp_version
-  end
 
 end

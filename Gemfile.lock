@@ -11,13 +11,6 @@ GIT
     jquery-datatables-rails (1.9.1.1)
       jquery-rails
 
-GIT
-  remote: https://github.com/morgz/rails_sql_views.git
-  revision: 0c92f229f743bb3f85ff036e4f1745130459830f
-  specs:
-    rails_sql_views (0.8.0.epublishing)
-      activerecord
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -77,8 +70,6 @@ GEM
     childprocess (0.3.1)
       ffi (~> 1.0.6)
     chunky_png (1.2.5)
-    citier (0.1.15)
-      rails_sql_views
     coderay (1.0.5)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -323,7 +314,6 @@ DEPENDENCIES
   capistrano
   capybara
   capybara-webkit
-  citier
   coffee-rails
   compass-rails
   database_cleaner
@@ -354,7 +344,6 @@ DEPENDENCIES
   pry
   rails (= 3.2.3)
   rails-footnotes
-  rails_sql_views!
   rb-fsevent
   rb-readline
   responders

@@ -1,5 +1,5 @@
 class Node < ActiveRecord::Base
-  acts_as_citier
+  #acts_as_citier
   belongs_to :device
   validates :state, :inclusion => %w(ok warning fail unknown)
   attr_accessible :description, :label, :snmp_index, :state, :type
