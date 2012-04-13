@@ -12,6 +12,7 @@ gem 'simple_form'
 gem 'citier'
 gem 'rails_sql_views', git: 'https://github.com/morgz/rails_sql_views.git'
 gem 'state_machine'
+gem 'will_paginate'
 # To use ActiveModel has_secure_password
 # gem 'simple_form'
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -45,6 +46,8 @@ group :test, :development do
   gem 'pry'
   gem 'launchy'
   gem 'database_cleaner'
+  gem 'populator'
+  gem 'faker'
   #gem 'evergreen'
 end
 
@@ -61,6 +64,8 @@ group :assets do
   # gem 'therubyracer', :platform => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+
+  gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 end
 
 gem 'jquery-rails'

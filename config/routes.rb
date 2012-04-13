@@ -1,5 +1,9 @@
 NetatlasRails::Application.routes.draw do
-  resources :devices
+  resources :devices do
+    collection do
+      get "datatable"
+    end
+  end
 
   resources :nodes
 

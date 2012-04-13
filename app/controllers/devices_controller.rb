@@ -2,6 +2,7 @@ class DevicesController < ApplicationController
   before_filter :authenticate_user!
 
   filter_resource_access
+  filter_access_to :datatable, :requre => :read
 
   def index
     @devices = Device.all
@@ -38,5 +39,11 @@ class DevicesController < ApplicationController
     @device = Device.find(params[:id])
     @device.destroy
     respond_with(@device)
+  end
+
+  def datatable
+    respond_to do |format|
+      format.json { render json: DevicesDatatable.new(view_context)}
+    end
   end
 end

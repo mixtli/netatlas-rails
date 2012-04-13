@@ -19,8 +19,11 @@
 //= require jquery.ui.all
 //= require underscore
 //= require backbone
+//= require dataTables/jquery.dataTables
 //
 //= require .//netatlas_rails
+//
+//= require devices
 //
 //= require_tree ../templates/
 //= require_tree .//models

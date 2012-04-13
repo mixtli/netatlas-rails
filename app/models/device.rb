@@ -6,3 +6,9 @@ class Device < Node
   before_create { |d| d.label ||= d.hostname }
   before_create { |d| d.state ||= "ok" }
 end
+
+
+
+
+
+
