@@ -12,7 +12,7 @@ describe "Devices List" do
     before(:each) do
       login_as(user)
       1.upto(25) do |n|
-        FactoryGirl.create(:device,  :hostname => "host#{n}.lvh.me")
+        FactoryGirl.create(:device,  :hostname => "host#{n}.lvh.me", :sys_contact => 'Bob')
       end
       visit devices_path
     end
@@ -22,8 +22,7 @@ describe "Devices List" do
     end
 
     it "should search devices", :js => true do
-      sfield = find('#devices_filter label input')
-      sfield.set("host2")
+      find('#devices_filter label input').set('host2')
       page.should_not have_content('host1')
       page.should have_content('host2')
     end
@@ -34,10 +33,16 @@ describe "Devices List" do
         #save_and_open_page
         link = all('span a.fg-button')[2]
         link.click
-        sleep 2
+        sleep 1
         #save_and_open_page
         all('tr').count.should be 6
       #end
+    end
+
+    it "should go to device view when device clicked", :js => true do 
+      click_link 'host1.lvh.me'
+      page.should have_content('host1.lvh.me')
+      page.should have_content('Bob')
     end
   end
 end

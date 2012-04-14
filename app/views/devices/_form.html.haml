@@ -13,13 +13,9 @@
     = f.input :auth_password
     = f.input :priv_protocol
     = f.input :priv_password
-    = f.input :sys_name
-    = f.input :sys_description
-    = f.input :sys_contact
-    = f.input :sys_location
     = f.input :memory
     = f.input :num_cpus
     = f.input :snmp_version
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, :id => 'create_device'

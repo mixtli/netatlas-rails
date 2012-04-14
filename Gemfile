@@ -9,16 +9,17 @@ gem 'declarative_authorization'
 gem 'responders'
 gem 'haml-rails'
 gem 'simple_form'
-#gem 'citier'
-#gem 'rails_sql_views', git: 'https://github.com/morgz/rails_sql_views.git'
 gem 'state_machine'
 gem 'will_paginate'
-# To use ActiveModel has_secure_password
-# gem 'simple_form'
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'jquery-rails'
+gem 'unicorn'
+gem 'capistrano'
+gem 'draper'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+
+#gem 'citier'
+#gem 'rails_sql_views', git: 'https://github.com/morgz/rails_sql_views.git'
+
 
 group :test, :development do
   gem 'debugger'
@@ -57,20 +58,12 @@ group :assets do
   gem 'jquery-ui-rails'
   #gem 'twitter-bootstrap-rails'
   gem 'bootstrap-sass'
-
   gem 'sass-rails'
   gem 'compass-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
-
   gem 'uglifier', '>= 1.0.3'
-
   gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 end
 
-gem 'jquery-rails'
-
-
-gem 'unicorn'
-gem 'capistrano'
 

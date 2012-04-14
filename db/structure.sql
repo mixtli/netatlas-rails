@@ -55,6 +55,7 @@ CREATE TABLE nodes (
 
 CREATE TABLE devices (
     hostname character varying(255),
+    ip_address character varying(255),
     ip_forwarding boolean,
     os character varying(255),
     os_version character varying(255),
@@ -66,12 +67,39 @@ CREATE TABLE devices (
     priv_protocol character varying(255),
     priv_password character varying(255),
     sys_name character varying(255),
-    sys_description character varying(255),
+    sys_descr character varying(255),
     sys_contact character varying(255),
     sys_location character varying(255),
+    sys_objectid character varying(255),
     memory integer,
     num_cpus integer,
     snmp_version character varying(255)
+)
+INHERITS (nodes);
+
+
+--
+-- Name: interfaces; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE interfaces (
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
+    ip_address character varying(255),
+    netmask integer,
+    hostname character varying(255),
+    if_speed integer,
+    if_type integer,
+    if_name character varying(255),
+    if_alias character varying(255),
+    if_descr character varying(255),
+    if_promiscuous boolean,
+    if_high_speed integer,
+    if_admin_status character varying(255),
+    physical_address character varying(255),
+    mtu integer,
+    duplex character varying(255)
 )
 INHERITS (nodes);
 
@@ -203,6 +231,20 @@ ALTER TABLE ONLY devices ALTER COLUMN state SET DEFAULT 'unknown'::character var
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY interfaces ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
+
+
+--
+-- Name: state; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY interfaces ALTER COLUMN state SET DEFAULT 'unknown'::character varying;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY nodes ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
 
 
@@ -318,3 +360,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120408140245');
 INSERT INTO schema_migrations (version) VALUES ('20120410090345');
 
 INSERT INTO schema_migrations (version) VALUES ('20120410120417');
+
+INSERT INTO schema_migrations (version) VALUES ('20120414100538');

@@ -8,6 +8,25 @@ class Device < Node
 
   before_create { |d| d.label ||= d.hostname }
   before_create { |d| d.state ||= "ok" }
+  before_validation :fix_ip_address
+  has_many :interfaces
+
+
+private
+  def fix_ip_address
+    return true if hostname && ip_address
+    unless hostname
+      self.hostname = Resolv.new.getname(ip_address)
+    end
+    unless ip_address
+      begin
+        self.ip_address = IPSocket.getaddress(hostname)
+      rescue SocketError => e
+        return false
+      end
+    end
+  end
+
 end
 
 

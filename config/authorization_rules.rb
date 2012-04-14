@@ -16,6 +16,6 @@ authorization do
 end
 privileges do
   privilege :manage do
-    includes :create, :read, :update, :delete, :index, :destroy, :show
+    includes :create, :read, :update, :delete, :index, :destroy, :show, :new
   end
 end

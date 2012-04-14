@@ -21,7 +21,7 @@ private
       [
         link_to(device.hostname, device),
         device.sys_name,
-        device.sys_description
+        device.sys_descr
       ]
     end
   end
@@ -52,7 +52,7 @@ private
   end
 
   def sort_column
-    columns = %w[hostname sys_name sys_description]
+    columns = %w[hostname sys_name sys_descr]
     columns[params[:iSortCol_0].to_i]
   end
 

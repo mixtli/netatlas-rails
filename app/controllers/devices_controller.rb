@@ -12,7 +12,7 @@ class DevicesController < ApplicationController
   end
 
   def show
-    @device = Device.find(params[:id])
+    @device = DeviceDecorator.find(params[:id])
     respond_with(@device)
   end
 

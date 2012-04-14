@@ -11,23 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120410120417) do
+ActiveRecord::Schema.define(:version => 20120414100538) do
 
   create_table "devices", :id => false, :force => true do |t|
-    t.integer  "id",                                                   :null => false
-    t.string   "label",           :limit => 32,                        :null => false
+    t.integer  "id",                                                 :null => false
+    t.string   "label",         :limit => 32,                        :null => false
     t.text     "description"
-    t.string   "type",            :limit => 32
-    t.string   "state",           :limit => 16, :default => "unknown"
+    t.string   "type",          :limit => 32
+    t.string   "state",         :limit => 16, :default => "unknown"
     t.integer  "device_id"
     t.integer  "snmp_index"
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.integer  "deleter_id"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.datetime "deleted_at"
     t.string   "hostname"
+    t.string   "ip_address"
     t.boolean  "ip_forwarding"
     t.string   "os"
     t.string   "os_version"
@@ -39,12 +40,43 @@ ActiveRecord::Schema.define(:version => 20120410120417) do
     t.string   "priv_protocol"
     t.string   "priv_password"
     t.string   "sys_name"
-    t.string   "sys_description"
+    t.string   "sys_descr"
     t.string   "sys_contact"
     t.string   "sys_location"
+    t.string   "sys_objectid"
     t.integer  "memory"
     t.integer  "num_cpus"
     t.string   "snmp_version"
+  end
+
+  create_table "interfaces", :id => false, :force => true do |t|
+    t.integer  "id",                                                    :null => false
+    t.string   "label",            :limit => 32,                        :null => false
+    t.text     "description"
+    t.string   "type",             :limit => 32
+    t.string   "state",            :limit => 16, :default => "unknown"
+    t.integer  "device_id"
+    t.integer  "snmp_index"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.integer  "deleter_id"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.datetime "deleted_at"
+    t.string   "ip_address"
+    t.integer  "netmask"
+    t.string   "hostname"
+    t.integer  "if_speed"
+    t.integer  "if_type"
+    t.string   "if_name"
+    t.string   "if_alias"
+    t.string   "if_descr"
+    t.boolean  "if_promiscuous"
+    t.integer  "if_high_speed"
+    t.string   "if_admin_status"
+    t.string   "physical_address"
+    t.integer  "mtu"
+    t.string   "duplex"
   end
 
   create_table "nodes", :force => true do |t|

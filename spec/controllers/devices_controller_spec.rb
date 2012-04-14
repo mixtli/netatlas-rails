@@ -24,7 +24,7 @@ describe DevicesController do
   # Device. As you add validations to Device, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {state: 'ok', hostname: 'foo.lvh.ml'}
+    {state: 'ok', hostname: 'foo.lvh.me'}
   end
   
   # This should return the minimal set of values that should be in the session

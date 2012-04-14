@@ -14,7 +14,7 @@ FactoryGirl.define do
     priv_protocol "MyString"
     priv_password "MyString"
     sys_name { Faker::Internet.domain_word }
-    sys_description "MyString"
+    sys_descr "MyString"
     sys_contact "MyString"
     sys_location "MyString"
     memory 1
