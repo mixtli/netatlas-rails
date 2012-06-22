@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-
-gem 'rails', '3.2.3'
+gem 'thin'
+gem 'rails', '3.2.5'
 gem 'backbone-on-rails'
 gem 'pg', :require => 'pg'
 gem 'devise'
@@ -15,14 +15,16 @@ gem 'jquery-rails'
 gem 'unicorn'
 gem 'capistrano'
 gem 'draper'
+gem 'daemons'
+gem 'amqp'
+gem 'bunny'
+gem 'rabbit_manager', :path => '/Users/rmcclain/Projects/rabbit_manager'
 
-
-#gem 'citier'
-#gem 'rails_sql_views', git: 'https://github.com/morgz/rails_sql_views.git'
 
 
 group :test, :development do
   gem 'debugger'
+  gem 'simplecov', :require => false
   gem 'therubyracer'
   gem 'rspec-rails'
   gem 'capybara'
@@ -43,12 +45,18 @@ group :test, :development do
   gem 'guard-bundler'
   gem 'guard-coffeescript'
   gem 'guard-migrate'
+  gem 'guard-process'
   gem 'rails-footnotes'
   gem 'pry'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
   gem 'launchy'
   gem 'database_cleaner'
   gem 'populator'
   gem 'faker'
+  gem 'evented-spec'
+  gem 'capistrano'
   #gem 'evergreen'
 end
 

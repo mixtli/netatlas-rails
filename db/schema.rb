@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120414100538) do
+ActiveRecord::Schema.define(:version => 20120422223615) do
+
+  create_table "commands", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "poller_id",  :null => false
+    t.string   "state",      :null => false
+    t.text     "arguments"
+    t.text     "message"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+  end
+
+  add_index "commands", ["poller_id"], :name => "index_commands_on_poller_id"
 
   create_table "devices", :id => false, :force => true do |t|
     t.integer  "id",                                                 :null => false
@@ -48,6 +63,29 @@ ActiveRecord::Schema.define(:version => 20120414100538) do
     t.integer  "num_cpus"
     t.string   "snmp_version"
   end
+
+  create_table "events", :force => true do |t|
+    t.integer  "poller_id"
+    t.integer  "node_id"
+    t.string   "state"
+    t.integer  "repeats"
+    t.string   "severity"
+    t.text     "description"
+    t.text     "additional"
+    t.text     "notes"
+    t.integer  "acknowledged_by_id"
+    t.integer  "resolved_by_id"
+    t.datetime "acknowledged_at"
+    t.datetime "resolved_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "events", ["acknowledged_by_id"], :name => "index_events_on_acknowledged_by_id"
+  add_index "events", ["node_id"], :name => "index_events_on_node_id"
+  add_index "events", ["poller_id"], :name => "index_events_on_poller_id"
+  add_index "events", ["resolved_by_id"], :name => "index_events_on_resolved_by_id"
 
   create_table "interfaces", :id => false, :force => true do |t|
     t.integer  "id",                                                    :null => false
@@ -99,6 +137,17 @@ ActiveRecord::Schema.define(:version => 20120414100538) do
   add_index "nodes", ["snmp_index"], :name => "index_nodes_on_snmp_index"
   add_index "nodes", ["state"], :name => "index_nodes_on_state"
   add_index "nodes", ["type"], :name => "index_nodes_on_type"
+
+  create_table "poller_nodes", :force => true do |t|
+    t.integer  "poller_id"
+    t.integer  "node_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "poller_nodes", ["node_id"], :name => "index_poller_nodes_on_node_id"
+  add_index "poller_nodes", ["poller_id"], :name => "index_poller_nodes_on_poller_id"
 
   create_table "pollers", :force => true do |t|
     t.string   "hostname"

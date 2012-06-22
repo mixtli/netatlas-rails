@@ -12,6 +12,13 @@ class Device < Node
   has_many :interfaces
 
 
+  def scan
+     AMQP::Channel.new do |channel|
+       puts "publishing"
+       channel.direct("").publish self.to_json(:only => [:hostname, :ip_address], :methods => :type), :routing_key => 'command'
+       puts "done publishing"
+     end
+  end
 private
   def fix_ip_address
     return true if hostname && ip_address

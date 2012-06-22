@@ -1,0 +1,23 @@
+development:
+  amqp:
+    user: netatlas
+    pass: netatlas
+    host: localhost
+    vhost: netatlas_development
+
+
+test:
+  amqp:
+    user: netatlas
+    pass: netatlas
+    host: localhost
+    vhost: netatlas_test
+
+production:
+  amqp:
+    user: netatlas
+    pass: netatlas
+    host: localhost
+    vhost: netatlas_production
+
+

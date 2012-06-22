@@ -19,7 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe DevicesController do
-
+  include EventedSpec::SpecHelper
   # This should return the minimal set of attributes required to create a valid
   # Device. As you add validations to Device, be sure to
   # update the return value of this method accordingly.
@@ -72,18 +72,21 @@ describe DevicesController do
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Device" do
-        expect {
-          post :create, {:device => valid_attributes}
-        }.to change(Device, :count).by(1)
+          Device.any_instance.stub(:scan => nil)
+          expect {
+            post :create, {:device => valid_attributes}
+          }.to change(Device, :count).by(1)
       end
 
       it "assigns a newly created device as @device" do
+        Device.any_instance.stub(:scan => nil)
         post :create, {:device => valid_attributes}
         assigns(:device).should be_a(Device)
         assigns(:device).should be_persisted
       end
 
       it "redirects to the created device" do
+        Device.any_instance.stub(:scan => nil)
         post :create, {:device => valid_attributes}
         response.should redirect_to(Device.last)
       end

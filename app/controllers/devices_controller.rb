@@ -28,6 +28,9 @@ class DevicesController < ApplicationController
   def create
     @device = Device.new(params[:device])
     @device.save
+    unless @device.new_record?
+      @device.scan
+    end
     respond_with(@device)
   end
 

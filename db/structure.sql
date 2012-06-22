@@ -29,6 +29,44 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: commands; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE commands (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    poller_id integer NOT NULL,
+    state character varying(255) NOT NULL,
+    arguments text,
+    message text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone,
+    creator_id integer,
+    updater_id integer
+);
+
+
+--
+-- Name: commands_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE commands_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: commands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE commands_id_seq OWNED BY commands.id;
+
+
+--
 -- Name: nodes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -79,6 +117,51 @@ INHERITS (nodes);
 
 
 --
+-- Name: events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE events (
+    id integer NOT NULL,
+    poller_id integer,
+    node_id integer,
+    state character varying(255),
+    repeats integer DEFAULT 0,
+    severity character varying(255),
+    description text,
+    additional text,
+    notes text,
+    acknowledged_by_id integer,
+    resolved_by_id integer,
+    acknowledged_at timestamp without time zone,
+    resolved_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone,
+    creator_id integer,
+    updater_id integer
+);
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE events_id_seq OWNED BY events.id;
+
+
+--
 -- Name: interfaces; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -121,6 +204,39 @@ CREATE SEQUENCE nodes_id_seq
 --
 
 ALTER SEQUENCE nodes_id_seq OWNED BY nodes.id;
+
+
+--
+-- Name: poller_nodes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE poller_nodes (
+    id integer NOT NULL,
+    poller_id integer,
+    node_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: poller_nodes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE poller_nodes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: poller_nodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE poller_nodes_id_seq OWNED BY poller_nodes.id;
 
 
 --
@@ -217,6 +333,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY commands ALTER COLUMN id SET DEFAULT nextval('commands_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY devices ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
 
 
@@ -225,6 +348,13 @@ ALTER TABLE ONLY devices ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::reg
 --
 
 ALTER TABLE ONLY devices ALTER COLUMN state SET DEFAULT 'unknown'::character varying;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::regclass);
 
 
 --
@@ -252,6 +382,13 @@ ALTER TABLE ONLY nodes ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY poller_nodes ALTER COLUMN id SET DEFAULT nextval('poller_nodes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY pollers ALTER COLUMN id SET DEFAULT nextval('pollers_id_seq'::regclass);
 
 
@@ -263,11 +400,35 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
+-- Name: commands_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY commands
+    ADD CONSTRAINT commands_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY nodes
     ADD CONSTRAINT nodes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: poller_nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY poller_nodes
+    ADD CONSTRAINT poller_nodes_pkey PRIMARY KEY (id);
 
 
 --
@@ -284,6 +445,41 @@ ALTER TABLE ONLY pollers
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_commands_on_poller_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_commands_on_poller_id ON commands USING btree (poller_id);
+
+
+--
+-- Name: index_events_on_acknowledged_by_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_acknowledged_by_id ON events USING btree (acknowledged_by_id);
+
+
+--
+-- Name: index_events_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_node_id ON events USING btree (node_id);
+
+
+--
+-- Name: index_events_on_poller_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_poller_id ON events USING btree (poller_id);
+
+
+--
+-- Name: index_events_on_resolved_by_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_resolved_by_id ON events USING btree (resolved_by_id);
 
 
 --
@@ -319,6 +515,20 @@ CREATE INDEX index_nodes_on_state ON nodes USING btree (state);
 --
 
 CREATE INDEX index_nodes_on_type ON nodes USING btree (type);
+
+
+--
+-- Name: index_poller_nodes_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_poller_nodes_on_node_id ON poller_nodes USING btree (node_id);
+
+
+--
+-- Name: index_poller_nodes_on_poller_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_poller_nodes_on_poller_id ON poller_nodes USING btree (poller_id);
 
 
 --
@@ -362,3 +572,9 @@ INSERT INTO schema_migrations (version) VALUES ('20120410090345');
 INSERT INTO schema_migrations (version) VALUES ('20120410120417');
 
 INSERT INTO schema_migrations (version) VALUES ('20120414100538');
+
+INSERT INTO schema_migrations (version) VALUES ('20120416033922');
+
+INSERT INTO schema_migrations (version) VALUES ('20120418102512');
+
+INSERT INTO schema_migrations (version) VALUES ('20120422223615');

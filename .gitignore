@@ -19,3 +19,10 @@ tags
 .sass-cache
 .rails_footnotes
 /public/assets
+coverage
+
+netatlas.sublime-project
+netatlas.sublime-workspace
+.powenv
+.powrc
+.tags

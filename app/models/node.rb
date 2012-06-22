@@ -3,6 +3,8 @@ class Node < ActiveRecord::Base
   belongs_to :device
   validates :state, :inclusion => %w(ok warning fail unknown)
   attr_accessible :description, :label, :snmp_index, :state, :type
+  has_many :poller_nodes
+  has_many :pollers, through: :poller_nodes
   state_machine :state, :initial => :unknown do
     state :pending
     state :unmonitored

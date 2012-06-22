@@ -1,4 +1,5 @@
 class NodesController < ApplicationController
+  respond_to :html, :json, :xml
   def index
     @nodes = Node.all
     respond_with(@nodes)
@@ -6,6 +7,7 @@ class NodesController < ApplicationController
 
   def show
     @node = Node.find(params[:id])
+    logger.debug request.headers
     respond_with(@node)
   end
 

@@ -6,7 +6,7 @@ describe "Create a device" do
     page.should have_selector("#user_password")
   end
 
-  describe "as a user", do
+  describe "as a user" do
     it "should allow me to navigate to device create page" do
       as_user(FactoryGirl.create(:user)) do
         visit root_path

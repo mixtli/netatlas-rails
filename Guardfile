@@ -11,7 +11,7 @@ guard 'migrate' do
   watch(%r{^db/migrate/(\d+).+\.rb})
 end
 
-guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' } do
+guard 'spork', :wait => 60, :cucumber => false, :rspec_env => { 'RAILS_ENV' => 'test' } do
   watch('config/application.rb')
   watch('config/environment.rb')
   watch('config/authorization_rules.rb')
@@ -49,7 +49,7 @@ guard 'jasmine-headless-webkit' do
 end
 
 
-guard 'rspec', :version => 2, :cli => "--drb --color", :all_on_start => false, :all_after_pass => false do
+guard 'rspec', :version => 2, :cli => "--tty --drb --color", :all_on_start => false, :all_after_pass => false do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -70,10 +70,19 @@ end
 
 guard 'coffeescript', :input => 'app/assets/javascripts', :noop => true, :hide_success => true
 
-
-guard 'ctags-bundler' do
-  watch(%r{^(app|lib|spec/support)/.*\.rb$})  { ["app", "lib", "spec/support"] }
-  watch('Gemfile.lock')
+guard 'process', :name => 'Event Collector', :command => 'script/daemon run event_processor.rb' do
+  watch('daemons/event_processor.rb')
+  watch('lib/event_processor.rb')
 end
+
+guard 'process', :name => "Command Processor", :command => "script/daemon run command_processor.rb" do
+  watch("daemons/command_processor.rb")
+  watch("lib/command_processor.rb")
+end
+
+#guard 'ctags-bundler' do
+#  watch(%r{^(app|lib|spec/support)/.*\.rb$})  { ["app", "lib", "spec/support"] }
+#  watch('Gemfile.lock')
+#end
 
 

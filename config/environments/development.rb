@@ -41,6 +41,9 @@ NetatlasRails::Application.configure do
   config.action_mailer.default_url_options = { :host => 'lvh.me:3000' }
   config.sass.style = :nested
 
+  #config.threadsage!
+
+
 end
   silence_warnings do
     begin
