@@ -1,3 +1,4 @@
+require 'resolv'
 class Device < Node
   #acts_as_citier
   self.table_name = 'devices'

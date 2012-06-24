@@ -1,11 +1,4 @@
 class ApplicationDecorator < Draper::Base
-  # Lazy Helpers
-  #   PRO: Call Rails helpers without the h. proxy
-  #        ex: number_to_currency(model.price)
-  #   CON: Add a bazillion methods into your decorator's namespace
-  #        and probably sacrifice performance/memory
-  #
-  #   Enable them by uncommenting this line:
   #   lazy_helpers
 
   # Shared Decorations
@@ -25,4 +18,8 @@ class ApplicationDecorator < Draper::Base
   #   def updated_at
   #     formatted_timestamp(model.updated_at)
   #   end
+
+  def as_json(options = {})
+    model.as_json(options)
+  end
 end

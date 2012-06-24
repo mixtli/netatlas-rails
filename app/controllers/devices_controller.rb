@@ -1,9 +1,4 @@
-class DevicesController < ApplicationController
-  before_filter :authenticate_user!
-
-  filter_resource_access
-
-
+class DevicesController < NodesController
   filter_access_to :datatable, :require => :read
 
   def index
