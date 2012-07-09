@@ -2,7 +2,7 @@ class CreateDevices < ActiveRecord::Migration
   def change
     create_table :devices, :id => false, :options => "INHERITS(nodes)" do |t|
       t.string :hostname
-      t.string :ip_address
+      t.inet :ip_address
       t.boolean :ip_forwarding
       t.string :os
       t.string :os_version

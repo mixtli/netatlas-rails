@@ -55,11 +55,9 @@
 %table#interfaces.table.table-striped.table-bordered
   %thead
     %th IP Address
-    %th Netmask
   %tbody
     - @device.interfaces.each do |i|
       %td= i.ip_address
-      %td= i.netmask
 
 
 

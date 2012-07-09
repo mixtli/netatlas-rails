@@ -11,7 +11,7 @@ class EventProcessor
 
   private
   def post_result(msg)
-    Event.create(msg)
+    EventService.call(msg)
   end
 end
 

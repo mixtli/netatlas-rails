@@ -22,7 +22,7 @@ describe "Show a device" do
   describe "As an authenticated user" do
     before(:each) do
       login_as(user)
-      create(:interface, :device => device, :ip_address => '127.0.0.1')
+      create(:interface )
       visit device_path(device)
     end
 
@@ -44,7 +44,6 @@ describe "Show a device" do
 
     it "should show interfaces"  do
       find('#interfaces thead' ).should have_content('IP Address')
-      find('#interfaces thead').should have_content('Netmask')
       find('#interfaces tbody').should have_content('127.0.0.1')
     end
   end
