@@ -1,0 +1,583 @@
+2012-06-25 07:07:36.002+0000: WARNING! Deprecated configuration options used. See manual for details
+2012-06-25 07:07:36.003+0000: enable_online_backup has been replaced with online_backup_enabled and online_backup_port
+2012-06-25 07:07:36.248+0000: Creating new db @ /Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/neostore
+2012-06-25 07:07:36.398+0000: Opened [/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/nioneo_logical.log.1] clean empty log, version=0, lastTxId=1
+2012-06-25 07:07:36.473+0000: TM new log: tm_tx_log.1
+2012-06-25 07:07:36.671+0000: Opened [/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/index/lucene.log.1] clean empty log, version=0, lastTxId=1
+2012-06-25 07:07:36.675+0000: --- STARTUP diagnostics START ---
+2012-06-25 07:07:36.682+0000: Neo4j Kernel properties:
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/nioneo_logical.log
+    min_node_cache_size=0
+    intercept_committing_transactions=false
+    node_auto_indexing=false
+    remote_shell_name=shell
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    ha.db=NO
+    use_adaptive_cache=YES
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=true
+    ha.coordinators=localhost:2181,localhost:2182,localhost:2183
+    timestamps=YES
+    rebuild_idgenerators_fast=true
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    max_node_cache_size=1500
+    neostore.propertystore.db.strings.mapped_memory=130M
+    neostore.propertystore.db.arrays.mapped_memory=130M
+    gcr_cache_min_log_interval=60s
+    relationship_grab_size=100
+    relationship_auto_indexing=false
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    storage_path=/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test
+    node_cache_array_fraction=1.0
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    relationship_cache_array_fraction=1.0
+    migration_thread=NO
+    remote_logging_host=127.0.0.1
+    store_dir=/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test
+    remote_logging_port=4560
+    enable_rules=YES
+    gc_monitor_threshold=200ms
+    load_kernel_extensions=true
+    array_block_size=120
+    neostore.relationshipstore.db.mapped_memory=50M
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    neostore.nodestore.db.mapped_memory=25M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=true
+    min_relationship_cache_size=0
+    max_relationship_cache_size=3500
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=9332
+    adaptive_cache_heap_ratio=0.77
+    identity_map=YES
+    adaptive_cache_manager_decrease_ratio=1.15
+    ha.server_id=2
+    neo_store=/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/neostore
+    adaptive_cache_worker_sleep_time=3000
+    neostore.propertystore.db.index.mapped_memory=1M
+    adaptive_cache_manager_increase_ratio=1.1
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=90M
+    string_block_size=120
+    grab_file_lock=true
+    remote_logging_enabled=false
+    ha.server=localhost:6002
+    neo4j.ext.udc.enabled=true
+2012-06-25 07:07:36.694+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+2012-06-25 07:07:36.695+0000: System memory information:
+    Total Physical memory: 4.00 GB
+    Free Physical memory: 55.43 MB
+    Committed virtual memory: 3.11 GB
+    Total swap space: 6.00 GB
+    Free swap space: 950.36 MB
+2012-06-25 07:07:36.718+0000: JVM memory information:
+    Free  memory: 26.39 MB
+    Total memory: 112.26 MB
+    Max   memory: 495.88 MB
+    Garbage Collector: ParNew: [Par Eden Space, Par Survivor Space]
+    Garbage Collector: ConcurrentMarkSweep: [Par Eden Space, Par Survivor Space, CMS Old Gen, CMS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=6.38 MB, used=6.29 MB, max=48.00 MB, threshold=0.00 B
+    Memory Pool: Par Eden Space (Heap memory): committed=16.63 MB, used=3.27 MB, max=33.31 MB, threshold=?
+    Memory Pool: Par Survivor Space (Heap memory): committed=2.06 MB, used=1.04 MB, max=4.13 MB, threshold=?
+    Memory Pool: CMS Old Gen (Heap memory): committed=93.57 MB, used=81.89 MB, max=458.44 MB, threshold=0.00 B
+    Memory Pool: CMS Perm Gen (Non-heap memory): committed=66.11 MB, used=50.18 MB, max=82.00 MB, threshold=0.00 B
+2012-06-25 07:07:36.743+0000: Operating system information:
+    Operating System: Mac OS X; version: 10.7.4; arch: x86_64; cpus: 2
+    Max number of file descriptors: 10240
+    Number of open file descriptors: 89
+    Process id: 95447@xenu.local
+    Byte order: LITTLE_ENDIAN
+2012-06-25 07:07:36.747+0000: JVM information:
+    VM Name: Java HotSpot(TM) 64-Bit Server VM
+    VM Vendor: Apple Inc.
+    VM Version: 20.8-b03-424
+    JIT compiler: HotSpot 64-Bit Tiered Compilers
+    VM Arguments: [-Djdk.home=, -Djruby.home=/Users/rmcclain/.rvm/rubies/jruby-1.6.7.2, -Djruby.script=jruby, -Djruby.shell=/bin/sh, -Djffi.boot.library.path=/Users/rmcclain/.rvm/rubies/jruby-1.6.7.2/lib/native/Darwin, -Xmx500m, -Xss2048k, -Djruby.memory.max=500m, -Djruby.stack.max=2048k, -Xbootclasspath/a:/Users/rmcclain/.rvm/rubies/jruby-1.6.7.2/lib/jruby.jar, -Dfile.encoding=UTF-8]
+2012-06-25 07:07:36.749+0000: Java classpath:
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/scala-library-2.9.0-1.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/jing.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-cypher-1.7.1.jar
+     [bootstrap] /System/Library/Frameworks/JavaVM.framework/Versions/A/Frameworks/JavaRuntimeSupport.framework/Versions/A/Resources/Java/JavaRuntimeSupport.jar
+     [loader.2] file:/System/Library/Java/Extensions/dns_sd.jar
+     [loader.2] file:/System/Library/Java/Extensions/MRJToolkit.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-lucene-index-1.7.1.jar
+     [loader.2] file:/System/Library/Java/Extensions/vecmath.jar
+     [loader.2] file:/System/Library/Java/Extensions/libmlib_jai.jnilib
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2@global/gems/bouncy-castle-java-1.5.0146.1/lib/bcmail-jdk15-146.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-shell-1.7.1.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/xercesImpl.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/activerecord-jdbc-adapter-1.2.2/lib/arjdbc/jdbc/adapter_java.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/eventmachine-0.12.10-java/lib/em_reactor.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/json-1.7.3-java/lib/json/ext/generator.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/nokogiri/nokogiri.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/dnsns.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-graph-matching-1.7.1.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2@global/gems/bouncy-castle-java-1.5.0146.1/lib/bcprov-jdk15-146.jar
+     [loader.2] file:/System/Library/Java/Extensions/libJ3D.jnilib
+     [loader.2] file:/System/Library/Java/Extensions/mlibwrapper_jai.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/localedata.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/isorelax.jar
+     [loader.2] file:/System/Library/Java/Extensions/QTJava.zip
+     [loader.2] file:/System/Library/Java/Extensions/libShark.jnilib
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar
+     [loader.2] file:/System/Library/Java/Extensions/libAppleScriptEngine.jnilib
+     [loader.2] file:/System/Library/Java/Extensions/libJ3DAudio.jnilib
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/nekohtml.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-udc-1.7.1.jar
+     [loader.2] file:/System/Library/Java/Extensions/j3daudio.jar
+     [loader.2] file:/System/Library/Java/Extensions/libJ3DUtils.jnilib
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-kernel-1.7.1.jar
+     [loader.2] file:/System/Library/Java/Extensions/libQTJNative.jnilib
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/json-1.7.3-java/lib/json/ext/parser.jar
+     [loader.2] file:/System/Library/Java/Extensions/j3dcore.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/nekodtd.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-jmx-1.7.1.jar
+     [loader.2] file:/System/Library/Java/Extensions/j3dutils.jar
+     [loader.2] file:/System/Library/Java/Extensions/jai_core.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2@global/gems/jruby-openssl-0.7.7/lib/shared/jopenssl.jar
+     [loader.2] file:/System/Library/Java/Extensions/jai_codec.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/server-api-1.7.1.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunjce_provider.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/lucene-core-3.5.0.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/bcrypt-ruby-3.0.1-java/lib/bcrypt_ext.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/jdbc-postgres-9.1.901/lib/postgresql-9.1-901.jdbc4.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-graph-algo-1.7.1.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/jce.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar
+     [bootstrap] /Users/rmcclain/.rvm/rubies/jruby-1.6.7.2/lib/jruby.jar
+     [classpath + loader.1] file:/Users/rmcclain/Projects/netatlas-rails/
+     [loader.2] file:/System/Library/Java/Extensions/AppleScriptEngine.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/apple_provider.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/geronimo-jta_1.1_spec-1.1.1.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunpkcs11.jar
+2012-06-25 07:07:36.812+0000: Library path:
+    /Users/rmcclain/Projects/netatlas-rails
+    /Library/Java/Extensions
+    /System/Library/Java/Extensions
+    /usr/lib/java
+2012-06-25 07:07:36.825+0000: System.properties:
+    jruby.home = /Users/rmcclain/.rvm/rubies/jruby-1.6.7.2
+    sun.boot.library.path = /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries
+    awt.nativeDoubleBuffering = true
+    gopherProxySet = false
+    mrj.build = 11M3720
+    path.separator = :
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = US
+    sun.os.patch.level = unknown
+    user.dir = /Users/rmcclain/Projects/netatlas-rails
+    jdk.home = 
+    sun.jnu.encoding = MacRoman
+    jruby.memory.max = 500m
+    sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+    http.nonProxyHosts = local|*.local|169.254/16|*.169.254/16
+    jffi.boot.library.path = /Users/rmcclain/.rvm/rubies/jruby-1.6.7.2/lib/native/Darwin
+    user.home = /Users/rmcclain
+    user.timezone = America/Chicago
+    file.encoding = UTF-8
+    jruby.stack.max = 2048k
+    jruby.script = jruby
+    user.name = rmcclain
+    jruby.shell = /bin/sh
+    sun.java.command = org/jruby/Main /Users/rmcclain/.rvm/gems/jruby-1.6.7.2/bin/ruby_noexec_wrapper /Users/rmcclain/.rvm/gems/jruby-1.6.7.2/bin/rspec spec
+    sun.arch.data.model = 64
+    user.language = en
+    awt.toolkit = apple.awt.CToolkit
+    file.separator = /
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    mrj.version = 1070.1.6.0_33-424
+    socksNonProxyHosts = local|*.local|169.254/16|*.169.254/16
+    ftp.nonProxyHosts = local|*.local|169.254/16|*.169.254/16
+    sun.cpu.isalist = 
+2012-06-25 07:07:36.826+0000: --- STARTUP diagnostics END ---
+2012-06-25 07:07:37.042+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-06-25 07:07:37.471+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-06-25 07:07:37.478+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-06-25 07:07:37.497+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-06-25 07:07:37.497+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1340608056248, id:434924156353394200, store version: 13561656364791302]
+2012-06-25 07:07:37.497+0000: Kernel version: Neo4j - Graph Database Kernel 1.7.1
+2012-06-25 07:07:37.497+0000: Neo4j component versions:
+2012-06-25 07:07:37.498+0000:   Neo4j - Graph Database Kernel 1.7.1
+2012-06-25 07:07:37.498+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-06-25 07:07:37.501+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-06-25 07:07:37.502+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-06-25 07:07:37.502+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-06-25 07:07:37.502+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-06-25 07:07:37.502+0000: Id usage:
+    Id usage:
+      NodeStore: used=1 high=0
+      RelationshipStore: used=0 high=-1
+      RelationshipTypeStore: used=0 high=-1
+      PropertyStore: used=0 high=-1
+      PropertyIndexStore: used=0 high=-1
+      StringPropertyStore: used=1 high=0
+      ArrayPropertyStore: used=1 high=0
+2012-06-25 07:07:37.503+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-06-25 07:07:37.503+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-06-25 07:07:37.503+0000: Storage files:
+    active_tx_log: 11.00 B
+    index:
+      lucene-store.db: 40.00 B
+      lucene.log.1: 16.00 B
+      lucene.log.active: 4.00 B
+    - Total: 60.00 B
+    lock: 0.00 B
+    messages.log: 14.98 kB
+    neostore: 54.00 B
+    neostore.id: 9.00 B
+    neostore.nodestore.db: 9.00 B
+    neostore.nodestore.db.id: 9.00 B
+    neostore.propertystore.db: 0.00 B
+    neostore.propertystore.db.arrays: 128.00 B
+    neostore.propertystore.db.arrays.id: 9.00 B
+    neostore.propertystore.db.id: 9.00 B
+    neostore.propertystore.db.index: 0.00 B
+    neostore.propertystore.db.index.id: 9.00 B
+    neostore.propertystore.db.index.keys: 38.00 B
+    neostore.propertystore.db.index.keys.id: 9.00 B
+    neostore.propertystore.db.strings: 128.00 B
+    neostore.propertystore.db.strings.id: 9.00 B
+    neostore.relationshipstore.db: 0.00 B
+    neostore.relationshipstore.db.id: 9.00 B
+    neostore.relationshiptypestore.db: 0.00 B
+    neostore.relationshiptypestore.db.id: 9.00 B
+    neostore.relationshiptypestore.db.names: 38.00 B
+    neostore.relationshiptypestore.db.names.id: 9.00 B
+    nioneo_logical.log.1: 16.00 B
+    nioneo_logical.log.active: 4.00 B
+    tm_tx_log.1: 0.00 B
+2012-06-25 07:07:37.506+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-06-25 07:07:37.508+0000: Started - database is now available
+2012-06-25 07:07:37.512+0000: GC Monitor started. 
+2012-06-25 07:08:13.781+0000: Stopping - database is now unavailable
+2012-06-25 07:08:13.787+0000: TM shutting down
+2012-06-25 07:08:13.851+0000: GC Monitor stopped. 
+2012-06-25 07:08:13.873+0000: Closed log /Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/index/lucene.log
+2012-06-25 07:08:13.907+0000: Closed log /Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/nioneo_logical.log
+2012-06-25 07:08:13.949+0000: NeoStore closed
+2012-06-25 07:08:13.949+0000: --- SHUTDOWN diagnostics START ---
+2012-06-25 07:08:13.949+0000: --- SHUTDOWN diagnostics END ---
+2012-06-25 07:35:10.063+0000: WARNING! Deprecated configuration options used. See manual for details
+2012-06-25 07:35:10.064+0000: enable_online_backup has been replaced with online_backup_enabled and online_backup_port
+2012-06-25 07:35:10.725+0000: Opened [/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/nioneo_logical.log.1] clean empty log, version=0, lastTxId=1
+2012-06-25 07:35:10.937+0000: TM opening log: /Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/tm_tx_log.1
+2012-06-25 07:35:11.188+0000: Opened [/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/index/lucene.log.1] clean empty log, version=0, lastTxId=1
+2012-06-25 07:35:11.191+0000: --- STARTUP diagnostics START ---
+2012-06-25 07:35:11.212+0000: Neo4j Kernel properties:
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/nioneo_logical.log
+    min_node_cache_size=0
+    intercept_committing_transactions=false
+    node_auto_indexing=false
+    remote_shell_name=shell
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    ha.db=NO
+    use_adaptive_cache=YES
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=true
+    ha.coordinators=localhost:2181,localhost:2182,localhost:2183
+    timestamps=YES
+    rebuild_idgenerators_fast=true
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    max_node_cache_size=1500
+    neostore.propertystore.db.strings.mapped_memory=130M
+    neostore.propertystore.db.arrays.mapped_memory=130M
+    gcr_cache_min_log_interval=60s
+    relationship_grab_size=100
+    relationship_auto_indexing=false
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    storage_path=/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test
+    node_cache_array_fraction=1.0
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    relationship_cache_array_fraction=1.0
+    migration_thread=NO
+    remote_logging_host=127.0.0.1
+    store_dir=/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test
+    remote_logging_port=4560
+    enable_rules=YES
+    gc_monitor_threshold=200ms
+    load_kernel_extensions=true
+    array_block_size=120
+    neostore.relationshipstore.db.mapped_memory=50M
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    neostore.nodestore.db.mapped_memory=25M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=true
+    min_relationship_cache_size=0
+    max_relationship_cache_size=3500
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=9332
+    adaptive_cache_heap_ratio=0.77
+    identity_map=YES
+    adaptive_cache_manager_decrease_ratio=1.15
+    ha.server_id=2
+    neo_store=/Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/neostore
+    adaptive_cache_worker_sleep_time=3000
+    neostore.propertystore.db.index.mapped_memory=1M
+    adaptive_cache_manager_increase_ratio=1.1
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=90M
+    string_block_size=120
+    grab_file_lock=true
+    remote_logging_enabled=false
+    ha.server=localhost:6002
+    neo4j.ext.udc.enabled=true
+2012-06-25 07:35:11.234+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+2012-06-25 07:35:11.235+0000: System memory information:
+    Total Physical memory: 4.00 GB
+    Free Physical memory: 8.54 MB
+    Committed virtual memory: 3.11 GB
+    Total swap space: 6.00 GB
+    Free swap space: 1003.59 MB
+2012-06-25 07:35:11.243+0000: JVM memory information:
+    Free  memory: 24.86 MB
+    Total memory: 113.93 MB
+    Max   memory: 495.88 MB
+    Garbage Collector: ParNew: [Par Eden Space, Par Survivor Space]
+    Garbage Collector: ConcurrentMarkSweep: [Par Eden Space, Par Survivor Space, CMS Old Gen, CMS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=5.44 MB, used=5.34 MB, max=48.00 MB, threshold=0.00 B
+    Memory Pool: Par Eden Space (Heap memory): committed=16.63 MB, used=12.21 MB, max=33.31 MB, threshold=?
+    Memory Pool: Par Survivor Space (Heap memory): committed=2.06 MB, used=1.19 MB, max=4.13 MB, threshold=?
+    Memory Pool: CMS Old Gen (Heap memory): committed=95.24 MB, used=75.66 MB, max=458.44 MB, threshold=0.00 B
+    Memory Pool: CMS Perm Gen (Non-heap memory): committed=66.15 MB, used=46.77 MB, max=82.00 MB, threshold=0.00 B
+2012-06-25 07:35:11.253+0000: Operating system information:
+    Operating System: Mac OS X; version: 10.7.4; arch: x86_64; cpus: 2
+    Max number of file descriptors: 10240
+    Number of open file descriptors: 88
+    Process id: 97976@xenu.local
+    Byte order: LITTLE_ENDIAN
+2012-06-25 07:35:11.266+0000: JVM information:
+    VM Name: Java HotSpot(TM) 64-Bit Server VM
+    VM Vendor: Apple Inc.
+    VM Version: 20.8-b03-424
+    JIT compiler: HotSpot 64-Bit Tiered Compilers
+    VM Arguments: [-Djdk.home=, -Djruby.home=/Users/rmcclain/.rvm/rubies/jruby-1.6.7.2, -Djruby.script=jruby, -Djruby.shell=/bin/sh, -Djffi.boot.library.path=/Users/rmcclain/.rvm/rubies/jruby-1.6.7.2/lib/native/Darwin, -Xmx500m, -Xss2048k, -Djruby.memory.max=500m, -Djruby.stack.max=2048k, -Xbootclasspath/a:/Users/rmcclain/.rvm/rubies/jruby-1.6.7.2/lib/jruby.jar, -Dfile.encoding=UTF-8]
+2012-06-25 07:35:11.268+0000: Java classpath:
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/scala-library-2.9.0-1.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/jing.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-cypher-1.7.1.jar
+     [bootstrap] /System/Library/Frameworks/JavaVM.framework/Versions/A/Frameworks/JavaRuntimeSupport.framework/Versions/A/Resources/Java/JavaRuntimeSupport.jar
+     [loader.2] file:/System/Library/Java/Extensions/dns_sd.jar
+     [loader.2] file:/System/Library/Java/Extensions/MRJToolkit.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-lucene-index-1.7.1.jar
+     [loader.2] file:/System/Library/Java/Extensions/vecmath.jar
+     [loader.2] file:/System/Library/Java/Extensions/libmlib_jai.jnilib
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2@global/gems/bouncy-castle-java-1.5.0146.1/lib/bcmail-jdk15-146.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-shell-1.7.1.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/xercesImpl.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/activerecord-jdbc-adapter-1.2.2/lib/arjdbc/jdbc/adapter_java.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/eventmachine-0.12.10-java/lib/em_reactor.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/json-1.7.3-java/lib/json/ext/generator.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/nokogiri/nokogiri.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/dnsns.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-graph-matching-1.7.1.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2@global/gems/bouncy-castle-java-1.5.0146.1/lib/bcprov-jdk15-146.jar
+     [loader.2] file:/System/Library/Java/Extensions/libJ3D.jnilib
+     [loader.2] file:/System/Library/Java/Extensions/mlibwrapper_jai.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/localedata.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/isorelax.jar
+     [loader.2] file:/System/Library/Java/Extensions/QTJava.zip
+     [loader.2] file:/System/Library/Java/Extensions/libShark.jnilib
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar
+     [loader.2] file:/System/Library/Java/Extensions/libAppleScriptEngine.jnilib
+     [loader.2] file:/System/Library/Java/Extensions/libJ3DAudio.jnilib
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/nekohtml.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-udc-1.7.1.jar
+     [loader.2] file:/System/Library/Java/Extensions/j3daudio.jar
+     [loader.2] file:/System/Library/Java/Extensions/libJ3DUtils.jnilib
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-kernel-1.7.1.jar
+     [loader.2] file:/System/Library/Java/Extensions/libQTJNative.jnilib
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/json-1.7.3-java/lib/json/ext/parser.jar
+     [loader.2] file:/System/Library/Java/Extensions/j3dcore.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/nokogiri-1.5.4-java/lib/nekodtd.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-jmx-1.7.1.jar
+     [loader.2] file:/System/Library/Java/Extensions/j3dutils.jar
+     [loader.2] file:/System/Library/Java/Extensions/jai_core.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2@global/gems/jruby-openssl-0.7.7/lib/shared/jopenssl.jar
+     [loader.2] file:/System/Library/Java/Extensions/jai_codec.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/server-api-1.7.1.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunjce_provider.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/lucene-core-3.5.0.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/bcrypt-ruby-3.0.1-java/lib/bcrypt_ext.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/jdbc-postgres-9.1.901/lib/postgresql-9.1-901.jdbc4.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/neo4j-graph-algo-1.7.1.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/jce.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar
+     [bootstrap] /Users/rmcclain/.rvm/rubies/jruby-1.6.7.2/lib/jruby.jar
+     [classpath + loader.1] file:/Users/rmcclain/Projects/netatlas-rails/
+     [loader.2] file:/System/Library/Java/Extensions/AppleScriptEngine.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/apple_provider.jar
+     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar
+     [loader.0] file:/Users/rmcclain/.rvm/gems/jruby-1.6.7.2/gems/neo4j-community-1.7.1-java/lib/neo4j-community/jars/geronimo-jta_1.1_spec-1.1.1.jar
+     [loader.2] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunpkcs11.jar
+2012-06-25 07:35:11.581+0000: Library path:
+    /Users/rmcclain/Projects/netatlas-rails
+    /Library/Java/Extensions
+    /System/Library/Java/Extensions
+    /usr/lib/java
+2012-06-25 07:35:11.675+0000: System.properties:
+    jruby.home = /Users/rmcclain/.rvm/rubies/jruby-1.6.7.2
+    sun.boot.library.path = /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries
+    awt.nativeDoubleBuffering = true
+    gopherProxySet = false
+    mrj.build = 11M3720
+    path.separator = :
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = US
+    sun.os.patch.level = unknown
+    user.dir = /Users/rmcclain/Projects/netatlas-rails
+    jdk.home = 
+    sun.jnu.encoding = MacRoman
+    jruby.memory.max = 500m
+    sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+    http.nonProxyHosts = local|*.local|169.254/16|*.169.254/16
+    jffi.boot.library.path = /Users/rmcclain/.rvm/rubies/jruby-1.6.7.2/lib/native/Darwin
+    user.home = /Users/rmcclain
+    user.timezone = America/Chicago
+    file.encoding = UTF-8
+    jruby.stack.max = 2048k
+    jruby.script = jruby
+    user.name = rmcclain
+    jruby.shell = /bin/sh
+    sun.java.command = org/jruby/Main /Users/rmcclain/.rvm/gems/jruby-1.6.7.2/bin/ruby_noexec_wrapper /Users/rmcclain/.rvm/gems/jruby-1.6.7.2/bin/rspec spec
+    sun.arch.data.model = 64
+    user.language = en
+    awt.toolkit = apple.awt.CToolkit
+    file.separator = /
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    mrj.version = 1070.1.6.0_33-424
+    socksNonProxyHosts = local|*.local|169.254/16|*.169.254/16
+    ftp.nonProxyHosts = local|*.local|169.254/16|*.169.254/16
+    sun.cpu.isalist = 
+2012-06-25 07:35:11.676+0000: --- STARTUP diagnostics END ---
+2012-06-25 07:35:11.743+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-06-25 07:35:14.323+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-06-25 07:35:14.329+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-06-25 07:35:14.333+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-06-25 07:35:14.333+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1340608056248, id:434924156353394200, store version: 13561656364791302]
+2012-06-25 07:35:14.333+0000: Kernel version: Neo4j - Graph Database Kernel 1.7.1
+2012-06-25 07:35:14.333+0000: Neo4j component versions:
+2012-06-25 07:35:14.334+0000:   Neo4j - Graph Database Kernel 1.7.1
+2012-06-25 07:35:14.334+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-06-25 07:35:14.337+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-06-25 07:35:14.337+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-06-25 07:35:14.337+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-06-25 07:35:14.337+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-06-25 07:35:14.337+0000: Id usage:
+    Id usage:
+      NodeStore: used=1 high=0
+      RelationshipStore: used=0 high=-1
+      RelationshipTypeStore: used=0 high=-1
+      PropertyStore: used=0 high=-1
+      PropertyIndexStore: used=0 high=-1
+      StringPropertyStore: used=1 high=0
+      ArrayPropertyStore: used=1 high=0
+2012-06-25 07:35:14.338+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-06-25 07:35:14.338+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-06-25 07:35:14.338+0000: Storage files:
+    active_tx_log: 11.00 B
+    index:
+      lucene-store.db: 40.00 B
+      lucene.log.1: 16.00 B
+      lucene.log.active: 4.00 B
+    - Total: 60.00 B
+    lock: 0.00 B
+    messages.log: 32.03 kB
+    neostore: 54.00 B
+    neostore.id: 9.00 B
+    neostore.nodestore.db: 9.00 B
+    neostore.nodestore.db.id: 9.00 B
+    neostore.propertystore.db: 0.00 B
+    neostore.propertystore.db.arrays: 128.00 B
+    neostore.propertystore.db.arrays.id: 9.00 B
+    neostore.propertystore.db.id: 9.00 B
+    neostore.propertystore.db.index: 0.00 B
+    neostore.propertystore.db.index.id: 9.00 B
+    neostore.propertystore.db.index.keys: 38.00 B
+    neostore.propertystore.db.index.keys.id: 9.00 B
+    neostore.propertystore.db.strings: 128.00 B
+    neostore.propertystore.db.strings.id: 9.00 B
+    neostore.relationshipstore.db: 0.00 B
+    neostore.relationshipstore.db.id: 9.00 B
+    neostore.relationshiptypestore.db: 0.00 B
+    neostore.relationshiptypestore.db.id: 9.00 B
+    neostore.relationshiptypestore.db.names: 38.00 B
+    neostore.relationshiptypestore.db.names.id: 9.00 B
+    nioneo_logical.log.1: 16.00 B
+    nioneo_logical.log.active: 4.00 B
+    tm_tx_log.1: 0.00 B
+2012-06-25 07:35:14.341+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-06-25 07:35:14.343+0000: Started - database is now available
+2012-06-25 07:35:14.344+0000: GC Monitor started. 
+2012-06-25 07:35:52.126+0000: Stopping - database is now unavailable
+2012-06-25 07:35:52.127+0000: TM shutting down
+2012-06-25 07:35:52.163+0000: GC Monitor stopped. 
+2012-06-25 07:35:52.675+0000: Closed log /Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/index/lucene.log
+2012-06-25 07:35:52.718+0000: Closed log /Users/rmcclain/Projects/netatlas-rails/db/neo4j-test/nioneo_logical.log
+2012-06-25 07:35:54.149+0000: NeoStore closed
+2012-06-25 07:35:54.149+0000: --- SHUTDOWN diagnostics START ---
+2012-06-25 07:35:54.149+0000: --- SHUTDOWN diagnostics END ---
