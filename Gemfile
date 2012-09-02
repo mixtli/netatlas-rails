@@ -12,13 +12,14 @@ gem 'simple_form'
 gem 'state_machine'
 gem 'will_paginate'
 gem 'jquery-rails'
-gem 'unicorn'
 gem 'capistrano'
 gem 'draper'
 gem 'daemons'
 gem 'amqp'
 gem 'bunny'
-gem 'rabbit_manager', :path => '/Users/rmcclain/Projects/rabbit_manager'
+gem 'rabbit_manager', :git => 'git@github.com:mixtli/rabbit_manager.git'
+#gem 'rabbit_manager', :path => '/Users/rmcclain/Projects/rabbit_manager'
+gem 'rest-client'
 
 
 
@@ -27,8 +28,8 @@ group :test, :development do
   gem 'simplecov', :require => false
   gem 'therubyracer'
   gem 'rspec-rails'
-  gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'capybara'# , :github => 'jnicklas/capybara'
+  gem 'capybara-webkit' #, :github => 'thoughtbot/capybara-webkit'
   gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
   gem 'spork-rails'
   gem 'growl'

@@ -8,11 +8,9 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_current_user  # required by declarative_authorization for model based access control
 
-   
-
+  
   protected
   def set_current_user
     #Authorization.current_user = current_user
   end
 end
-

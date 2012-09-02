@@ -70,15 +70,15 @@ end
 
 guard 'coffeescript', :input => 'app/assets/javascripts', :noop => true, :hide_success => true
 
-guard 'process', :name => 'Event Collector', :command => 'script/daemon run event_processor.rb' do
-  watch('daemons/event_processor.rb')
-  watch('lib/event_processor.rb')
-end
+# guard 'process', :name => 'Event Collector', :command => 'script/daemon run event_processor.rb' do
+#   watch('daemons/event_processor.rb')
+#   watch('lib/event_processor.rb')
+# end
 
-guard 'process', :name => "Command Processor", :command => "script/daemon run command_processor.rb" do
-  watch("daemons/command_processor.rb")
-  watch("lib/command_processor.rb")
-end
+#guard 'process', :name => "Command Processor", :command => "script/daemon run command_processor.rb" do
+#  watch("daemons/command_processor.rb")
+#  watch("lib/command_processor.rb")
+#end
 
 #guard 'ctags-bundler' do
 #  watch(%r{^(app|lib|spec/support)/.*\.rb$})  { ["app", "lib", "spec/support"] }
