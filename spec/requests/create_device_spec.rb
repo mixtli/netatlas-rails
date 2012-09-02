@@ -20,7 +20,7 @@ describe "Create a device" do
         visit new_device_path
         fill_in 'device_hostname', with: 'foo.lvh.me'
         click_on 'create_device'
-        Device.first.ip_address.should eql '127.0.0.1'
+        Device.first.ip_address.should eql IPAddr.new('127.0.0.1')
       end
     end
   end

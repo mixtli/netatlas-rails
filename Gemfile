@@ -3,6 +3,7 @@ gem 'thin'
 gem 'rails', '3.2.5'
 gem 'backbone-on-rails'
 gem 'pg', :require => 'pg'
+gem 'postgres_ext'
 gem 'devise'
 gem 'userstamp', :git => 'git://github.com/evendis/userstamp.git'
 gem 'declarative_authorization'
@@ -58,6 +59,7 @@ group :test, :development do
   gem 'faker'
   gem 'evented-spec'
   gem 'capistrano'
+  gem 'timecop'
   #gem 'evergreen'
 end
 

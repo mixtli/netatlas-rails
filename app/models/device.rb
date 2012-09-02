@@ -5,10 +5,11 @@ class Device < Node
   self.sequence_name = 'nodes_id_seq'
 
   validates :hostname, :presence => true
-  attr_accessible :auth_password, :auth_protocol, :community, :hostname, :ip_forwarding, :memory, :num_cpus, :os, :os_type, :os_vendor, :os_version, :priv_password, :priv_protocol, :snmp_version, :sys_contact, :sys_description, :sys_location, :sys_name
+  attr_accessible :ip_address, :auth_password, :auth_protocol, :community, :hostname, :ip_forwarding, :memory, :num_cpus, :os, :os_type, :os_vendor, :os_version, :priv_password, :priv_protocol, :snmp_version, :sys_contact, :sys_description, :sys_location, :sys_name
 
   before_create { |d| d.label ||= d.hostname }
   before_create { |d| d.state ||= "ok" }
+  after_create :create_primary_interface
   before_validation :fix_ip_address
   has_many :interfaces
 
@@ -24,7 +25,7 @@ private
   def fix_ip_address
     return true if hostname && ip_address
     unless hostname
-      self.hostname = Resolv.new.getname(ip_address)
+      self.hostname = Resolv.new.getname(ip_address.to_s)
     end
     unless ip_address
       begin
@@ -32,6 +33,13 @@ private
       rescue SocketError => e
         return false
       end
+    end
+  end
+
+  def create_primary_interface
+    primary = interfaces.where(:ip_address => ip_address.to_s).first
+    unless primary
+      interfaces.create!(:ip_address => ip_address)
     end
   end
 

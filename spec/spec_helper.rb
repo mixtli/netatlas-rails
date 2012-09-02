@@ -48,6 +48,7 @@ Spork.prefork do
 
     config.before(:each) do
       DatabaseCleaner.start
+      Timecop.return
       # DatabaseCleaner.clean
     end
 
@@ -80,5 +81,7 @@ end
 Spork.each_run do
   # This code will be run each time you run your specs.
   FactoryGirl.reload
+  require File.expand_path("../../app/models/node", __FILE__) # for some reason, node not reloading without this
+  Dir[Rails.root.join("app/models/**/*.rb")].each {|f| require f}
 end
 

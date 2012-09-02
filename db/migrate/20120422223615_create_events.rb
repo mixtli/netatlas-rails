@@ -20,5 +20,7 @@ class CreateEvents < ActiveRecord::Migration
     add_index :events, :node_id
     add_index :events, :acknowledged_by_id
     add_index :events, :resolved_by_id
+    add_index :events, :state
+    add_index :events, :severity
   end
 end

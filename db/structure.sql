@@ -24,6 +24,48 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: node_dependencies(integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION node_dependencies(id integer) RETURNS TABLE(id integer)
+    LANGUAGE sql STABLE STRICT COST 1 ROWS 100
+    AS $_$
+       WITH RECURSIVE
+       deps AS(
+         SELECT node_id, dependency_id
+           FROM dependencies
+           WHERE dependencies.node_id = $1
+         UNION
+         SELECT parent.node_id, parent.dependency_id
+           FROM deps 
+           JOIN dependencies AS parent ON parent.node_id = deps.dependency_id
+       )    
+       SELECT dependency_id FROM deps;
+     $_$;
+
+
+--
+-- Name: node_dependents(integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION node_dependents(id integer) RETURNS TABLE(id integer)
+    LANGUAGE sql STABLE STRICT COST 1 ROWS 100
+    AS $_$
+       WITH RECURSIVE
+       deps AS(
+         SELECT node_id, dependency_id
+           FROM dependencies
+           WHERE dependency_id = $1
+         UNION
+         SELECT parent.node_id, parent.dependency_id 
+           FROM deps
+           JOIN dependencies AS parent ON deps.node_id = parent.dependency_id
+       )
+       SELECT node_id FROM deps
+     $_$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -67,6 +109,161 @@ ALTER SEQUENCE commands_id_seq OWNED BY commands.id;
 
 
 --
+-- Name: data_sources; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE data_sources (
+    id integer NOT NULL,
+    node_id integer NOT NULL,
+    plugin_id integer NOT NULL,
+    data_template_id integer,
+    state character varying(16) NOT NULL,
+    last_polled_at timestamp without time zone,
+    "interval" integer DEFAULT 300 NOT NULL,
+    description text,
+    arguments text,
+    varbinds text,
+    warning_threshold double precision,
+    critical_threshold double precision,
+    operator character varying(8) DEFAULT '>'::character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: data_sources_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE data_sources_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: data_sources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE data_sources_id_seq OWNED BY data_sources.id;
+
+
+--
+-- Name: data_streams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE data_streams (
+    id integer NOT NULL,
+    data_source_id integer,
+    poller_id integer,
+    creator_id integer,
+    updater_id integer,
+    deleter_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: data_streams_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE data_streams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: data_streams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE data_streams_id_seq OWNED BY data_streams.id;
+
+
+--
+-- Name: data_templates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE data_templates (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    plugin_id integer NOT NULL,
+    "interval" integer DEFAULT 300 NOT NULL,
+    warning_threshold double precision,
+    critical_threshold double precision,
+    operator character varying(255) DEFAULT '>'::character varying,
+    description text,
+    arguments text,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: data_templates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE data_templates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: data_templates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE data_templates_id_seq OWNED BY data_templates.id;
+
+
+--
+-- Name: dependencies; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE dependencies (
+    id integer NOT NULL,
+    node_id integer,
+    dependency_id integer,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: dependencies_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE dependencies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: dependencies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE dependencies_id_seq OWNED BY dependencies.id;
+
+
+--
 -- Name: nodes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -93,7 +290,7 @@ CREATE TABLE nodes (
 
 CREATE TABLE devices (
     hostname character varying(255),
-    ip_address character varying(255),
+    ip_address inet,
     ip_forwarding boolean,
     os character varying(255),
     os_version character varying(255),
@@ -162,6 +359,41 @@ ALTER SEQUENCE events_id_seq OWNED BY events.id;
 
 
 --
+-- Name: groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE groups (
+    id integer NOT NULL,
+    name character varying(255),
+    parent_id integer,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
+
+
+--
 -- Name: interfaces; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -169,8 +401,7 @@ CREATE TABLE interfaces (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     deleted_at timestamp without time zone,
-    ip_address character varying(255),
-    netmask integer,
+    ip_address inet,
     hostname character varying(255),
     if_speed integer,
     if_type integer,
@@ -180,11 +411,46 @@ CREATE TABLE interfaces (
     if_promiscuous boolean,
     if_high_speed integer,
     if_admin_status character varying(255),
-    physical_address character varying(255),
+    physical_address macaddr,
     mtu integer,
     duplex character varying(255)
 )
 INHERITS (nodes);
+
+
+--
+-- Name: memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE memberships (
+    id integer NOT NULL,
+    group_id integer,
+    node_id integer,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE memberships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE memberships_id_seq OWNED BY memberships.id;
 
 
 --
@@ -204,6 +470,41 @@ CREATE SEQUENCE nodes_id_seq
 --
 
 ALTER SEQUENCE nodes_id_seq OWNED BY nodes.id;
+
+
+--
+-- Name: plugins; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE plugins (
+    id integer NOT NULL,
+    name character varying(255),
+    class_name character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone,
+    creator_id integer,
+    updater_id integer
+);
+
+
+--
+-- Name: plugins_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE plugins_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: plugins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE plugins_id_seq OWNED BY plugins.id;
 
 
 --
@@ -288,6 +589,44 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: subscriptions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE subscriptions (
+    id integer NOT NULL,
+    group_id integer,
+    poller_id integer,
+    node_id integer,
+    state character varying(255),
+    severity character varying(255),
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE subscriptions_id_seq OWNED BY subscriptions.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -340,6 +679,34 @@ ALTER TABLE ONLY commands ALTER COLUMN id SET DEFAULT nextval('commands_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY data_sources ALTER COLUMN id SET DEFAULT nextval('data_sources_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY data_streams ALTER COLUMN id SET DEFAULT nextval('data_streams_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY data_templates ALTER COLUMN id SET DEFAULT nextval('data_templates_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY dependencies ALTER COLUMN id SET DEFAULT nextval('dependencies_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY devices ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
 
 
@@ -361,6 +728,13 @@ ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY groups ALTER COLUMN id SET DEFAULT nextval('groups_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY interfaces ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
 
 
@@ -375,7 +749,21 @@ ALTER TABLE ONLY interfaces ALTER COLUMN state SET DEFAULT 'unknown'::character 
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY memberships ALTER COLUMN id SET DEFAULT nextval('memberships_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY nodes ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY plugins ALTER COLUMN id SET DEFAULT nextval('plugins_id_seq'::regclass);
 
 
 --
@@ -396,6 +784,13 @@ ALTER TABLE ONLY pollers ALTER COLUMN id SET DEFAULT nextval('pollers_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY subscriptions ALTER COLUMN id SET DEFAULT nextval('subscriptions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -408,6 +803,38 @@ ALTER TABLE ONLY commands
 
 
 --
+-- Name: data_sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY data_sources
+    ADD CONSTRAINT data_sources_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: data_streams_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY data_streams
+    ADD CONSTRAINT data_streams_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: data_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY data_templates
+    ADD CONSTRAINT data_templates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dependencies_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY dependencies
+    ADD CONSTRAINT dependencies_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -416,11 +843,35 @@ ALTER TABLE ONLY events
 
 
 --
+-- Name: groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY groups
+    ADD CONSTRAINT groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT memberships_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY nodes
     ADD CONSTRAINT nodes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: plugins_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY plugins
+    ADD CONSTRAINT plugins_pkey PRIMARY KEY (id);
 
 
 --
@@ -440,6 +891,14 @@ ALTER TABLE ONLY pollers
 
 
 --
+-- Name: subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY subscriptions
+    ADD CONSTRAINT subscriptions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -452,6 +911,69 @@ ALTER TABLE ONLY users
 --
 
 CREATE INDEX index_commands_on_poller_id ON commands USING btree (poller_id);
+
+
+--
+-- Name: index_data_sources_on_data_template_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_sources_on_data_template_id ON data_sources USING btree (data_template_id);
+
+
+--
+-- Name: index_data_sources_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_sources_on_node_id ON data_sources USING btree (node_id);
+
+
+--
+-- Name: index_data_sources_on_plugin_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_sources_on_plugin_id ON data_sources USING btree (plugin_id);
+
+
+--
+-- Name: index_data_streams_on_data_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_streams_on_data_source_id ON data_streams USING btree (data_source_id);
+
+
+--
+-- Name: index_data_streams_on_poller_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_streams_on_poller_id ON data_streams USING btree (poller_id);
+
+
+--
+-- Name: index_data_templates_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_templates_on_name ON data_templates USING btree (name);
+
+
+--
+-- Name: index_data_templates_on_plugin_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_templates_on_plugin_id ON data_templates USING btree (plugin_id);
+
+
+--
+-- Name: index_dependencies_on_dependency_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_dependencies_on_dependency_id ON dependencies USING btree (dependency_id);
+
+
+--
+-- Name: index_dependencies_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_dependencies_on_node_id ON dependencies USING btree (node_id);
 
 
 --
@@ -480,6 +1002,62 @@ CREATE INDEX index_events_on_poller_id ON events USING btree (poller_id);
 --
 
 CREATE INDEX index_events_on_resolved_by_id ON events USING btree (resolved_by_id);
+
+
+--
+-- Name: index_events_on_severity; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_severity ON events USING btree (severity);
+
+
+--
+-- Name: index_events_on_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_state ON events USING btree (state);
+
+
+--
+-- Name: index_groups_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_groups_on_name ON groups USING btree (name);
+
+
+--
+-- Name: index_groups_on_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_groups_on_parent_id ON groups USING btree (parent_id);
+
+
+--
+-- Name: index_memberships_on_creator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_memberships_on_creator_id ON memberships USING btree (creator_id);
+
+
+--
+-- Name: index_memberships_on_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_memberships_on_group_id ON memberships USING btree (group_id);
+
+
+--
+-- Name: index_memberships_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_memberships_on_node_id ON memberships USING btree (node_id);
+
+
+--
+-- Name: index_memberships_on_updater_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_memberships_on_updater_id ON memberships USING btree (updater_id);
 
 
 --
@@ -518,6 +1096,20 @@ CREATE INDEX index_nodes_on_type ON nodes USING btree (type);
 
 
 --
+-- Name: index_plugins_on_class_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_plugins_on_class_name ON plugins USING btree (class_name);
+
+
+--
+-- Name: index_plugins_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_plugins_on_name ON plugins USING btree (name);
+
+
+--
 -- Name: index_poller_nodes_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -536,6 +1128,55 @@ CREATE INDEX index_poller_nodes_on_poller_id ON poller_nodes USING btree (poller
 --
 
 CREATE INDEX index_pollers_on_hostname ON pollers USING btree (hostname);
+
+
+--
+-- Name: index_subscriptions_on_creator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_subscriptions_on_creator_id ON subscriptions USING btree (creator_id);
+
+
+--
+-- Name: index_subscriptions_on_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_subscriptions_on_group_id ON subscriptions USING btree (group_id);
+
+
+--
+-- Name: index_subscriptions_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_subscriptions_on_node_id ON subscriptions USING btree (node_id);
+
+
+--
+-- Name: index_subscriptions_on_poller_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_subscriptions_on_poller_id ON subscriptions USING btree (poller_id);
+
+
+--
+-- Name: index_subscriptions_on_severity; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_subscriptions_on_severity ON subscriptions USING btree (severity);
+
+
+--
+-- Name: index_subscriptions_on_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_subscriptions_on_state ON subscriptions USING btree (state);
+
+
+--
+-- Name: index_subscriptions_on_updater_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_subscriptions_on_updater_id ON subscriptions USING btree (updater_id);
 
 
 --
@@ -578,3 +1219,19 @@ INSERT INTO schema_migrations (version) VALUES ('20120416033922');
 INSERT INTO schema_migrations (version) VALUES ('20120418102512');
 
 INSERT INTO schema_migrations (version) VALUES ('20120422223615');
+
+INSERT INTO schema_migrations (version) VALUES ('20120625090828');
+
+INSERT INTO schema_migrations (version) VALUES ('20120626051005');
+
+INSERT INTO schema_migrations (version) VALUES ('20120626052818');
+
+INSERT INTO schema_migrations (version) VALUES ('20120626053343');
+
+INSERT INTO schema_migrations (version) VALUES ('20120626054730');
+
+INSERT INTO schema_migrations (version) VALUES ('20120628072301');
+
+INSERT INTO schema_migrations (version) VALUES ('20120628072417');
+
+INSERT INTO schema_migrations (version) VALUES ('20120628072738');

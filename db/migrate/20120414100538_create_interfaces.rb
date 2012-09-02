@@ -1,8 +1,7 @@
 class CreateInterfaces < ActiveRecord::Migration
   def change
     create_table :interfaces, :id => false, :options => "INHERITS(nodes)" do |t|
-      t.string :ip_address
-      t.integer :netmask
+      t.inet :ip_address
       t.string :hostname
       t.integer :if_speed
       t.integer :if_type
@@ -12,7 +11,7 @@ class CreateInterfaces < ActiveRecord::Migration
       t.boolean :if_promiscuous
       t.integer :if_high_speed
       t.string :if_admin_status
-      t.string :physical_address
+      t.macaddr :physical_address
       t.integer :mtu
       t.string :duplex
 
