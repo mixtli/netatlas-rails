@@ -31,7 +31,9 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'capybara'# , :github => 'jnicklas/capybara'
   gem 'capybara-webkit' #, :github => 'thoughtbot/capybara-webkit'
-  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  group :darwin do
+    gem 'rb-fsevent', :require => false 
+  end
   gem 'spork-rails'
   gem 'growl'
   gem 'rb-readline'
