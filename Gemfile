@@ -23,6 +23,13 @@ gem 'rabbit_manager', :git => 'git@github.com:mixtli/rabbit_manager.git'
 gem 'rest-client'
 
 
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+  gem 'therubyracer'
+end
+
 
 group :test, :development do
   gem 'debugger'
