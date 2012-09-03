@@ -82,7 +82,7 @@ group :assets do
   gem 'compass-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier' #, '>= 1.0.3'
   gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 end
 
