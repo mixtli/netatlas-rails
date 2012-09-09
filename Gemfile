@@ -21,6 +21,7 @@ gem 'bunny'
 gem 'rabbit_manager', :git => 'git@github.com:mixtli/rabbit_manager.git'
 #gem 'rabbit_manager', :path => '/Users/rmcclain/Projects/rabbit_manager'
 gem 'rest-client'
+gem 'seed-fu'
 
 
 group :assets do
