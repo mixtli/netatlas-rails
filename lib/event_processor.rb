@@ -1,17 +1,12 @@
-class EventProcessor
-
-  def run
-    AMQP.run do
-      amq = AMQP::Channel.new
-      amq.queue('event').subscribe do |hdr, msg|
-        post_result(msg)
-      end
-    end
+require 'queue_processor'
+class EventProcessor < QueueProcessor
+  def queue_name
+    "event_queue"
   end
 
-  private
   def post_result(msg)
-    EventService.call(msg)
+    puts "got msg #{msg}"
+    CreateEventService.call(JSON.parse(msg))
   end
 end
 

@@ -109,6 +109,40 @@ ALTER SEQUENCE commands_id_seq OWNED BY commands.id;
 
 
 --
+-- Name: data_points; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE data_points (
+    id integer NOT NULL,
+    data_stream_id integer,
+    "timestamp" timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    value double precision,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: data_points_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE data_points_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: data_points_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE data_points_id_seq OWNED BY data_points.id;
+
+
+--
 -- Name: data_sources; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -126,6 +160,9 @@ CREATE TABLE data_sources (
     warning_threshold double precision,
     critical_threshold double precision,
     operator character varying(8) DEFAULT '>'::character varying,
+    creator_id integer,
+    updater_id integer,
+    deleter_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     deleted_at timestamp without time zone
@@ -454,6 +491,40 @@ ALTER SEQUENCE memberships_id_seq OWNED BY memberships.id;
 
 
 --
+-- Name: networks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE networks (
+    id integer NOT NULL,
+    address cidr,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: networks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE networks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: networks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE networks_id_seq OWNED BY networks.id;
+
+
+--
 -- Name: nodes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -548,7 +619,7 @@ CREATE TABLE pollers (
     id integer NOT NULL,
     hostname character varying(255),
     port integer,
-    state character varying(16),
+    state character varying(16) DEFAULT 'unknown'::character varying,
     queue_username character varying(32) NOT NULL,
     queue_password character varying(32) NOT NULL,
     creator_id integer,
@@ -586,6 +657,15 @@ ALTER SEQUENCE pollers_id_seq OWNED BY pollers.id;
 CREATE TABLE schema_migrations (
     version character varying(255) NOT NULL
 );
+
+
+--
+-- Name: services; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE services (
+)
+INHERITS (nodes);
 
 
 --
@@ -679,6 +759,13 @@ ALTER TABLE ONLY commands ALTER COLUMN id SET DEFAULT nextval('commands_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY data_points ALTER COLUMN id SET DEFAULT nextval('data_points_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY data_sources ALTER COLUMN id SET DEFAULT nextval('data_sources_id_seq'::regclass);
 
 
@@ -756,6 +843,13 @@ ALTER TABLE ONLY memberships ALTER COLUMN id SET DEFAULT nextval('memberships_id
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY networks ALTER COLUMN id SET DEFAULT nextval('networks_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY nodes ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
 
 
@@ -784,6 +878,20 @@ ALTER TABLE ONLY pollers ALTER COLUMN id SET DEFAULT nextval('pollers_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY services ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
+
+
+--
+-- Name: state; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY services ALTER COLUMN state SET DEFAULT 'unknown'::character varying;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY subscriptions ALTER COLUMN id SET DEFAULT nextval('subscriptions_id_seq'::regclass);
 
 
@@ -800,6 +908,14 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY commands
     ADD CONSTRAINT commands_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: data_points_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY data_points
+    ADD CONSTRAINT data_points_pkey PRIMARY KEY (id);
 
 
 --
@@ -859,6 +975,14 @@ ALTER TABLE ONLY memberships
 
 
 --
+-- Name: networks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY networks
+    ADD CONSTRAINT networks_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -911,6 +1035,13 @@ ALTER TABLE ONLY users
 --
 
 CREATE INDEX index_commands_on_poller_id ON commands USING btree (poller_id);
+
+
+--
+-- Name: index_data_points_on_data_stream_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_points_on_data_stream_id ON data_points USING btree (data_stream_id);
 
 
 --
@@ -1235,3 +1366,9 @@ INSERT INTO schema_migrations (version) VALUES ('20120628072301');
 INSERT INTO schema_migrations (version) VALUES ('20120628072417');
 
 INSERT INTO schema_migrations (version) VALUES ('20120628072738');
+
+INSERT INTO schema_migrations (version) VALUES ('20120917004926');
+
+INSERT INTO schema_migrations (version) VALUES ('20120920071352');
+
+INSERT INTO schema_migrations (version) VALUES ('20120922222425');

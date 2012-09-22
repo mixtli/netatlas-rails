@@ -13,7 +13,7 @@ class CreateDataSources < ActiveRecord::Migration
       t.float :warning_threshold
       t.float :critical_threshold
       t.string :operator, :default => '>', :limit => 8
-
+      t.userstamps(true)
       t.timestamps
     end
     add_index :data_sources, :node_id

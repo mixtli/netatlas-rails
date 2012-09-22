@@ -9,6 +9,8 @@ NetatlasRails::Application.routes.draw do
 
   resources :nodes
   resources :pollers
+  resources :data_sources
+  resources :services
 
 
   mount JasmineRails::Engine => "/specs" unless Rails.env.production?

@@ -4,6 +4,7 @@ require 'spork'
 #require 'spork/ext/ruby-debug'
 
 ENV["RAILS_ENV"] ||= 'test'
+Thread.abort_on_exception = true
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
@@ -24,7 +25,7 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
   
-  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.strategy = :transaction
   RSpec.configure do |config|
     # ## Mock Framework
     #
@@ -43,18 +44,21 @@ Spork.prefork do
     config.use_transactional_fixtures = false
 
     config.before(:suite) do
-      #DatabaseCleaner.clean_with(:truncation)
+      DatabaseCleaner.clean_with(:truncation)
     end
 
-    config.before(:each) do
-      DatabaseCleaner.start
+
+    config.around(:each) do |ex|
       Timecop.return
-      # DatabaseCleaner.clean
-    end
-
-    config.after(:each) do
-      Warden.test_reset! 
+      if example.options[:truncate]
+        DatabaseCleaner.strategy = :truncation
+      else
+        DatabaseCleaner.strategy = :transaction
+        DatabaseCleaner.start
+      end
+      ex.run
       DatabaseCleaner.clean
+      Warden.test_reset!
     end
     #
     # If true, the base class of anonymous controllers will be inferred

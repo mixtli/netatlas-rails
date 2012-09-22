@@ -6,6 +6,7 @@ authorization do
 
   role :user, :includes => :guest do
     has_permission_on :devices, :to => :manage
+    has_permission_on :services, :to => :manage
   end
 
 

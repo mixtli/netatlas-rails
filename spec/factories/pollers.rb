@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :poller do
     hostname { |n| "poller#{n}.lvh.me" }
     port 8888
-    state "active"
+    state "unknown"
     queue_username "MyString"
     queue_password "MyString"
   end

@@ -1,5 +1,5 @@
 development:
-  amqp:
+  :amqp:
     user: netatlas
     pass: netatlas
     host: localhost
@@ -7,14 +7,15 @@ development:
 
 
 test:
-  amqp:
+  :amqp:
     user: netatlas
     pass: netatlas
+    password: netatlas
     host: localhost
-    vhost: netatlas_test
+    vhost: "netatlas_test" 
 
 production:
-  amqp:
+  :amqp:
     user: netatlas
     pass: netatlas
     host: localhost

@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :data_source do
-    node nil
-    plugin nil
+    node 
+    plugin 
     data_template nil
     state "MyString"
     last_polled_at "2012-06-26 00:33:43"
