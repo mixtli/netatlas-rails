@@ -30,14 +30,21 @@ test: &test
   host: 127.0.0.1
   #socket: /tmp/mysql.sock
 
-production:
-  #adapter: mysql2
+staging:
   adapter: postgresql
   encoding: utf8
-  reconnect: false
+  database: netatlas_staging
+  pool: 5
+  username: postgres
+  password:
+  host: 127.0.0.1
+
+production:
+  adapter: postgresql
+  encoding: utf8
   database: netatlas_production
   pool: 5
-  username: rmcclain
+  username: postgres
   password:
   host: 127.0.0.1
 

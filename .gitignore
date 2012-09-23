@@ -27,3 +27,5 @@ netatlas.sublime-workspace
 .powrc
 .tags
 .tags_sorted_by_file
+gems
+.codeintel

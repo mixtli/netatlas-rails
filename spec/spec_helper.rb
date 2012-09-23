@@ -26,6 +26,7 @@ Spork.prefork do
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
   
   DatabaseCleaner.strategy = :transaction
+
   RSpec.configure do |config|
     # ## Mock Framework
     #
