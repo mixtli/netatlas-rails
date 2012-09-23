@@ -2,7 +2,8 @@ require 'rubygems'
 require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
-
+require 'rabbit_manager'
+require File.dirname(__FILE__) + "/support/rabbit_helper"
 ENV["RAILS_ENV"] ||= 'test'
 Thread.abort_on_exception = true
 
@@ -11,6 +12,7 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
   # Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+  reset_rabbit
   require File.expand_path("../../config/environment", __FILE__)
   Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
   require 'rspec/rails'
@@ -46,10 +48,14 @@ Spork.prefork do
 
     config.before(:suite) do
       DatabaseCleaner.clean_with(:truncation)
+      #reset_rabbit
     end
 
 
     config.around(:each) do |ex|
+      #reset_rabbit
+      @rabbit = Bunny.new(CONFIG['amqp'].symbolize_keys)
+      @rabbit.start
       Timecop.return
       if example.options[:truncate]
         DatabaseCleaner.strategy = :truncation

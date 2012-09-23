@@ -9,7 +9,8 @@ describe EventProcessor do
     collector_thread = Thread.new { subject.run }
     time = Time.now
     event = {:node_id => node.id }
-    BUNNY.exchange('').publish(event.to_json, :key => subject.queue_name)
+    @rabbit.queue(subject.queue_name, :durable => true)
+    @rabbit.exchange('').publish(event.to_json, :key => subject.queue_name)
     sleep 3
     collector_thread.kill
     Event.first.node_id.should eql(node.id)
