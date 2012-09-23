@@ -23,6 +23,7 @@ gem 'rabbit_manager', :git => 'git@github.com:mixtli/rabbit_manager.git'
 gem 'rest-client'
 gem 'seed-fu'
 
+gem 'jasmine-rails'
 
 group :assets do
   gem 'sass-rails'
@@ -47,7 +48,6 @@ group :test, :development do
   gem 'rb-readline'
   gem 'foreman'
   gem 'factory_girl_rails'
-  gem 'jasmine-rails'
   gem 'guard-livereload'
   gem 'guard-ctags-bundler'
   gem 'guard-rspec'
