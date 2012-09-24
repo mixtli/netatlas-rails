@@ -1,18 +1,20 @@
 class QueueProcessor 
   def initialize(options = {})
     @connection_options = options
+    @logger = options[:logger] || Rails.logger
   end
 
   def run
     EM.run do
+      @logger.debug 
       AMQP.connect(@connection_options.symbolize_keys) do |connection|
         amq = AMQP::Channel.new(connection)
         amq.queue(queue_name, :durable => true).subscribe do |hdr, msg|
-          puts "got message #{msg}"
+          @logger.debug "#{queue_name} RECEIVED: #{msg.inspect}"
           begin
             post_result(msg)
           rescue => e
-            puts "ERROR processing #{queue_name}: #{e.message}"
+            @logger.error "ERROR processing #{queue_name}: #{msg.inspect} #{e.message}"
           end
         end
       end
