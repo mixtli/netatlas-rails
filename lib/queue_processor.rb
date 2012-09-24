@@ -6,7 +6,7 @@ class QueueProcessor
 
   def run
     EM.run do
-      @logger.debug 
+      @logger.debug "#{queue_name} Listener started"
       AMQP.connect(@connection_options.symbolize_keys) do |connection|
         amq = AMQP::Channel.new(connection)
         amq.queue(queue_name, :durable => true).subscribe do |hdr, msg|
