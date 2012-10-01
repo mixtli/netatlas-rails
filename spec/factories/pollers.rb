@@ -4,6 +4,7 @@ FactoryGirl.define do
     hostname { |n| "poller#{n}.lvh.me" }
     port 8888
     state "unknown"
+    association :creator, :factory => :user
     queue_username "MyString"
     queue_password "MyString"
   end

@@ -4,6 +4,7 @@ describe "Pollers" do
   describe "GET /pollers" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
+      login_as(create(:user))
       get pollers_path
       response.status.should be(200)
     end
