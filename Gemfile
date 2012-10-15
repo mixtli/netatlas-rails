@@ -14,6 +14,8 @@ gem 'state_machine'
 gem 'ransack'
 gem 'will_paginate'
 gem 'jquery-rails'
+gem 'dynamic_form'
+gem 'rb-readline'
 gem 'capistrano'
 gem 'draper'
 gem 'daemons'
@@ -26,6 +28,17 @@ gem 'seed-fu'
 
 gem 'jasmine-rails'
 
+#if ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
+  gem 'netatlas-poller', :path => "#{ENV['HOME']}/Projects/netatlas-poller"
+#else
+#  gem 'netatlas-poller', :git => 'git@github.com:mixtli/netatlas-poller.git'
+#end
+#if ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
+  gem 'netatlas-client', :path => "#{ENV['HOME']}/Projects/netatlas-client", :require => 'netatlas/client'
+#else
+#  gem 'netatlas-client', :git => 'git@github.com:mixtli/netatlas-client.git'
+#end
+ 
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
@@ -45,7 +58,8 @@ group :test, :development do
     gem 'rb-fsevent', :require => false 
   end
   gem 'spork-rails'
-  gem 'growl'
+  gem 'terminal-notifier-guard'
+  #gem 'growl'
   gem 'rb-readline'
   gem 'foreman'
   gem 'factory_girl_rails'

@@ -1,0 +1,27 @@
+%h1 Listing Events
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Node
+      %th State
+      %th Severity
+      %th Time
+      %th
+      %th
+      %th
+  
+  %tbody
+    - @events.each do |event|
+      %tr
+        %td= event.node
+        %td= event.state
+        %td= event.severity
+        %td= event.created_at
+        %td= link_to 'Show', event, :class => 'btn btn-mini'
+        %td= link_to 'Edit', edit_event_path(event), :class => 'btn btn-mini'
+        %td= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
+  
+%br
+
+= link_to 'New Event', new_event_path

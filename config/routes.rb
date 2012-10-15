@@ -10,7 +10,13 @@ NetatlasRails::Application.routes.draw do
   resources :nodes
   resources :pollers
   resources :data_sources
-  resources :services
+  resources :interfaces
+  resources :events
+  resources :services do
+    collection do
+      get 'datatable'
+    end
+  end
 
 
   mount JasmineRails::Engine => "/specs" unless Rails.env.production?

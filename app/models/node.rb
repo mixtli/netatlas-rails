@@ -10,7 +10,9 @@ class Node < ActiveRecord::Base
 
   has_many :dependent_nodes, :class_name => 'Dependency', :foreign_key => :dependency_id
   has_many :dependents, :through => :dependent_nodes, :source => :node
+  has_many :data_sources
 
+  def to_s; label; end
 
   state_machine :state, :initial => :unknown do
     state :pending

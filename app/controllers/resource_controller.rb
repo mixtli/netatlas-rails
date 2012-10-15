@@ -15,7 +15,7 @@ class ResourceController < ApplicationController
         conditions["#{k}_eq".to_sym] = conditions.delete(k)
       end
     end
-    @nodes = self.class.resource_class.search(conditions).result
+    @nodes = self.class.resource_class.search(conditions).result.paginate(:page => params[:page], :per_page => 10)
     instance_variable_set("@#{self.class.resource_name.to_s.pluralize}".to_sym, @nodes)
     respond_with(@nodes)
   end
@@ -39,7 +39,6 @@ class ResourceController < ApplicationController
   end
 
   def create
-    puts "resource_name #{self.class.resource_name}"
     @node = resource_class.new(params[self.class.resource_name])
     @node.creator = current_user
     @node.save

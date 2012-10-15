@@ -7,8 +7,10 @@
 @import "icons/*.png";
 @import "jquery.ui.all";
 @import "jquery.ui.theme";
-@import "bootstrap_and_overrides";
 @import "dataTables/src/demo_table_jui";
+//@import "dataTables/jquery.dataTables";
+//@import "dataTables/jquery.dataTables.bootstrap";
+@import "bootstrap_and_overrides";
 @include all-icons-sprites;
 
 

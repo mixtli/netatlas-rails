@@ -13,6 +13,7 @@ class Device < Node
   before_validation :fix_ip_address
   has_many :interfaces
 
+  def to_s; label; end
 
   def scan
      AMQP::Channel.new do |channel|
@@ -35,6 +36,7 @@ private
       end
     end
   end
+
 
   def create_primary_interface
     primary = interfaces.where(:ip_address => ip_address.to_s).first

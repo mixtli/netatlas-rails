@@ -1,0 +1,10 @@
+= simple_form_for @service, :html => {:class => 'form-horizontal' }  do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :label
+    = f.association :service_type
+    = f.input :port
+    = f.association :device, :label_field => :hostname
+
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'

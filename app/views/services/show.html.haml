@@ -1,0 +1,18 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th{colspan: 2} Service Information
+  %tbody
+    %tr
+      %th Name
+      %td= @service.label
+    %tr
+      %th Device
+      %td= @service.device
+
+= render 'data_sources/list', :data_sources => @service.data_sources
+
+= link_to 'Create Data Source', new_data_source_path(:node_id => @service.id)
+= link_to 'Edit', edit_service_path(@service)
+\|
+= link_to 'Back', services_path

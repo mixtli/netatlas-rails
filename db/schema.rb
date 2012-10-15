@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120628072738) do
+ActiveRecord::Schema.define(:version => 20121010040106) do
 
   create_table "commands", :force => true do |t|
     t.string   "name",       :null => false
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(:version => 20120628072738) do
 
   add_index "commands", ["poller_id"], :name => "index_commands_on_poller_id"
 
+  create_table "data_points", :force => true do |t|
+    t.integer  "data_stream_id"
+    t.datetime "timestamp"
+    t.datetime "created_at",     :null => false
+    t.float    "value"
+    t.datetime "updated_at",     :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "data_points", ["data_stream_id"], :name => "index_data_points_on_data_stream_id"
+
   create_table "data_sources", :force => true do |t|
     t.integer  "node_id",                                           :null => false
     t.integer  "plugin_id",                                         :null => false
@@ -41,6 +52,9 @@ ActiveRecord::Schema.define(:version => 20120628072738) do
     t.float    "warning_threshold"
     t.float    "critical_threshold"
     t.string   "operator",           :limit => 8,  :default => ">"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.integer  "deleter_id"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
     t.datetime "deleted_at"
@@ -216,6 +230,15 @@ ActiveRecord::Schema.define(:version => 20120628072738) do
   add_index "memberships", ["node_id"], :name => "index_memberships_on_node_id"
   add_index "memberships", ["updater_id"], :name => "index_memberships_on_updater_id"
 
+  create_table "networks", :force => true do |t|
+    t.cidr     "address"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
+  end
+
   create_table "nodes", :force => true do |t|
     t.string   "label",       :limit => 32,                        :null => false
     t.text     "description"
@@ -264,18 +287,48 @@ ActiveRecord::Schema.define(:version => 20120628072738) do
   create_table "pollers", :force => true do |t|
     t.string   "hostname"
     t.integer  "port"
-    t.string   "state",          :limit => 16
-    t.string   "queue_username", :limit => 32, :null => false
-    t.string   "queue_password", :limit => 32, :null => false
+    t.string   "state",          :limit => 16, :default => "unknown"
+    t.string   "queue_username", :limit => 32,                        :null => false
+    t.string   "queue_password", :limit => 32,                        :null => false
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.integer  "deleter_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.datetime "deleted_at"
   end
 
   add_index "pollers", ["hostname"], :name => "index_pollers_on_hostname"
+
+  create_table "service_types", :force => true do |t|
+    t.string   "name"
+    t.integer  "default_port"
+    t.integer  "default_template_id"
+    t.text     "description"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "service_types", ["default_template_id"], :name => "index_service_types_on_default_template_id"
+
+  create_table "services", :id => false, :force => true do |t|
+    t.integer  "id",                                                   :null => false
+    t.string   "label",           :limit => 32,                        :null => false
+    t.text     "description"
+    t.string   "type",            :limit => 32
+    t.string   "state",           :limit => 16, :default => "unknown"
+    t.integer  "device_id"
+    t.integer  "snmp_index"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.integer  "deleter_id"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.datetime "deleted_at"
+    t.integer  "port"
+    t.integer  "service_type_id"
+  end
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "group_id"

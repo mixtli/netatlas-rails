@@ -80,9 +80,10 @@ guard 'coffeescript', :input => 'app/assets/javascripts', :noop => true, :hide_s
 #  watch("lib/command_processor.rb")
 #end
 
-#guard 'ctags-bundler' do
-#  watch(%r{^(app|lib|spec/support)/.*\.rb$})  { ["app", "lib", "spec/support"] }
-#  watch('Gemfile.lock')
-#end
 
 
+
+guard 'ctags-bundler', :src_path => ["app", "lib", "spec/support"] do
+  watch(/^(app|lib|spec\/support)\/.*\.rb$/)
+  watch('Gemfile.lock')
+end

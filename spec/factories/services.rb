@@ -2,6 +2,9 @@
 
 FactoryGirl.define do
   factory :service do
-    label Faker::Lorem.words(1)
+    label { Faker::Lorem.words(2).join(" ") }
+    device
+    state "unknown"
+    description { Faker::Lorem.words(10).join(" ")}
   end
 end

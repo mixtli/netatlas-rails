@@ -59,6 +59,7 @@
     - @device.interfaces.each do |i|
       %td= i.ip_address
 
+= render 'interfaces/list', :interfaces => @device.interfaces
 
 
 = link_to 'Edit', edit_device_path(@device)

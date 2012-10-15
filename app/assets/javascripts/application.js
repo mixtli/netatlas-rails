@@ -12,21 +12,21 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
-//= require bootstrap-dropdown
-//= require bootstrap-tooltip
-//= require bootstrap-popover
 //= require jquery.ui.all
 //= require underscore
-//= require backbone
 //= require dataTables/jquery.dataTables
+//= require bootstrap
+//= require bootstrap_additions
 //
-//= require .//netatlas_rails
+//= require dataTables/jquery.dataTables.bootstrap
 //
 //= require devices
 //
-//= require_tree ../templates/
-//= require_tree .//models
-//= require_tree .//collections
-//= require_tree .//views
-//= require_tree .//routers
+//= require_self
+//
+
+$('.datatable').dataTable({
+  "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+  "sPaginationType": "bootstrap"
+});
+

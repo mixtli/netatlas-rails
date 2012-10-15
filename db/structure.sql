@@ -151,7 +151,7 @@ CREATE TABLE data_sources (
     node_id integer NOT NULL,
     plugin_id integer NOT NULL,
     data_template_id integer,
-    state character varying(16) NOT NULL,
+    state character varying(16) DEFAULT 'unknown'::character varying NOT NULL,
     last_polled_at timestamp without time zone,
     "interval" integer DEFAULT 300 NOT NULL,
     description text,
@@ -660,10 +660,47 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: service_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE service_types (
+    id integer NOT NULL,
+    name character varying(255),
+    default_port integer,
+    default_template_id integer,
+    description text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: service_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE service_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: service_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE service_types_id_seq OWNED BY service_types.id;
+
+
+--
 -- Name: services; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE services (
+    port integer,
+    service_type_id integer
 )
 INHERITS (nodes);
 
@@ -878,6 +915,13 @@ ALTER TABLE ONLY pollers ALTER COLUMN id SET DEFAULT nextval('pollers_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY service_types ALTER COLUMN id SET DEFAULT nextval('service_types_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY services ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
 
 
@@ -1012,6 +1056,14 @@ ALTER TABLE ONLY poller_nodes
 
 ALTER TABLE ONLY pollers
     ADD CONSTRAINT pollers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: service_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY service_types
+    ADD CONSTRAINT service_types_pkey PRIMARY KEY (id);
 
 
 --
@@ -1262,6 +1314,13 @@ CREATE INDEX index_pollers_on_hostname ON pollers USING btree (hostname);
 
 
 --
+-- Name: index_service_types_on_default_template_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_service_types_on_default_template_id ON service_types USING btree (default_template_id);
+
+
+--
 -- Name: index_subscriptions_on_creator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1372,3 +1431,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120917004926');
 INSERT INTO schema_migrations (version) VALUES ('20120920071352');
 
 INSERT INTO schema_migrations (version) VALUES ('20120922222425');
+
+INSERT INTO schema_migrations (version) VALUES ('20121010040106');

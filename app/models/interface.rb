@@ -5,4 +5,6 @@ class Interface < Node
   #validates :ip_address, :presence => true
   before_create {|d| d.label = d.ip_address.to_s unless d.label }
 
+  def to_s; label;  end
+
 end

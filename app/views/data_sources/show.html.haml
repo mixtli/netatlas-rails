@@ -1,0 +1,16 @@
+%h3 Data Source 
+%table.table.table-striped.table-bordered
+  %tr
+    %th Node
+    %td= link_to @data_source.node, @data_source.node
+  %tr
+    %th Template
+    %td= @data_source.data_template
+  %tr
+    %th Plugin
+    %td= @data_source.plugin
+  %tr
+    %th Arguments
+    %td= @data_source.arguments.inspect
+
+=link_to 'Edit', edit_data_source_path(@data_source)

@@ -18,5 +18,4 @@ class ApplicationController < ActionController::Base
   def log_request_info
     logger.debug "current_user = #{current_user.try(:email)}"
   end
-
 end

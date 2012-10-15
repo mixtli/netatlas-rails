@@ -23,12 +23,14 @@
               %ul.nav
                 %li 
                   = link_to 'Devices', devices_path
+                %li
+                  = link_to 'Services', services_path
                 %li 
                   %a Outages
                 %li
                   %a Dashboard
                 %li
-                  %a Events
+                  = link_to 'Events', events_path
                 %li
                   %a Notifications
                 %li
