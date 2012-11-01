@@ -1,5 +1,10 @@
 [![Build Status](https://secure.travis-ci.org/softa/activerecord-postgres-hstore.png?branch=master)](http://travis-ci.org/softa/activerecord-postgres-hstore)
 
+We just moved this repository.
+--------------------------------
+
+Guys, the oficial repo is now [here](https://github.com/engageis/activerecord-postgres-hstore) please update your local repos.
+
 Goodbye serialize, hello hstore.
 --------------------------------
 
