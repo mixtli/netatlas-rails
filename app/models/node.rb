@@ -2,7 +2,7 @@ class Node < ActiveRecord::Base
   #acts_as_citier
   belongs_to :device
   validates :state, :inclusion => %w(ok warning fail unknown)
-  attr_accessible :description, :label, :snmp_index, :state, :type
+  attr_accessible :description, :label, :snmp_index, :state, :type, :snmp_attributes
   has_many :poller_nodes
   has_many :pollers, :through => :poller_nodes
   has_many :dependency_nodes, :class_name => 'Dependency', :foreign_key => :node_id
@@ -11,8 +11,43 @@ class Node < ActiveRecord::Base
   has_many :dependent_nodes, :class_name => 'Dependency', :foreign_key => :dependency_id
   has_many :dependents, :through => :dependent_nodes, :source => :node
   has_many :data_sources
+  has_many :memberships
+  has_many :groups, :through => :memberships
+  serialize :snmp_attributes, ActiveRecord::Coders::Hstore
+
+  class << self
+    def klass(type)
+      type.to_s.camelize.constantize
+    end
+    def factory(type, args = {})
+      klass(type).new(args)
+    end
+
+    def unique_scope(arguments)
+      conditions = {}
+      unique_keys.each do |k|
+        conditions[k] = arguments[k.to_s] || arguments[k] #if arguments[k]
+      end
+      where(conditions)
+    end
+
+    def unique_keys
+      # override in subclasses
+      [:id]
+    end
+  end
 
   def to_s; label; end
+
+  def get_ip_address
+    if self.kind_of?(Device)
+      ip_address
+    elsif device
+      device.ip_address
+    else
+      nil # Probably shouldn't allow this?
+    end
+  end
 
   state_machine :state, :initial => :unknown do
     state :pending
@@ -58,6 +93,5 @@ class Node < ActiveRecord::Base
     result = ActiveRecord::Base.connection.execute("SELECT * FROM node_dependencies(#{id})")
     Node.where(:id => result.map {|r| r["id"].to_i})
   end
-
 
 end

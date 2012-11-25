@@ -36,7 +36,6 @@ describe DataSourcesController do
         poller.data_sources << create(:data_source, :creator => @user)
       end
       get :index, :format => :json, :data_streams_poller_id_eq => poller.id
-      puts response.body
       JSON.parse(response.body).size.should eql(5)
     end
   end

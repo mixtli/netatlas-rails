@@ -1,0 +1,23 @@
+%h1 Notifications
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Event
+      %th Contact
+      %th Timestamp 
+      %th State
+      %th
+  
+  %tbody
+    - @notifications.each do |notification|
+      %tr
+        %td= link_to notification.event, notification.event 
+        %td= notification.contact 
+        %td= notification.created_at
+        %td= notification.state
+        %td= link_to 'Show', notification, :class => 'btn btn-mini'
+  
+%br
+= will_paginate(@notifications)
+

@@ -1,0 +1,21 @@
+%h1 Listing Event Filters
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Label 
+      %th
+      %th
+      %th
+  
+  %tbody
+    - @event_filters.each do |filter|
+      %tr
+        %td= filter.label
+        %td= link_to 'Show', filter, :class => 'btn btn-mini'
+        %td= link_to 'Edit', edit_event_filter_path(filter), :class => 'btn btn-mini'
+        %td= link_to 'Destroy', event_filter, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
+  
+%br
+
+= link_to 'New Event Filter', new_event_filter_path

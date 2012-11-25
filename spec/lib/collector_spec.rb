@@ -3,11 +3,12 @@ describe Collector do
   subject { Collector.new(CONFIG[:amqp])}
   let(:data_stream) { create(:data_stream) }
 
-  it "should save a result from queue" do
+  it "should save a result from queue", :truncate do
     collector_thread = Thread.new { subject.run }
     time = Time.now
     @rabbit.queue(subject.queue_name, :durable => true)
-    @rabbit.exchange('').publish("#{data_stream.id}, #{time.to_i}, 10", :key => subject.queue_name)
+    msg = {:data_source_id => data_stream.data_source_id, :poller_id => data_stream.poller_id, :timestamp => time.to_i, :value => 10}
+    @rabbit.exchange('').publish(msg.to_json, :key => subject.queue_name)
     sleep 1
     data_point = data_stream.data_points.first
     data_point.value.should eql(10.0)

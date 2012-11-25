@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :data_stream do
-    data_source nil
-    poller nil
+    data_source 
+    poller 
   end
 end

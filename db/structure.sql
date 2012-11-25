@@ -22,6 +22,20 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
 SET search_path = public, pg_catalog;
 
 --
@@ -106,6 +120,46 @@ CREATE SEQUENCE commands_id_seq
 --
 
 ALTER SEQUENCE commands_id_seq OWNED BY commands.id;
+
+
+--
+-- Name: contacts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE contacts (
+    id integer NOT NULL,
+    user_id integer,
+    type character varying(255),
+    status character varying(255) DEFAULT 'active'::character varying,
+    username character varying(255),
+    password character varying(255),
+    email character varying(255),
+    url character varying(255),
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE contacts_id_seq OWNED BY contacts.id;
 
 
 --
@@ -312,6 +366,8 @@ CREATE TABLE nodes (
     state character varying(16) DEFAULT 'unknown'::character varying,
     device_id integer,
     snmp_index integer,
+    snmp_attributes hstore,
+    last_scan timestamp without time zone,
     creator_id integer,
     updater_id integer,
     deleter_id integer,
@@ -351,6 +407,46 @@ INHERITS (nodes);
 
 
 --
+-- Name: event_filters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE event_filters (
+    id integer NOT NULL,
+    label character varying(255),
+    node_ids integer[],
+    types character varying(255)[],
+    states character varying(255)[],
+    severities character varying(255)[],
+    group_ids integer[],
+    public boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone,
+    creator_id integer,
+    updater_id integer
+);
+
+
+--
+-- Name: event_filters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE event_filters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: event_filters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE event_filters_id_seq OWNED BY event_filters.id;
+
+
+--
 -- Name: events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -358,12 +454,15 @@ CREATE TABLE events (
     id integer NOT NULL,
     poller_id integer,
     node_id integer,
+    data_source_id integer,
+    type character varying(255),
     state character varying(255),
     repeats integer DEFAULT 0,
     severity character varying(255),
     description text,
     additional text,
     notes text,
+    arguments text,
     acknowledged_by_id integer,
     resolved_by_id integer,
     acknowledged_at timestamp without time zone,
@@ -544,6 +643,43 @@ ALTER SEQUENCE nodes_id_seq OWNED BY nodes.id;
 
 
 --
+-- Name: notifications; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE notifications (
+    id integer NOT NULL,
+    event_id integer,
+    contact_id integer,
+    event_filter_id integer,
+    state character varying(255),
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE notifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE notifications_id_seq OWNED BY notifications.id;
+
+
+--
 -- Name: plugins; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -711,11 +847,8 @@ INHERITS (nodes);
 
 CREATE TABLE subscriptions (
     id integer NOT NULL,
-    group_id integer,
-    poller_id integer,
-    node_id integer,
-    state character varying(255),
-    severity character varying(255),
+    user_id integer,
+    event_filter_id integer,
     creator_id integer,
     updater_id integer,
     created_at timestamp without time zone NOT NULL,
@@ -796,6 +929,13 @@ ALTER TABLE ONLY commands ALTER COLUMN id SET DEFAULT nextval('commands_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY contacts ALTER COLUMN id SET DEFAULT nextval('contacts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY data_points ALTER COLUMN id SET DEFAULT nextval('data_points_id_seq'::regclass);
 
 
@@ -845,6 +985,13 @@ ALTER TABLE ONLY devices ALTER COLUMN state SET DEFAULT 'unknown'::character var
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY event_filters ALTER COLUMN id SET DEFAULT nextval('event_filters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::regclass);
 
 
@@ -888,6 +1035,13 @@ ALTER TABLE ONLY networks ALTER COLUMN id SET DEFAULT nextval('networks_id_seq':
 --
 
 ALTER TABLE ONLY nodes ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notifications ALTER COLUMN id SET DEFAULT nextval('notifications_id_seq'::regclass);
 
 
 --
@@ -955,6 +1109,14 @@ ALTER TABLE ONLY commands
 
 
 --
+-- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY contacts
+    ADD CONSTRAINT contacts_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: data_points_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -995,6 +1157,14 @@ ALTER TABLE ONLY dependencies
 
 
 --
+-- Name: event_filters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY event_filters
+    ADD CONSTRAINT event_filters_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1032,6 +1202,14 @@ ALTER TABLE ONLY networks
 
 ALTER TABLE ONLY nodes
     ADD CONSTRAINT nodes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY notifications
+    ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
 
 
 --
@@ -1087,6 +1265,13 @@ ALTER TABLE ONLY users
 --
 
 CREATE INDEX index_commands_on_poller_id ON commands USING btree (poller_id);
+
+
+--
+-- Name: index_contacts_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_contacts_on_user_id ON contacts USING btree (user_id);
 
 
 --
@@ -1164,6 +1349,13 @@ CREATE INDEX index_dependencies_on_node_id ON dependencies USING btree (node_id)
 --
 
 CREATE INDEX index_events_on_acknowledged_by_id ON events USING btree (acknowledged_by_id);
+
+
+--
+-- Name: index_events_on_data_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_data_source_id ON events USING btree (data_source_id);
 
 
 --
@@ -1279,6 +1471,27 @@ CREATE INDEX index_nodes_on_type ON nodes USING btree (type);
 
 
 --
+-- Name: index_notifications_on_contact_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_notifications_on_contact_id ON notifications USING btree (contact_id);
+
+
+--
+-- Name: index_notifications_on_event_filter_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_notifications_on_event_filter_id ON notifications USING btree (event_filter_id);
+
+
+--
+-- Name: index_notifications_on_event_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_notifications_on_event_id ON notifications USING btree (event_id);
+
+
+--
 -- Name: index_plugins_on_class_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1321,52 +1534,17 @@ CREATE INDEX index_service_types_on_default_template_id ON service_types USING b
 
 
 --
--- Name: index_subscriptions_on_creator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_subscriptions_on_event_filter_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_subscriptions_on_creator_id ON subscriptions USING btree (creator_id);
-
-
---
--- Name: index_subscriptions_on_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_subscriptions_on_group_id ON subscriptions USING btree (group_id);
+CREATE INDEX index_subscriptions_on_event_filter_id ON subscriptions USING btree (event_filter_id);
 
 
 --
--- Name: index_subscriptions_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_subscriptions_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_subscriptions_on_node_id ON subscriptions USING btree (node_id);
-
-
---
--- Name: index_subscriptions_on_poller_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_subscriptions_on_poller_id ON subscriptions USING btree (poller_id);
-
-
---
--- Name: index_subscriptions_on_severity; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_subscriptions_on_severity ON subscriptions USING btree (severity);
-
-
---
--- Name: index_subscriptions_on_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_subscriptions_on_state ON subscriptions USING btree (state);
-
-
---
--- Name: index_subscriptions_on_updater_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_subscriptions_on_updater_id ON subscriptions USING btree (updater_id);
+CREATE INDEX index_subscriptions_on_user_id ON subscriptions USING btree (user_id);
 
 
 --
@@ -1396,6 +1574,8 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 INSERT INTO schema_migrations (version) VALUES ('20120408100254');
 
+INSERT INTO schema_migrations (version) VALUES ('20120408140244');
+
 INSERT INTO schema_migrations (version) VALUES ('20120408140245');
 
 INSERT INTO schema_migrations (version) VALUES ('20120410090345');
@@ -1424,8 +1604,6 @@ INSERT INTO schema_migrations (version) VALUES ('20120628072301');
 
 INSERT INTO schema_migrations (version) VALUES ('20120628072417');
 
-INSERT INTO schema_migrations (version) VALUES ('20120628072738');
-
 INSERT INTO schema_migrations (version) VALUES ('20120917004926');
 
 INSERT INTO schema_migrations (version) VALUES ('20120920071352');
@@ -1433,3 +1611,11 @@ INSERT INTO schema_migrations (version) VALUES ('20120920071352');
 INSERT INTO schema_migrations (version) VALUES ('20120922222425');
 
 INSERT INTO schema_migrations (version) VALUES ('20121010040106');
+
+INSERT INTO schema_migrations (version) VALUES ('20121118064015');
+
+INSERT INTO schema_migrations (version) VALUES ('20121119050202');
+
+INSERT INTO schema_migrations (version) VALUES ('20121119051816');
+
+INSERT INTO schema_migrations (version) VALUES ('20121125031423');

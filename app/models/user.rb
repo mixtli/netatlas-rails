@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
+  has_many :contacts
+  has_many :subscription
+  after_create :create_initial_contact
  
   model_stamper
   stampable
@@ -20,6 +23,13 @@ class User < ActiveRecord::Base
 
   def to_s
     email
+  end
+
+  private
+  def create_initial_contact
+    contact = Contact::Email.new(:email => email)
+    contact.user_id = id 
+    contact.save!
   end
 
   

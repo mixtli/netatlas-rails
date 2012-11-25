@@ -19,6 +19,7 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'capybara/rspec'
   require 'database_cleaner'
+  require 'sidekiq/testing'
   
   require 'declarative_authorization/maintenance'
   include Authorization::TestHelper

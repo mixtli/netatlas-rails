@@ -1,5 +1,9 @@
+require 'sidekiq/web'
 NetatlasRails::Application.routes.draw do
+  
   devise_for :users
+
+  mount Sidekiq::Web, at: '/sidekiq'
   
   resources :devices do
     collection do
@@ -12,6 +16,9 @@ NetatlasRails::Application.routes.draw do
   resources :data_sources
   resources :interfaces
   resources :events
+  resources :event_filters
+  resources :notifications
+  resources :contacts
   resources :services do
     collection do
       get 'datatable'

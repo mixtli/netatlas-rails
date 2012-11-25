@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010040106) do
+ActiveRecord::Schema.define(:version => 20121125031423) do
 
   create_table "commands", :force => true do |t|
     t.string   "name",       :null => false
@@ -28,6 +28,23 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
 
   add_index "commands", ["poller_id"], :name => "index_commands_on_poller_id"
 
+  create_table "contacts", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "type"
+    t.string   "status",     :default => "active"
+    t.string   "username"
+    t.string   "password"
+    t.string   "email"
+    t.string   "url"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "contacts", ["user_id"], :name => "index_contacts_on_user_id"
+
   create_table "data_points", :force => true do |t|
     t.integer  "data_stream_id"
     t.datetime "timestamp"
@@ -40,12 +57,12 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
   add_index "data_points", ["data_stream_id"], :name => "index_data_points_on_data_stream_id"
 
   create_table "data_sources", :force => true do |t|
-    t.integer  "node_id",                                           :null => false
-    t.integer  "plugin_id",                                         :null => false
+    t.integer  "node_id",                                                 :null => false
+    t.integer  "plugin_id",                                               :null => false
     t.integer  "data_template_id"
-    t.string   "state",              :limit => 16,                  :null => false
+    t.string   "state",              :limit => 16, :default => "unknown", :null => false
     t.datetime "last_polled_at"
-    t.integer  "interval",                         :default => 300, :null => false
+    t.integer  "interval",                         :default => 300,       :null => false
     t.text     "description"
     t.text     "arguments"
     t.text     "varbinds"
@@ -55,8 +72,8 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.integer  "deleter_id"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
     t.datetime "deleted_at"
   end
 
@@ -111,18 +128,20 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
   add_index "dependencies", ["node_id"], :name => "index_dependencies_on_node_id"
 
   create_table "devices", :id => false, :force => true do |t|
-    t.integer  "id",                                                 :null => false
-    t.string   "label",         :limit => 32,                        :null => false
+    t.integer  "id",                                                   :null => false
+    t.string   "label",           :limit => 32,                        :null => false
     t.text     "description"
-    t.string   "type",          :limit => 32
-    t.string   "state",         :limit => 16, :default => "unknown"
+    t.string   "type",            :limit => 32
+    t.string   "state",           :limit => 16, :default => "unknown"
     t.integer  "device_id"
     t.integer  "snmp_index"
+    t.hstore   "snmp_attributes"
+    t.datetime "last_scan"
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.integer  "deleter_id"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.datetime "deleted_at"
     t.string   "hostname"
     t.inet     "ip_address"
@@ -146,15 +165,32 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
     t.string   "snmp_version"
   end
 
+  create_table "event_filters", :force => true do |t|
+    t.string   "label"
+    t.integer  "node_ids",                   :array => true
+    t.string   "types",                      :array => true
+    t.string   "states",                     :array => true
+    t.string   "severities",                 :array => true
+    t.integer  "group_ids",                  :array => true
+    t.boolean  "public"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+  end
+
   create_table "events", :force => true do |t|
     t.integer  "poller_id"
     t.integer  "node_id"
+    t.string   "type"
     t.string   "state"
     t.integer  "repeats",            :default => 0
     t.string   "severity"
     t.text     "description"
     t.text     "additional"
     t.text     "notes"
+    t.text     "arguments"
     t.integer  "acknowledged_by_id"
     t.integer  "resolved_by_id"
     t.datetime "acknowledged_at"
@@ -194,6 +230,8 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
     t.string   "state",            :limit => 16, :default => "unknown"
     t.integer  "device_id"
     t.integer  "snmp_index"
+    t.hstore   "snmp_attributes"
+    t.datetime "last_scan"
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.integer  "deleter_id"
@@ -240,17 +278,19 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
   end
 
   create_table "nodes", :force => true do |t|
-    t.string   "label",       :limit => 32,                        :null => false
+    t.string   "label",           :limit => 32,                        :null => false
     t.text     "description"
-    t.string   "type",        :limit => 32
-    t.string   "state",       :limit => 16, :default => "unknown"
+    t.string   "type",            :limit => 32
+    t.string   "state",           :limit => 16, :default => "unknown"
     t.integer  "device_id"
     t.integer  "snmp_index"
+    t.hstore   "snmp_attributes"
+    t.datetime "last_scan"
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.integer  "deleter_id"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.datetime "deleted_at"
   end
 
@@ -259,6 +299,22 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
   add_index "nodes", ["snmp_index"], :name => "index_nodes_on_snmp_index"
   add_index "nodes", ["state"], :name => "index_nodes_on_state"
   add_index "nodes", ["type"], :name => "index_nodes_on_type"
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "contact_id"
+    t.integer  "event_filter_id"
+    t.string   "state"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "notifications", ["contact_id"], :name => "index_notifications_on_contact_id"
+  add_index "notifications", ["event_filter_id"], :name => "index_notifications_on_event_filter_id"
+  add_index "notifications", ["event_id"], :name => "index_notifications_on_event_id"
 
   create_table "plugins", :force => true do |t|
     t.string   "name"
@@ -320,6 +376,8 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
     t.string   "state",           :limit => 16, :default => "unknown"
     t.integer  "device_id"
     t.integer  "snmp_index"
+    t.hstore   "snmp_attributes"
+    t.datetime "last_scan"
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.integer  "deleter_id"
@@ -331,25 +389,17 @@ ActiveRecord::Schema.define(:version => 20121010040106) do
   end
 
   create_table "subscriptions", :force => true do |t|
-    t.integer  "group_id"
-    t.integer  "poller_id"
-    t.integer  "node_id"
-    t.string   "state"
-    t.string   "severity"
+    t.integer  "user_id"
+    t.integer  "event_filter_id"
     t.integer  "creator_id"
     t.integer  "updater_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.datetime "deleted_at"
   end
 
-  add_index "subscriptions", ["creator_id"], :name => "index_subscriptions_on_creator_id"
-  add_index "subscriptions", ["group_id"], :name => "index_subscriptions_on_group_id"
-  add_index "subscriptions", ["node_id"], :name => "index_subscriptions_on_node_id"
-  add_index "subscriptions", ["poller_id"], :name => "index_subscriptions_on_poller_id"
-  add_index "subscriptions", ["severity"], :name => "index_subscriptions_on_severity"
-  add_index "subscriptions", ["state"], :name => "index_subscriptions_on_state"
-  add_index "subscriptions", ["updater_id"], :name => "index_subscriptions_on_updater_id"
+  add_index "subscriptions", ["event_filter_id"], :name => "index_subscriptions_on_event_filter_id"
+  add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false

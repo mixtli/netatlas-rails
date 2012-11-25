@@ -2,10 +2,7 @@
 
 FactoryGirl.define do
   factory :subscription do
-    group nil
-    poller nil
-    node nil
-    state "MyString"
-    severity "MyString"
+    user 
+    event_filter 
   end
 end

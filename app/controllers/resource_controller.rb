@@ -20,6 +20,7 @@ class ResourceController < ApplicationController
     respond_with(@nodes)
   end
 
+
   def show
     @node = resource_class.find(params[:id])
     logger.debug request.headers
@@ -47,8 +48,12 @@ class ResourceController < ApplicationController
   end
 
   def update
+    logger.debug "resource_class = #{resource_class}"
     @node = resource_class.find(params[:id])
+    logger.debug "node = #{@node.inspect}"
+    logger.debug "params = #{params[self.class.resource_name].inspect}"
     @node.update_attributes(params[self.class.resource_name])
+    logger.debug "node now #{@node.inspect}"
     instance_variable_set("@#{self.class.resource_name.to_s}".to_sym, @node)
     respond_with(@node)
   end

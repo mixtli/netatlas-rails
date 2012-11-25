@@ -4,6 +4,10 @@
     = f.input :node_id, :as => :select, :collection => Node.all
     = f.association :data_template
     = f.association :pollers
+    = f.input :interval
+    = f.input :warning_threshold
+    = f.input :critical_threshold
+    = f.input :operator, :as => :select, :collection => ['>','<']
     - if @data_source.plugin
       - @data_source.plugin.argument_list.each do |name, options|
         = label name, name

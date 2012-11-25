@@ -1,20 +1,27 @@
 %h1 Listing Events
 
+= search_form_for @q do |f|
+  = f.select :severity_eq, options_for_select(Event.severities, @q.severity_eq), :include_blank => true
+  = f.select :state_eq, options_for_select(Event.states, @q.state_eq), :include_blank => true
+  = f.select :type_eq, options_for_select(Event.types, @q.type_eq), :include_blank => true
+  = submit_tag 'Search'
+
 %table.table.table-striped
   %thead
     %tr
-      %th Node
-      %th State
-      %th Severity
-      %th Time
+      %th= sort_link @q, :node_label, "Node" 
+      %th= sort_link @q, :state, "State"
+      %th= sort_link @q, :severity, "Severity"
+      %th= sort_link @q, :timestamp, "Time"
       %th
       %th
       %th
   
   %tbody
     - @events.each do |event|
+      - Rails.logger.debug ("doing event #{event.id}")
       %tr
-        %td= event.node
+        %td= link_to event.node, event.node
         %td= event.state
         %td= event.severity
         %td= event.created_at
@@ -23,5 +30,6 @@
         %td= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
   
 %br
+= will_paginate(@events)
 
 = link_to 'New Event', new_event_path

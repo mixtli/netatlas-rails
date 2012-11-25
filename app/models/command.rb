@@ -3,6 +3,7 @@ class Command < ActiveRecord::Base
   validates :poller, :presence => true, :associated => true
   validates :name, :presence => true
   attr_accessible :arguments, :message, :name
+  serialize :arguments
   state_machine :state, :initial => :pending do
     before_transition any => :queued, :do => :queue_command 
     state :success

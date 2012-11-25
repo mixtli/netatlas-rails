@@ -1,0 +1,16 @@
+= simple_form_for(@event_filter, :html => {:class => 'form-horizontal'}) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :label
+  .form-inputs
+    = f.label :types
+    = f.select :types, Event.types, {}, {:multiple => true}
+  .form-inputs
+    = f.label :states
+    = f.select :states, Event.states, {}, {:multiple => true} 
+  .form-inputs
+    = f.label :severities
+    = f.select :severities, Event.severities, {}, {:multiple => true }
+  .form-actions
+    = f.button :submit

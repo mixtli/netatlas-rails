@@ -11,8 +11,8 @@ describe Plugin do
     plugin = Plugin.new(:name => "A plugin", :class_name => "MyPlugin")
     plugin.should be_valid
   end
-  it "should get associated plugin", :focus  do
+  it "should get associated plugin" do
     subject.argument_list.should be_kind_of(Hash)
-    subject.argument_list[:warning_threshold].should be_kind_of(Hash)
+    subject.argument_list[:additional_arguments].should be_kind_of(Hash)
   end
 end

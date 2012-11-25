@@ -4,35 +4,12 @@ class EventMailer < ActionMailer::Base
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
-  #   en.event.new_event.subject
+  #   en.event.event_email.subject
   #
-  def new_event(user,event)
+  def event_email(email, event)
     @greeting = "Hi"
     @event = event
-
-    mail to: user.email
-  end
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.event.resolved_event.subject
-  #
-  def resolved_event(user,event)
-    @greeting = "Hi"
-    @event = event
-
-    mail to: user.email
-  end
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.event.acknowledged_event.subject
-  #
-  def acknowledged_event(user,event)
-    @greeting = "Hi"
-    @event = event
-    mail to: user.email
+    mail to: email,
+         subject: "#{event.severity} #{event.node.try(:to_s)} #{event.description.try(:slice, 0, 30)}"
   end
 end

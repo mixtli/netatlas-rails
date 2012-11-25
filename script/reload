@@ -1,0 +1,13 @@
+#!/bin/sh
+
+launchctl stop mixtli.netatlas.poller
+launchctl stop mixtli.netatlas.command_processor
+launchctl stop mixtli.netatlas.event_processor
+launchctl stop mixtli.netatlas.collector
+
+sleep 2
+
+launchctl start mixtli.netatlas.poller
+launchctl start mixtli.netatlas.command_processor
+launchctl start mixtli.netatlas.event_processor
+launchctl start mixtli.netatlas.collector

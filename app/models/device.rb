@@ -13,6 +13,12 @@ class Device < Node
   before_validation :fix_ip_address
   has_many :interfaces
 
+  class << self
+    def unique_keys
+      [:hostname]
+    end
+  end
+
   def to_s; label; end
 
   def scan
@@ -26,7 +32,11 @@ private
   def fix_ip_address
     return true if hostname && ip_address
     unless hostname
-      self.hostname = Resolv.new.getname(ip_address.to_s)
+      begin
+        self.hostname = Resolv.new.getname(ip_address.to_s)
+      rescue Resolv::ResolvError => e
+        errors[:ip_address] =  e.message
+      end
     end
     unless ip_address
       begin

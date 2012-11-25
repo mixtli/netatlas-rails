@@ -21,10 +21,14 @@
           %div.nav-collapse
             - if user_signed_in?
               %ul.nav
-                %li 
-                  = link_to 'Devices', devices_path
-                %li
-                  = link_to 'Services', services_path
+                %li.dropdown
+                  %a.dropdown-toggle{ 'data-toggle' => 'dropdown'}
+                    Nodes
+                    %b.caret
+                  %ul.dropdown-menu
+                    %li= link_to 'Devices', devices_path
+                    %li= link_to 'Services', services_path
+                    %li= link_to 'Interfaces', interfaces_path
                 %li 
                   %a Outages
                 %li
@@ -32,7 +36,7 @@
                 %li
                   = link_to 'Events', events_path
                 %li
-                  %a Notifications
+                  = link_to 'Notifications', notifications_path
                 %li
                   %a Charts
                 %li
@@ -45,6 +49,8 @@
                     %ul.dropdown-menu
                       %li
                         = link_to 'Pollers', pollers_path
+                        = link_to 'Event Filters', event_filters_path
+                        = link_to 'Contacts', contacts_path
                     
             %ul.nav.pull-right
               - if user_signed_in?
