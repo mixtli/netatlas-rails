@@ -22,7 +22,7 @@ describe "Contacts List" do
     end
 
     it "should go to edit view when edit clicked" do 
-      click_link 'Edit'
+      page.first(:link, "Edit").click
       page.should have_content("Editing Contact")
       page.should have_content(user.contacts.first.email)
     end

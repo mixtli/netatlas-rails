@@ -8,4 +8,3 @@ ENV["RAILS_ENV_PATH"] ||= "#{ENV["APP_ROOT"]}/config/environment.rb"
 script = "#{ENV["APP_ROOT"]}/daemons/#{ARGV[1]}"
 
 Daemons.run(script, multiple: true, dir_mode: :normal, dir: "#{ENV["APP_ROOT"]}/tmp/pids") 
-

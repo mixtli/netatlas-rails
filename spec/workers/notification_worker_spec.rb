@@ -8,12 +8,12 @@ describe NotificationWorker do
 
   it "should add job to queue" do
     expect {
-      described_class.perform_async(build(:notification).id)
+      described_class.perform_async(create(:notification).id)
     }.to change { described_class.jobs.size}.by(1)
   end
 
   it "should deliver a notification" do
-    described_class.perform_async(create(:notification, :contact => create(:email_contact)))
+    described_class.perform_async(create(:notification, :contact => create(:email_contact)).id)
     expect {
       described_class.drain
     }.to change { ActionMailer::Base.deliveries.size}.by(1)

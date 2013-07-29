@@ -13,6 +13,7 @@ class DataSourcesController < ResourceController
   end
 
   def create
+    logger.debug params.inspect
     @data_source = DataSource.new params[:data_source]
     @data_source.arguments ||= {}
     if params[:data_source][:data_template_id]

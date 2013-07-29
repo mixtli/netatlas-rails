@@ -1,9 +1,11 @@
 require 'sidekiq/web'
+require_dependency 'app/api/api.rb'
 NetatlasRails::Application.routes.draw do
   
   devise_for :users
 
   mount Sidekiq::Web, at: '/sidekiq'
+  mount NetAtlasAPI => '/api' 
   
   resources :devices do
     collection do

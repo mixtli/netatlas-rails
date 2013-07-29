@@ -23,7 +23,7 @@ describe "Notifications List" do
     end
 
     it "should go to show view when notification clicked" do 
-      click_link 'Show'
+      page.first(:link, "Show").click
       page.should have_content('an event 1')
     end
   end

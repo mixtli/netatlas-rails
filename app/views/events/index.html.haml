@@ -1,9 +1,9 @@
 %h1 Listing Events
 
 = search_form_for @q do |f|
-  = f.select :severity_eq, options_for_select(Event.severities, @q.severity_eq), :include_blank => true
-  = f.select :state_eq, options_for_select(Event.states, @q.state_eq), :include_blank => true
-  = f.select :type_eq, options_for_select(Event.types, @q.type_eq), :include_blank => true
+  = f.select :severity_eq, options_for_select(Event.severities, @q.severity_eq), :include_blank => 'All Severities' 
+  = f.select :state_eq, options_for_select(Event.states, @q.state_eq), :include_blank => 'All Statuses'
+  = f.select :type_eq, options_for_select(Event.types, @q.type_eq), :include_blank => 'All Types'
   = submit_tag 'Search'
 
 %table.table.table-striped
@@ -12,6 +12,7 @@
       %th= sort_link @q, :node_label, "Node" 
       %th= sort_link @q, :state, "State"
       %th= sort_link @q, :severity, "Severity"
+      %th= sort_link @q, :type, "Type"
       %th= sort_link @q, :timestamp, "Time"
       %th
       %th
@@ -19,11 +20,11 @@
   
   %tbody
     - @events.each do |event|
-      - Rails.logger.debug ("doing event #{event.id}")
       %tr
-        %td= link_to event.node, event.node
+        %td= event.node ? link_to(event.node, event.node): 'None'
         %td= event.state
         %td= event.severity
+        %td= event.type
         %td= event.created_at
         %td= link_to 'Show', event, :class => 'btn btn-mini'
         %td= link_to 'Edit', edit_event_path(event), :class => 'btn btn-mini'

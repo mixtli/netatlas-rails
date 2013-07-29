@@ -34,7 +34,7 @@
                 %li
                   %a Dashboard
                 %li
-                  = link_to 'Events', events_path
+                  = link_to 'Events', events_path(:q => {:state_eq => 'open'})
                 %li
                   = link_to 'Notifications', notifications_path
                 %li

@@ -1,3 +1,4 @@
+require_relative "service_base"
 class CreateEventService < ServiceBase
 
   def call(args = {})

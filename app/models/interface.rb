@@ -9,7 +9,7 @@ class Interface < Node
 
   def as_json(options = {}) 
     result = super(options)
-    result[:ip_address] = ip_address.to_s
+    result['interface']['ip_address'] = ip_address.to_s
     result
   end
 end

@@ -1,3 +1,4 @@
+require 'spec_helper'
 describe CreateEventService do
   it "should create an event" do
     event = subject.call

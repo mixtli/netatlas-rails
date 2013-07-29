@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
-//= require underscore
 //= require dataTables/jquery.dataTables
 //= require bootstrap
 //= require bootstrap_additions

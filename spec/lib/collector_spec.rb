@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'collector'
 describe Collector do
   subject { Collector.new(CONFIG[:amqp])}

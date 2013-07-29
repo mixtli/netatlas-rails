@@ -38,7 +38,6 @@ describe "Devices List" do
 
     it "should go to device view when device clicked", :js => true do 
       pending "test is bombing with spurious webkit error"
-      save_and_open_page
       click_link 'host1.lvh.me'
       page.should have_content('host1.lvh.me')
       page.should have_content('Bob')

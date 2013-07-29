@@ -5,6 +5,8 @@ class CreateNotifications < ActiveRecord::Migration
       t.belongs_to :contact
       t.belongs_to :event_filter
       t.string :state
+      t.string :message
+      t.string :type
       t.userstamps
       t.timestamps
     end

@@ -1,0 +1,8 @@
+# pack-refs with: peeled 
+3a9d47370f3fc372acbf2f86c7b8bd930ab74ec1 refs/heads/gh-pages
+777633aa564f8457c999ddb96afa4c5ae18d319f refs/heads/master
+0ec4040f08840a0896547bbcb1a5100bf3b27c2d refs/heads/mongoid
+2c702dec04d3cfbe0fb4c8ec56d79341277d0cad refs/heads/mongoid3
+2217069fba20e4ac6b770d904e58d4beda77d49f refs/heads/rails32
+a120d2668ce8399d7ef4312d68baa287f0dd3249 refs/tags/2.0.2
+^777633aa564f8457c999ddb96afa4c5ae18d319f

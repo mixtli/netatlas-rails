@@ -8,10 +8,10 @@
 require 'declarative_authorization/maintenance'
 
 admin = nil
-#Authorization::Maintenance::without_access_control do
-#  admin = User.create(:email => 'admin@netatlas.com', :password => 'password', :password_confirmation => 'password')
-#  admin.update_attribute(:admin, true)
-#end
+Authorization::Maintenance::without_access_control do
+  admin = User.create(:email => 'admin@netatlas.com', :password => 'password', :password_confirmation => 'password')
+  admin.update_attribute(:admin, true)
+end
 Authorization.current_user = admin
 
 

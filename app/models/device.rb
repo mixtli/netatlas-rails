@@ -5,7 +5,7 @@ class Device < Node
   self.sequence_name = 'nodes_id_seq'
 
   validates :hostname, :presence => true
-  attr_accessible :ip_address, :auth_password, :auth_protocol, :community, :hostname, :ip_forwarding, :memory, :num_cpus, :os, :os_type, :os_vendor, :os_version, :priv_password, :priv_protocol, :snmp_version, :sys_contact, :sys_description, :sys_location, :sys_name
+  attr_accessible :ip_address, :auth_password, :auth_protocol, :community, :hostname, :ip_forwarding, :memory, :num_cpus, :os, :os_type, :os_vendor, :os_version, :priv_password, :priv_protocol, :snmp_version, :sys_contact, :sys_description, :sys_location, :sys_name, :sys_descr, :label
 
   before_create { |d| d.label ||= d.hostname }
   before_create { |d| d.state ||= "ok" }
@@ -56,9 +56,4 @@ private
   end
 
 end
-
-
-
-
-
 

@@ -48,7 +48,7 @@ describe "Services List" do
     end
 
     it "should go to service view when service clicked" do 
-      click_link 'Show'
+      page.first(:link, 'Show').click
       page.should have_content('ServiceName 1')
     end
   end

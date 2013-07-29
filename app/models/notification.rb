@@ -2,7 +2,7 @@ class Notification < ActiveRecord::Base
   belongs_to :event
   belongs_to :contact
   belongs_to :event_filter
-  # attr_accessible :title, :body
+  attr_accessible :event_id, :contact_id, :message
   default_scope includes(:event, :contact)
   state_machine :state, :initial => :pending do
     state :delivered

@@ -7,6 +7,13 @@ class ResourceController < ApplicationController
   def self.resource_name
     resource_class.to_s.underscore.to_sym
   end
+  def self.default_scope
+    @default_scope ||= resource_class
+  end
+  def self.default_scope=(scope)
+    @default_scope = scope
+  end
+
   def index(conditions = nil)
     conditions ||= params.dup
     # convert simple params like poller_id to ransack search params like poller_id_eq
@@ -15,9 +22,12 @@ class ResourceController < ApplicationController
         conditions["#{k}_eq".to_sym] = conditions.delete(k)
       end
     end
-    @nodes = self.class.resource_class.search(conditions).result.paginate(:page => params[:page], :per_page => 10)
-    instance_variable_set("@#{self.class.resource_name.to_s.pluralize}".to_sym, @nodes)
-    respond_with(@nodes)
+    @resources = self.class.default_scope.search(conditions).result.paginate(:page => params[:page], :per_page => 10)
+    instance_variable_set("@#{self.class.resource_name.to_s.pluralize}".to_sym, @resources)
+    respond_with(@resources) do |format|
+      format.html
+      format.json { render :json => @resources.to_json}
+    end
   end
 
 

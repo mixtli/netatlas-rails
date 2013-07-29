@@ -652,6 +652,8 @@ CREATE TABLE notifications (
     contact_id integer,
     event_filter_id integer,
     state character varying(255),
+    message character varying(255),
+    type character varying(255),
     creator_id integer,
     updater_id integer,
     created_at timestamp without time zone NOT NULL,

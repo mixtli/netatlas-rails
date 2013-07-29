@@ -29,10 +29,10 @@ class DataSource < ActiveRecord::Base
     node.get_ip_address
   end
 
-  def as_json(options)
-    ds = super
-    ds[:plugin_name] = plugin.name
-    ds[:ip_address] = ip_address.to_s
+  def as_json(options = {})
+    ds = super(options)
+    ds['data_source']['plugin_name'] = plugin.name
+    ds['data_source']['ip_address'] = ip_address.to_s
     ds
   end
 end

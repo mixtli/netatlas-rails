@@ -5,9 +5,12 @@ class EventsController < ResourceController
     logger.debug "in index"
     @q = Event.search(params[:q])
     logger.debug "did search"
-    @events = @q.result(:distinct => true).paginate(:per_page => 10, :page => params[:page])
+    @events = @q.result(:distinct => true).includes(:node).paginate(:per_page => 10, :page => params[:page])
     logger.debug "got result #{@events.count}"
-    respond_with(@events)
+    respond_with(@events) do |format|
+      format.html
+      format.json { render :json => @events.to_json}
+    end
     logger.debug "rendered"
   end
 end

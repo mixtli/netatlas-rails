@@ -1,3 +1,4 @@
+require 'spec_helper'
 describe CreateNotificationService do
   it "should deliver a notification" do
     contact = create(:email_contact)
