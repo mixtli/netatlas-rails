@@ -1,5 +1,11 @@
+require 'sidekiq/web'
+require_dependency 'app/api/api.rb'
 NetatlasRails::Application.routes.draw do
+  
   devise_for :users
+
+  mount Sidekiq::Web, at: '/sidekiq'
+  mount NetAtlasAPI => '/api' 
   
   resources :devices do
     collection do
@@ -10,7 +16,16 @@ NetatlasRails::Application.routes.draw do
   resources :nodes
   resources :pollers
   resources :data_sources
-  resources :services
+  resources :interfaces
+  resources :events
+  resources :event_filters
+  resources :notifications
+  resources :contacts
+  resources :services do
+    collection do
+      get 'datatable'
+    end
+  end
 
 
   mount JasmineRails::Engine => "/specs" unless Rails.env.production?

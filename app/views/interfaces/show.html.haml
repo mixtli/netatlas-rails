@@ -1,0 +1,54 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th{colspan: 2} Interface Information
+  %tbody
+    %tr
+      %th Device 
+      %td= @interface.device.hostname
+    %tr
+      %th IP Address
+      %td= @interface.ip_address
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th{colspan: 2}  SNMP Attributes
+  %tbody
+    %tr
+      %th Speed
+      %td= @interface.if_speed
+    %tr
+      %th Type
+      %td= @interface.if_type
+    %tr
+      %th Name
+      %td= @interface.if_name
+    %tr
+      %th Alias
+      %td= @interface.if_alias
+    %tr
+      %th Description
+      %td= @interface.if_descr
+    %tr
+      %th Promiscuous?
+      %td= @interface.if_promiscuous
+    %tr
+      %th High Spped
+      %td= @interface.if_high_speed
+    %tr
+      %th Admin Status
+      %td= @interface.if_admin_status
+    %tr
+      %th Physical Address
+      %td= @interface.physical_address
+    %tr
+      %th MTU
+      %td= @interface.mtu
+    %tr
+      %th Duplex
+      %td= @interface.duplex
+
+= link_to 'Edit', edit_interface_path(@interface)
+\|
+= link_to 'Back', interfaces_path

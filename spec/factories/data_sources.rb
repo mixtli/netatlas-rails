@@ -9,7 +9,6 @@ FactoryGirl.define do
     last_polled_at "2012-06-26 00:33:43"
     interval 1
     description "MyText"
-    arguments "MyText"
     varbinds "MyText"
     warning_threshold 1.5
     critical_threshold 1.5

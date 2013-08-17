@@ -1,0 +1,8 @@
+= simple_form_for @contact, :url => contact_path(@contact) do |f|
+  = f.input :type, :collection => Contact.types
+  - if @contact.type == 'Contact::Email'
+    = f.input :email
+  - if @contact.type == 'Contact::Postback'
+    = f.input :url
+  = f.submit
+

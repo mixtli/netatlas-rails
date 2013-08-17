@@ -1,9 +1,12 @@
 require 'rubygems'
+puts Time.now
 require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 require 'rabbit_manager'
 require File.dirname(__FILE__) + "/support/rabbit_helper"
+require 'sidekiq'
+require 'sidekiq/testing'
 ENV["RAILS_ENV"] ||= 'test'
 Thread.abort_on_exception = true
 
@@ -12,8 +15,12 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
   # Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+  puts Time.now
+
   reset_rabbit
+  puts Time.now
   require File.expand_path("../../config/environment", __FILE__)
+  puts Time.now
   Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
   require 'rspec/rails'
   require 'rspec/autorun'
@@ -28,6 +35,7 @@ Spork.prefork do
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
   
   DatabaseCleaner.strategy = :transaction
+  puts Time.now
 
   RSpec.configure do |config|
     # ## Mock Framework
@@ -40,6 +48,7 @@ Spork.prefork do
   
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
+    config.order = :random
   
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
@@ -90,8 +99,10 @@ Spork.prefork do
 end
 
 Spork.each_run do
+
   # This code will be run each time you run your specs.
   FactoryGirl.reload
+  Dir[Rails.root.join("app/api/**/*.rb")].each {|f| require f}
   require File.expand_path("../../app/models/node", __FILE__) # for some reason, node not reloading without this
   Dir[Rails.root.join("app/models/**/*.rb")].each {|f| require f}
 end

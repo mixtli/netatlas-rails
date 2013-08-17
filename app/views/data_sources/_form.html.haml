@@ -1,0 +1,20 @@
+= simple_form_for(@data_source, :html => {:class => 'form-horizontal'}) do |f|
+  = f.error_messages
+  .form-inputs
+    = f.input :node_id, :as => :select, :collection => Node.all
+    = f.association :data_template
+    = f.association :pollers
+    = f.input :interval
+    = f.input :warning_threshold
+    = f.input :critical_threshold
+    = f.input :operator, :as => :select, :collection => ['>','<']
+    - if @data_source.plugin
+      - @data_source.plugin.argument_list.each do |name, options|
+        = label name, name
+        - if options[:options]
+          = select_tag "data_source[arguments][#{name}]", options_for_select(options[:options])
+        - else
+          = text_field_tag "data_source[arguments][#{name}]", @data_source.arguments[name] || options[:default_value]
+
+  .form-actions
+    = f.button :submit, :id => 'create_data_source'

@@ -1,4 +1,6 @@
-class ApplicationDecorator < Draper::Base
+require 'draper'
+class ApplicationDecorator < Draper::Decorator
+  delegate_all
   #   lazy_helpers
 
   # Shared Decorations

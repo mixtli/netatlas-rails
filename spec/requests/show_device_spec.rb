@@ -28,7 +28,6 @@ describe "Show a device" do
 
     it "should display snnp attributes" do
       #pending
-      #save_and_open_page
       page.should have_content('Darwin')
       page.should have_content('.1.3.6.1')
       page.should have_content('localhost')

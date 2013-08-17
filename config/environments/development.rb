@@ -43,6 +43,7 @@ NetatlasRails::Application.configure do
 
   #config.threadsage!
 
+  #config.ember.variant = :development 
 
 end
   silence_warnings do

@@ -11,8 +11,9 @@ guard 'migrate' do
   watch(%r{^db/migrate/(\d+).+\.rb})
 end
 
-guard 'spork', :wait => 60, :cucumber => false, :rspec_env => { 'RAILS_ENV' => 'test' } do
+guard 'spork', :wait => 60, :cucumber => false, :rspec_env => { 'RAILS_ENV' => 'test', 'PROFILE' => 'true' } do
   watch('config/application.rb')
+  watch(%r{^app/api/.+\.rb$})
   watch('config/environment.rb')
   watch('config/authorization_rules.rb')
   watch(%r{^config/environments/.+\.rb$})
@@ -24,19 +25,19 @@ guard 'spork', :wait => 60, :cucumber => false, :rspec_env => { 'RAILS_ENV' => '
   watch(%r{features/support/}) { :cucumber }
   watch(%r{^spec/support/.+\.rb$})
 end
-
-guard 'livereload' do
-  watch(%r{app/views/.+\.(erb|haml|slim)})
-  watch(%r{app/helpers/.+\.rb})
-  watch(%r{public/.+\.(css|js|html)})
-  watch(%r{config/locales/.+\.yml})
-  # Rails Assets Pipeline
-  watch(%r{(app|vendor)/assets/\w+/(.+\.(css|js|html)).*})  { |m| "/assets/#{m[2]}" }
-end
-
-guard 'rails-assets', :run_on => [:start, :change], :runner => :rails, :rails_env => 'test' do
-  watch(%r{^app/assets/.+$})
-end
+#
+#guard 'livereload' do
+#  watch(%r{app/views/.+\.(erb|haml|slim)})
+#  watch(%r{app/helpers/.+\.rb})
+#  watch(%r{public/.+\.(css|js|html)})
+#  watch(%r{config/locales/.+\.yml})
+#  # Rails Assets Pipeline
+#  watch(%r{(app|vendor)/assets/\w+/(.+\.(css|js|html)).*})  { |m| "/assets/#{m[2]}" }
+#end
+#
+#guard 'rails-assets', :run_on => [:start, :change], :runner => :rails, :rails_env => 'test' do
+#  watch(%r{^app/assets/.+$})
+#end
 
 
 spec_location = "spec/javascripts/%s_spec"
@@ -48,12 +49,23 @@ guard 'jasmine-headless-webkit' do
   watch(%r{^spec/javascripts/(.*)_spec\..*}) { |m| newest_js_file(spec_location % m[1]) }
 end
 
+### Guard::Sidekiq
+#  available options:
+#  - :verbose
+#  - :queue (defaults to "default")
+#  - :concurrency (defaults to 1)
+#  - :timeout
+#  - :environment (corresponds to RAILS_ENV for the Sidekiq worker)
+#guard 'sidekiq', :environment => 'development' do
+#  watch(%r{^workers/(.+)\.rb$})
+#  watch(%r{config/sidekiq.yml$})
+#end
 
-guard 'rspec', :version => 2, :cli => "--tty --drb --color", :all_on_start => false, :all_after_pass => false do
+
+guard 'rspec', :version => 2, :cli => "--fail-fast --tty --color --drb", :all_on_start => false, :all_after_pass => false do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
-
   # Rails example
   watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
   watch(%r{^app/(.*)(\.erb|\.haml)$})                 { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }
@@ -68,7 +80,7 @@ end
 
 
 
-guard 'coffeescript', :input => 'app/assets/javascripts', :noop => true, :hide_success => true
+#guard 'coffeescript', :input => 'app/assets/javascripts', :noop => true, :hide_success => true
 
 # guard 'process', :name => 'Event Collector', :command => 'script/daemon run event_processor.rb' do
 #   watch('daemons/event_processor.rb')
@@ -80,9 +92,21 @@ guard 'coffeescript', :input => 'app/assets/javascripts', :noop => true, :hide_s
 #  watch("lib/command_processor.rb")
 #end
 
-#guard 'ctags-bundler' do
-#  watch(%r{^(app|lib|spec/support)/.*\.rb$})  { ["app", "lib", "spec/support"] }
+
+
+
+#guard 'ctags-bundler', :src_path => ["app", "lib", "spec/support"] do
+#  watch(/^(app|lib|spec\/support)\/.*\.rb$/)
 #  watch('Gemfile.lock')
 #end
 
-
+### Guard::Sidekiq
+#  available options:
+#  - :verbose
+#  - :queue (defaults to "default")
+#  - :concurrency (defaults to 1)
+#  - :timeout
+#  - :environment (corresponds to RAILS_ENV for the Sidekiq worker)
+#guard 'sidekiq', :environment => 'development' do
+#  watch(%r{^workers/(.+)\.rb$})
+#end

@@ -9,10 +9,15 @@ class DevicesController < NodesController
 
 
   def create
+    logger.debug  "in create"
+    params[:device].permit! #.permit(:state, :hostname)
     @device = Device.new(params[:device])
-    @device.save
-    unless @device.new_record?
-      @device.scan
+    if @device.valid?
+      @device.save
+      unless @device.new_record?
+        @device.scan
+      end
+    else
     end
     respond_with(@device)
   end

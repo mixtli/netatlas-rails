@@ -9,6 +9,6 @@ FactoryGirl.define do
     critical_threshold 1.5
     operator "MyString"
     description "MyText"
-    arguments "MyText"
+    arguments nil
   end
 end

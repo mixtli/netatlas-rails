@@ -69,5 +69,5 @@ NetatlasRails::Application.configure do
   #
 
   config.action_mailer.default_url_options = { :host => 'netatlas.com' }
-
+  #config.ember.variant = :production
 end

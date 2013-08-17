@@ -1,0 +1,39 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th{colspan: 2} Event Information
+  %tbody
+    %tr
+      %th Node
+      %td= link_to @event.node, @event.node
+    %tr
+      %th State
+      %td= @event.state
+    %tr
+      %th Severity
+      %td= @event.severity
+    %tr
+      %th Timestamp
+      %td= @event.created_at
+    %tr
+      %th Repeats
+      %td= @event.repeats
+    %tr
+      %th Description
+      %td= @event.description
+    %tr
+      %th Additional Information
+      %td= @event.additional
+    %tr
+      %th Notes
+      %td= @event.notes
+    %tr
+      %th Acknowledged By
+      %td= @event.acknowledged_by
+    %tr
+      %th Resolved By
+      %td= @event.resolved_by
+
+= link_to 'Edit', edit_event_path(@event)
+\|
+= link_to 'Back', events_path

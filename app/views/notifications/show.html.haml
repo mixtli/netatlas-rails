@@ -1,0 +1,18 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th{colspan: 2} Notification Information
+  %tbody
+    %tr
+      %th Contact
+      %td= @notification.contact
+    %tr
+      %th Event 
+      %td= link_to @notification.event, @notification.event
+    %tr
+      %th State
+      %td= @notification.state
+    %tr
+      %th Created At
+      %td= @notification.created_at
+

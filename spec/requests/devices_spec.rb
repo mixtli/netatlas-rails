@@ -36,9 +36,8 @@ describe "Devices List" do
       all('tr').count.should be 6
     end
 
-    it "should go to device view when device clicked", :pending => true, :js => true do 
-      # XXX this test is bombing with some spurious webkit error for some reason
-      save_and_open_page
+    it "should go to device view when device clicked", :js => true do 
+      pending "test is bombing with spurious webkit error"
       click_link 'host1.lvh.me'
       page.should have_content('host1.lvh.me')
       page.should have_content('Bob')

@@ -8,7 +8,7 @@ describe "Create a device" do
 
   describe "as a user" do
     it "should allow me to navigate to device create page" do
-      as_user(FactoryGirl.create(:user)) do
+      as_user(create(:user)) do
         visit root_path
         click_link 'Devices'
         click_link 'Create a Device'
@@ -16,7 +16,7 @@ describe "Create a device" do
       end
     end
     it "should create a new device" do
-      as_user(FactoryGirl.create(:user)) do
+      as_user(create(:user)) do
         visit new_device_path
         fill_in 'device_hostname', with: 'foo.lvh.me'
         click_on 'create_device'

@@ -1,0 +1,26 @@
+%h1 Listing Contacts
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Type
+      %th Contact
+      %th Status
+      %th
+      %th
+      %th
+  
+  %tbody
+    - @contacts.each do |contact|
+      %tr
+        %td= contact.type
+        %td= contact
+        %td= contact.status
+        %td= link_to 'Show', contact_path(contact), :class => 'btn btn-mini'
+        %td= link_to 'Edit', edit_contact_path(contact), :class => 'btn btn-mini'
+        %td= link_to 'Destroy', contact_path(contact), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
+  
+%br
+= will_paginate(@contacts)
+
+= link_to 'New Contact', new_contact_path

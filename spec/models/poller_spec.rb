@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Poller do
-  let(:poller) { FactoryGirl.build(:poller) }
+  let(:poller) { create(:poller) }
 
   it "should not allow invalid state" do
     poller.state = "fasf"

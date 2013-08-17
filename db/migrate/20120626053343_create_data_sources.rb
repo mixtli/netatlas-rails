@@ -4,7 +4,7 @@ class CreateDataSources < ActiveRecord::Migration
       t.belongs_to :node, :null => false
       t.belongs_to :plugin, :null => false
       t.belongs_to :data_template
-      t.string :state, :null => false, :limit => 16
+      t.string :state, :null => false, :limit => 16, :default => "unknown"
       t.datetime :last_polled_at
       t.integer :interval, :default => 300, :null => false
       t.text :description

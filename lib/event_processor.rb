@@ -6,7 +6,7 @@ class EventProcessor < QueueProcessor
 
   def post_result(msg)
     puts "got msg #{msg}"
-    CreateEventService.call(JSON.parse(msg))
+    CreateEventService.call(msg)
   end
 end
 

@@ -7,9 +7,7 @@ class CommandProcessor < QueueProcessor
 
   private
   def post_result(msg)
-    puts "got result"
-    msg = JSON.parse(msg)
-    puts msg.inspect
+    puts "got result #{msg}"
     cmd = Command.find(msg['id'])
     if msg['result'] == true
       puts "success!"

@@ -5,7 +5,7 @@ class Device < Node
   self.sequence_name = 'nodes_id_seq'
 
   validates :hostname, :presence => true
-  attr_accessible :ip_address, :auth_password, :auth_protocol, :community, :hostname, :ip_forwarding, :memory, :num_cpus, :os, :os_type, :os_vendor, :os_version, :priv_password, :priv_protocol, :snmp_version, :sys_contact, :sys_description, :sys_location, :sys_name
+  attr_accessible :ip_address, :auth_password, :auth_protocol, :community, :hostname, :ip_forwarding, :memory, :num_cpus, :os, :os_type, :os_vendor, :os_version, :priv_password, :priv_protocol, :snmp_version, :sys_contact, :sys_description, :sys_location, :sys_name, :sys_descr, :label
 
   before_create { |d| d.label ||= d.hostname }
   before_create { |d| d.state ||= "ok" }
@@ -13,6 +13,13 @@ class Device < Node
   before_validation :fix_ip_address
   has_many :interfaces
 
+  class << self
+    def unique_keys
+      [:hostname]
+    end
+  end
+
+  def to_s; label; end
 
   def scan
      AMQP::Channel.new do |channel|
@@ -25,7 +32,11 @@ private
   def fix_ip_address
     return true if hostname && ip_address
     unless hostname
-      self.hostname = Resolv.new.getname(ip_address.to_s)
+      begin
+        self.hostname = Resolv.new.getname(ip_address.to_s)
+      rescue Resolv::ResolvError => e
+        errors[:ip_address] =  e.message
+      end
     end
     unless ip_address
       begin
@@ -36,6 +47,7 @@ private
     end
   end
 
+
   def create_primary_interface
     primary = interfaces.where(:ip_address => ip_address.to_s).first
     unless primary
@@ -44,9 +56,4 @@ private
   end
 
 end
-
-
-
-
-
 

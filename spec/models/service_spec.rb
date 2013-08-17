@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe Service do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:service)}
+  it "should create a service" do
+    subject.save.should be_true
+  end
 end

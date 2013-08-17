@@ -5,7 +5,7 @@ FactoryGirl.define do
     label "Node Label"
     description "Node Description"
     state "ok"
-    device nil
+    device  
     snmp_index 1
   end
 end

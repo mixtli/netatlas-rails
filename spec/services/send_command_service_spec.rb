@@ -1,3 +1,4 @@
+require 'spec_helper'
 describe SendCommandService do
   include EventedSpec::AMQPSpec
   let(:poller) { create(:poller)}
@@ -15,7 +16,7 @@ describe SendCommandService do
       command.name.should eql(:scan)
       queue = @channel.queue("command_#{command.poller_id}", :durable => true)
       queue.subscribe do |hdr, msg|
-        msg = JSON.parse(msg)
+        msg = JSON.parse(msg)['command']
         msg['id'].should eql(command.id)
         msg['name'].should eql('scan')
         msg['arguments'].should eql({})

@@ -1,0 +1,16 @@
+%h2 Interfaces
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Device
+      %th IP Address 
+      %th
+    - interfaces.each do |i|
+      %tr
+        %td= link_to i.device.hostname, i.device
+        %td= i.ip_address
+        %td
+          = link_to 'Show', i, :class => 'btn btn-mini'
+          = link_to 'Edit', edit_interface_path(i), :class => 'btn btn-mini'
+          = link_to 'Destroy', i, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
+
