@@ -7,6 +7,7 @@ require 'rabbit_manager'
 require File.dirname(__FILE__) + "/support/rabbit_helper"
 require 'sidekiq'
 require 'sidekiq/testing'
+require 'capybara/poltergeist'
 ENV["RAILS_ENV"] ||= 'test'
 Thread.abort_on_exception = true
 
@@ -48,7 +49,7 @@ Spork.prefork do
   
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
-    config.order = :random
+    #config.order = :random
   
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
@@ -88,8 +89,10 @@ Spork.prefork do
     config.filter_run :focus => true
     config.run_all_when_everything_filtered = true
     config.include FactoryGirl::Syntax::Methods
-
-    Capybara.javascript_driver = :webkit
+    Capybara.register_driver :poltergeist do |app|
+      Capybara::Poltergeist::Driver.new(app, {:timeout => 60})
+    end
+    Capybara.javascript_driver = :poltergeist
 
     
     def t(key)

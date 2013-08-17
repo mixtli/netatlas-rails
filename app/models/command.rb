@@ -3,7 +3,6 @@ class Command < ActiveRecord::Base
   validates :poller, :presence => true, :associated => true
   validates :name, :presence => true
   attr_accessible :arguments, :message, :name
-  serialize :arguments
   state_machine :state, :initial => :pending do
     before_transition any => :queued, :do => :queue_command 
     state :success
@@ -33,7 +32,7 @@ class Command < ActiveRecord::Base
     #puts CONFIG[:amqp].symbolize_keys
     #bunny = Bunny.new(CONFIG[:amqp].symbolize_keys) #.merge({:logging => true}))
     #bunny.start
-    BUNNY.queue('command_' + poller.id.to_s, :durable => true)
-    BUNNY.exchange('').publish(msg, :key => "command_#{poller.id}")
+    ::BUNNY.queue('command_' + poller.id.to_s, :durable => true)
+    ::BUNNY.exchange('').publish(msg, :key => "command_#{poller.id}")
   end
 end

@@ -45,6 +45,7 @@ class Event < ActiveRecord::Base
 
     def factory(t, args = {})
       # TODO whitelist possible classnames
+      puts "t = #{t}, args = #{args}"
       klass_name = "Event::#{t.to_s.camelize}"
       klass = t ? eval(klass_name) : self
       klass.create(args)

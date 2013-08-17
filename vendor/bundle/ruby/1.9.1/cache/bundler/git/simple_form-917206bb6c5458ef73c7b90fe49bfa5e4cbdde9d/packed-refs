@@ -1,7 +1,7 @@
 # pack-refs with: peeled 
 c2d2c574e6d3702eefe59f0eb9ecee0a8526dc49 refs/heads/gh-pages
 c2c7d95c5632c94ba0400192784476bc6f1757a6 refs/heads/issue-802
-87323fd625802f3aea7fd7d8a2fd64016b18cdaa refs/heads/master
+359606f222fa0972a4a14ec70140ac00f7c80839 refs/heads/master
 12a6dd2440dee3b7b68f7ffe48acc105c95c9563 refs/heads/orm-adapter
 77c22c341d09e283a12e9ff9f8a6e4935fdc7b09 refs/heads/v1.0
 c7c8461189c0516b18790fcc01ab464b556f0753 refs/heads/v1.5

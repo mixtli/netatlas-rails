@@ -49,7 +49,7 @@ private
 
 
   def create_primary_interface
-    primary = interfaces.where(:ip_address => ip_address.to_s).first
+    primary = Interface.where(:ip_address => ip_address.to_s, :device_id => id).first
     unless primary
       interfaces.create!(:ip_address => ip_address)
     end

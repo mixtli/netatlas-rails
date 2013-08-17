@@ -49,6 +49,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'therubyracer'
 
+gem 'sass-rails'
 
 group :test, :development do
   gem 'railroady'
@@ -59,7 +60,8 @@ group :test, :development do
   gem 'therubyracer'
   gem 'rspec-rails'
   gem 'capybara'# , :github => 'jnicklas/capybara'
-  gem 'capybara-webkit' #, :github => 'thoughtbot/capybara-webkit'
+  #gem 'capybara-webkit' #, :github => 'thoughtbot/capybara-webkit'
+  gem 'poltergeist'
   group :darwin do
     gem 'rb-fsevent', :require => false 
   end

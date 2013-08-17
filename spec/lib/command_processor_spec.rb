@@ -8,11 +8,16 @@ describe CommandProcessor do
 
   it "should process a result", :truncate do
     processor_thread = Thread.new { subject.run }
+    puts "running thread"
     @rabbit.queue(subject.queue_name, :durable => true)
+    puts "created queue"
     @rabbit.exchange('').publish({'id' => command.id, 'result' => true}.to_json, :key => subject.queue_name)
+    puts "created exchange"
     sleep 2
     processor_thread.kill
+    puts "killed processor"
     command.reload
+    puts "reloaded command"
     command.state.should eql('success')
   end
 end
