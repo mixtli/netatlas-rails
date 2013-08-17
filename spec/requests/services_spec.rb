@@ -5,6 +5,7 @@ describe "Services List" do
 
   it "should redirect to login if not logged in" do
     visit services_path
+    save_and_open_page
     page.should have_selector("#user_password")
   end
 

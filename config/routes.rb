@@ -1,18 +1,14 @@
 require 'sidekiq/web'
-require_dependency 'app/api/api.rb'
+require_relative '../app/api/api'
 NetatlasRails::Application.routes.draw do
-  
   devise_for :users
-
   mount Sidekiq::Web, at: '/sidekiq'
   mount NetAtlasAPI => '/api' 
-  
   resources :devices do
     collection do
       get "datatable"
     end
   end
-
   resources :nodes
   resources :pollers
   resources :data_sources
@@ -27,13 +23,9 @@ NetatlasRails::Application.routes.draw do
     end
   end
 
-
   mount JasmineRails::Engine => "/specs" unless Rails.env.production?
   get "main/index"
   root :to => "main#index"
-
-
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

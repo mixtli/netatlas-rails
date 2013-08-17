@@ -12,5 +12,5 @@
         %td= service.device
         %td= link_to 'Show', service, :class => 'btn btn-mini'
         %td= link_to 'Edit', edit_service_path(service), :class => 'btn btn-mini'
-        %td= link_to 'Destroy', service, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
+        %td= link_to 'Destroy', service, :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'
 = will_paginate @services

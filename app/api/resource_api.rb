@@ -15,7 +15,7 @@ module NetAtlas
         get do
           limit = params[:limit] || 100
           offset = params[:offset] || 0
-          base.resource_class.scoped.limit(limit).offset(offset).search(params[:q]).result.all
+          base.resource_class.all.limit(limit).offset(offset).search(params[:q]).result.all
         end
 
         get ':id' do

@@ -13,7 +13,8 @@ class Node < ActiveRecord::Base
   has_many :data_sources
   has_many :memberships
   has_many :groups, :through => :memberships
-  serialize :snmp_attributes, ActiveRecord::Coders::Hstore
+  #serialize :snmp_attributes, ActiveRecord::Coders::Hstore
+  store_accessor :snmp_attributes
 
   class << self
     def klass(type)

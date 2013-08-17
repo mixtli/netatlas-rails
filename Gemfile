@@ -1,17 +1,17 @@
 source 'https://rubygems.org'
 gem 'thin'
-gem 'rails'
+gem 'rails', '~> 4.0.0'
 gem 'pg', :require => 'pg'
-gem 'postgres_ext'
+#gem 'postgres_ext'
 gem 'devise'
 gem 'userstamp', :git => 'git://github.com/evendis/userstamp.git'
 gem 'declarative_authorization'
 gem 'responders'
 gem 'haml-rails'
-gem 'simple_form'
+gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'exception_notification'
 gem 'state_machine'
-gem 'ransack'
+gem 'ransack', github: "ernie/ransack", branch: "rails-4" 
 gem 'will_paginate'
 gem 'jquery-rails'
 gem 'dynamic_form'
@@ -25,7 +25,7 @@ gem 'rabbit_manager', :git => 'git@github.com:mixtli/rabbit_manager.git'
 #gem 'rabbit_manager', :path => '/Users/rmcclain/Projects/rabbit_manager'
 gem 'rest-client'
 gem 'seed-fu'
-gem 'activerecord-postgres-hstore', git: 'git://github.com/softa/activerecord-postgres-hstore.git'
+#gem 'activerecord-postgres-hstore', git: 'git://github.com/softa/activerecord-postgres-hstore.git'
 
 gem 'jasmine-rails'
 gem 'sidekiq'
@@ -33,7 +33,6 @@ gem 'ruby_parser' # needed for declarative_authorization for some reason
 
 gem 'sinatra', :require => false
 gem 'slim'
-gem 'strong_parameters'
 
 #if ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
   gem 'netatlas-poller', :path => "#{ENV['HOME']}/Projects/netatlas-poller"
@@ -45,13 +44,10 @@ gem 'strong_parameters'
 #else
 #  gem 'netatlas-client', :git => 'git@github.com:mixtli/netatlas-client.git'
 #end
- 
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-  gem 'therubyracer'
-end
+
+gem 'coffee-rails'
+gem 'uglifier'
+gem 'therubyracer'
 
 
 group :test, :development do
@@ -67,10 +63,10 @@ group :test, :development do
   group :darwin do
     gem 'rb-fsevent', :require => false 
   end
-  gem 'spork-rails'
+  gem 'spork-rails', :github => 'sporkrb/spork-rails'
   gem 'terminal-notifier-guard'
   #gem 'growl'
-  gem 'rb-readline' #, :github => 'luislavena/rb-readline'
+  gem 'rb-readline', '~> 0.4.2' #, :github => 'luislavena/rb-readline'
   gem 'foreman'
   gem 'factory_girl_rails'
   gem 'guard-livereload'
@@ -85,12 +81,12 @@ group :test, :development do
   gem 'guard-process'
   gem 'guard-sidekiq'
   #gem 'rails-footnotes'
-  gem 'pry'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
-  gem 'pry-debugger'
-  gem 'pry-rails'
-  gem 'pry-doc'
+  #gem 'pry'
+  #gem 'pry-remote'
+  #gem 'pry-stack_explorer'
+  #gem 'pry-debugger'
+  #gem 'pry-rails'
+  #gem 'pry-doc'
   gem 'launchy'
   gem 'database_cleaner'
   gem 'populator'
@@ -102,17 +98,15 @@ group :test, :development do
 end
 
 
-group :assets do
-  gem 'coffee-rails'
-  gem 'jquery-ui-rails'
-  #gem 'twitter-bootstrap-rails'
-  gem 'bootstrap-sass'
-  gem 'sass-rails'
-  gem 'compass-rails'
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
-  gem 'uglifier' #, '>= 1.0.3'
-  gem 'jquery-datatables-rails', :github => 'rweng/jquery-datatables-rails'
-end
+gem 'coffee-rails'
+gem 'jquery-ui-rails'
+gem 'uglifier' #, '>= 1.0.3'
+gem 'zurb-foundation'
+
+#gem 'jquery-datatables-rails', :github => 'rweng/jquery-datatables-rails'
 
 
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
