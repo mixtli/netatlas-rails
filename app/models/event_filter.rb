@@ -4,7 +4,7 @@ class EventFilter < ActiveRecord::Base
 
   def events
     # This logic is the inverse of Event.filters and should be updated in both places
-    event_scope = Event.scoped
+    event_scope = Event.all
     node_list = []
     if node_ids
       node_list += nodes.map(&:id)

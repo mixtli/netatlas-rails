@@ -11,7 +11,7 @@ class CreateEvents < ActiveRecord::Migration
       t.text :description
       t.text :additional
       t.text :notes
-      t.text :arguments
+      t.hstore :arguments
       t.references :acknowledged_by
       t.references :resolved_by
       t.datetime :acknowledged_at

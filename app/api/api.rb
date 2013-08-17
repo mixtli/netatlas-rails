@@ -1,6 +1,7 @@
 ActiveRecord::Base.include_root_in_json = true
 
-Dir["app/api/**"].each {|f| require_dependency f }
+Dir["app/api/**"].each {|f| require_relative "../../#{f}" }
+
 class NetAtlasAPI < Grape::API
   logger Rails.logger
   rescue_from :all do |e|

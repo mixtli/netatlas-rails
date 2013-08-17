@@ -93,10 +93,10 @@ CREATE TABLE commands (
     name character varying(255) NOT NULL,
     poller_id integer NOT NULL,
     state character varying(255) NOT NULL,
-    arguments text,
+    arguments hstore,
     message text,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone,
     creator_id integer,
     updater_id integer
@@ -137,8 +137,8 @@ CREATE TABLE contacts (
     url character varying(255),
     creator_id integer,
     updater_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -170,9 +170,9 @@ CREATE TABLE data_points (
     id integer NOT NULL,
     data_stream_id integer,
     "timestamp" timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
     value double precision,
-    updated_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -217,8 +217,8 @@ CREATE TABLE data_sources (
     creator_id integer,
     updater_id integer,
     deleter_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -253,8 +253,8 @@ CREATE TABLE data_streams (
     creator_id integer,
     updater_id integer,
     deleter_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -294,8 +294,8 @@ CREATE TABLE data_templates (
     arguments text,
     creator_id integer,
     updater_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -329,8 +329,8 @@ CREATE TABLE dependencies (
     dependency_id integer,
     creator_id integer,
     updater_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -365,14 +365,14 @@ CREATE TABLE nodes (
     type character varying(32),
     state character varying(16) DEFAULT 'unknown'::character varying,
     device_id integer,
-    snmp_index integer,
+    snmp_index bigint,
     snmp_attributes hstore,
     last_scan timestamp without time zone,
     creator_id integer,
     updater_id integer,
     deleter_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -419,8 +419,8 @@ CREATE TABLE event_filters (
     severities character varying(255)[],
     group_ids integer[],
     public boolean,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone,
     creator_id integer,
     updater_id integer
@@ -462,13 +462,13 @@ CREATE TABLE events (
     description text,
     additional text,
     notes text,
-    arguments text,
+    arguments hstore,
     acknowledged_by_id integer,
     resolved_by_id integer,
     acknowledged_at timestamp without time zone,
     resolved_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone,
     creator_id integer,
     updater_id integer
@@ -504,8 +504,8 @@ CREATE TABLE groups (
     parent_id integer,
     creator_id integer,
     updater_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -564,8 +564,8 @@ CREATE TABLE memberships (
     node_id integer,
     creator_id integer,
     updater_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -598,8 +598,8 @@ CREATE TABLE networks (
     address cidr,
     creator_id integer,
     updater_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -656,8 +656,8 @@ CREATE TABLE notifications (
     type character varying(255),
     creator_id integer,
     updater_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -689,8 +689,8 @@ CREATE TABLE plugins (
     id integer NOT NULL,
     name character varying(255),
     class_name character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone,
     creator_id integer,
     updater_id integer
@@ -724,8 +724,8 @@ CREATE TABLE poller_nodes (
     id integer NOT NULL,
     poller_id integer,
     node_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -763,8 +763,8 @@ CREATE TABLE pollers (
     creator_id integer,
     updater_id integer,
     deleter_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -807,8 +807,8 @@ CREATE TABLE service_types (
     default_port integer,
     default_template_id integer,
     description text,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -853,8 +853,8 @@ CREATE TABLE subscriptions (
     event_filter_id integer,
     creator_id integer,
     updater_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -895,8 +895,8 @@ CREATE TABLE users (
     current_sign_in_ip character varying(255),
     last_sign_in_ip character varying(255),
     admin boolean DEFAULT false,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     deleted_at timestamp without time zone
 );
 
@@ -1573,6 +1573,8 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 --
 -- PostgreSQL database dump complete
 --
+
+SET search_path TO "$user",public;
 
 INSERT INTO schema_migrations (version) VALUES ('20120408100254');
 

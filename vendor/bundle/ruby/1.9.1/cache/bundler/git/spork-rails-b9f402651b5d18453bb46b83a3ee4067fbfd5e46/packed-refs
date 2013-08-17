@@ -1,0 +1,5 @@
+# pack-refs with: peeled 
+3224f84d8c31fcb0894e9a43f6c3ac67e3aa0d71 refs/heads/master
+3f30fdebd24b87c9e72671637af9f81f1d931634 refs/heads/modernize-wip
+6fe7043476fa048aa98ccd9fadc49270e18bc4fc refs/tags/3.2.0
+d246bb1935f1465c1e148bfb391187a535afb44e refs/tags/3.2.1

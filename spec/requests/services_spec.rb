@@ -5,6 +5,7 @@ describe "Services List" do
 
   it "should redirect to login if not logged in" do
     visit services_path
+    save_and_open_page
     page.should have_selector("#user_password")
   end
 
@@ -36,7 +37,11 @@ describe "Services List" do
       click_link 'Create Data Source'
       select 'HTTP Latency', :from => 'data_source_data_template_id'
       select 'poller1', :from => 'Pollers'
+      # XXX: I don't understand why I have to mock this.  It should be set by bunny.rb initializer
+      # but for some reason ::BUNNY is nil here
+      ::BUNNY = stub(:queue => nil, :exchange => stub(:publish => nil))
       click_button 'Create'
+      save_and_open_page
       page.should have_content('successfully created')
       DataSource.count.should == 1
       DataSource.first.data_streams.count.should == 1

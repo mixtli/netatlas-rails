@@ -6,7 +6,7 @@ class CreateNodes < ActiveRecord::Migration
       t.string :type, :limit => 32
       t.string :state, :limit => 16, :default => "unknown"
       t.belongs_to :device
-      t.integer :snmp_index, :limit => 64
+      t.integer :snmp_index, :limit => 8
       t.hstore :snmp_attributes
       t.datetime :last_scan
       t.userstamps(true)
