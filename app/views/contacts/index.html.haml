@@ -18,7 +18,7 @@
         %td= contact.status
         %td= link_to 'Show', contact_path(contact), :class => 'btn btn-mini'
         %td= link_to 'Edit', edit_contact_path(contact), :class => 'btn btn-mini'
-        %td= link_to 'Destroy', contact_path(contact), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
+        %td= link_to 'Destroy', contact_path(contact), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'
   
 %br
 = will_paginate(@contacts)

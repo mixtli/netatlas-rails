@@ -10,6 +10,7 @@ describe SendCommandService do
   end
 
   it "should send a command to queue" do
+    ::BUNNY = stub(:queue => nil, :exchange => stub(:publish => nil))
     amqp do
       command = described_class.call(poller.id, :scan)
       command.poller_id.should eql(poller.id)

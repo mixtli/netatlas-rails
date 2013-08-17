@@ -5,6 +5,7 @@ describe Collector do
   let(:data_stream) { create(:data_stream) }
 
   it "should save a result from queue", :truncate do
+    ::BUNNY = stub(:queue => nil, :exchange => stub(:publish => nil))
     collector_thread = Thread.new { subject.run }
     time = Time.now
     @rabbit.queue(subject.queue_name, :durable => true)
