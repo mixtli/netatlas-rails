@@ -1,0 +1,12 @@
+= simple_form_for @poller, :html => {:class => 'form-horizontal' }  do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :hostname
+    = f.input :port
+    = f.input :state
+    = f.input :queue_username
+    = f.input :queue_password
+
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to 'Cancel', pollers_path, :class => 'btn'

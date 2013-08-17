@@ -1,23 +1,7 @@
-require 'bundler/gem_tasks'
-require 'rake'
-require 'rake/testtask'
-require 'rake/rdoctask'
+#!/usr/bin/env rake
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-desc 'Default: run unit tests.'
-task :default => :test
+require File.expand_path('../config/application', __FILE__)
 
-desc 'Test the userstamp plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
-
-desc 'Generate documentation for the userstamp plugin.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'Userstamp'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README', 'CHANGELOG', 'LICENSE')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
+NetatlasRails::Application.load_tasks

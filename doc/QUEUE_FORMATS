@@ -1,0 +1,25 @@
+command_<poller_id>  (JSON)
+{ 
+    'id' => <command_id>, 
+    'name' => <command_name>, 
+    'arguments' => <command_arguments>
+}
+
+command_result (JSON)
+{
+	'id' => <command_id>,
+	'result' => boolean,
+	'message' => 'message from poller'
+}
+
+collector (CSV)
+<data_stream_id>,<timestamp>,<value>
+
+event (JSON)
+{
+	'node_id' => <node_id>,
+	'timestamp' => <timestamp (epoch seconds)>,
+	'severity' => (ok,warning,critical,unknown),
+	etc..
+}
+

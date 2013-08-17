@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Hostname:
+  = @poller.hostname
+%p
+  %b Port:
+  = @poller.port
+%p
+  %b State:
+  = @poller.state
+%p
+  %b Queue username:
+  = @poller.queue_username
+%p
+  %b Queue password:
+  = @poller.queue_password
+
+= link_to 'Edit', edit_poller_path(@poller)
+\|
+= link_to 'Back', pollers_path

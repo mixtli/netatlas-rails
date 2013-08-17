@@ -1,0 +1,12 @@
+<table id="devices" class="display" data-source="/devices/datatable.json">
+  <thead>
+    <tr>
+      <th>Hostname</th>
+      <th>SysName</th>
+      <th>SysDescr</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+

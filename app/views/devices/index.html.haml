@@ -1,0 +1,9 @@
+= link_to 'Create a Device', new_device_path
+%table#devices.display{'data-source' => datatable_devices_url(:format => 'json')}
+  %thead
+    %th Hostname
+    %th SysName
+    %th SysDescr
+  %tbody
+
+

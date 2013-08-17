@@ -1,0 +1,10 @@
+POSTGRES:
+  This app requires postgres because I'm using native pg table inheritance features.  
+
+TESTING:
+  Use rake db:test:clone_structure instead of db:test:clone for now.  We have to use sql schemas because the table inheritance doesn't work with ruby schemas.  It works in the migrations, but doesn't dump the options to the schema.rb
+
+NOTES:
+  To init the db from scratch in dev and test do:
+  rake db:migrate:reset db:seed db:populate db:test:clone_structure
+  It might be helpful to make a shell alias
