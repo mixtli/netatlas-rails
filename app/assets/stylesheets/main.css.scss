@@ -1,3 +1,25 @@
-// Place all the styles related to the main controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.clearfix {
+    zoom:1;
+    &:before, &:after {
+        content: "\0020";
+        display: block;
+        height: 0;
+        overflow: hidden;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+table {
+  width: 90%;
+}
+
+.filter-bar {
+  select {
+    float: left;
+    display: inline;
+    @extend .clearfix;
+    width: 20%;
+  }
+}

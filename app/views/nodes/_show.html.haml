@@ -1,0 +1,50 @@
+%table
+  %thead
+    %tr
+      %th{colspan: 2} Node Information
+  %tbody
+    %tr
+      %th Name
+      %td= node.label
+    %tr
+      %th Status
+      %td= node.state
+    %tr
+      %th Type
+      %td= node.type
+    %tr
+      %th SNMP Index
+      %td= node.snmp_index
+    %tr
+      %th Last Scan
+      %td= node.last_scan
+    %tr
+      %th Created By
+      %td= node.creator
+    %tr
+      %th Updated By
+      %td= node.updater
+    %tr
+      %th Created At
+      %td= node.created_at
+    %tr
+      %th Updated At
+      %td= node.updated_at
+%table
+  %thead
+    %tr
+      %th Dependencies
+    - node.dependencies.each do |n|
+      %tr
+        %td= link_to(n, n)
+
+%table
+  %thead
+    %tr
+      %th Dependents
+    - node.dependents.each do |n|
+      %tr
+        %td= link_to(n, n)
+
+= link_to 'Edit', polymorphic_path([:edit, node]), :class => 'button radius'
+= link_to 'Delete', node, :method => :delete, :class => 'button radius', :data => {:confirm => 'Are you sure?'}

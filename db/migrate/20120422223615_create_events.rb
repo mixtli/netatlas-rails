@@ -9,9 +9,9 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :repeats, :default => 0
       t.string :severity
       t.text :description
-      t.text :additional
+      t.json :additional, :default => {}
       t.text :notes
-      t.hstore :arguments
+      t.json :arguments, :default => {}
       t.references :acknowledged_by
       t.references :resolved_by
       t.datetime :acknowledged_at

@@ -1,12 +1,20 @@
 development:
+  :graphite:
+    hostname: localhost
+    port: 2003
+    url: http://localhost:8080
   :amqp:
     user: netatlas
     pass: netatlas
     host: localhost
     vhost: netatlas_development
 
-
 test:
+  :graphite:
+    hostname: localhost
+    port: 2003
+    url: http://localhost:8080
+  :whisper_dir: /opt/graphite/storage/whisper
   :amqp:
     user: netatlas
     pass: netatlas
@@ -15,6 +23,10 @@ test:
     vhost: "netatlas_test" 
 
 production:
+  :graphite:
+    hostname: localhost
+    port: 2003
+    url: http://localhost:8080
   :amqp:
     user: netatlas
     pass: netatlas

@@ -25,7 +25,8 @@ gem 'rabbit_manager', :git => 'git@github.com:mixtli/rabbit_manager.git'
 #gem 'rabbit_manager', :path => '/Users/rmcclain/Projects/rabbit_manager'
 gem 'rest-client'
 gem 'seed-fu'
-#gem 'activerecord-postgres-hstore', git: 'git://github.com/softa/activerecord-postgres-hstore.git'
+gem 'statsd-ruby', :require => 'statsd'
+gem 'graphite-api'
 
 gem 'jasmine-rails'
 gem 'sidekiq'
@@ -33,6 +34,7 @@ gem 'ruby_parser' # needed for declarative_authorization for some reason
 
 gem 'sinatra', :require => false
 gem 'slim'
+gem 'her', :github => 'remiprev/her'
 
 #if ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
   gem 'netatlas-poller', :path => "#{ENV['HOME']}/Projects/netatlas-poller"
@@ -50,6 +52,7 @@ gem 'uglifier'
 gem 'therubyracer'
 
 gem 'sass-rails'
+gem 'graphite_storage', :github => 'mleinart/graphite_storage'
 
 group :test, :development do
   gem 'railroady'
@@ -71,7 +74,7 @@ group :test, :development do
   gem 'rb-readline', '~> 0.4.2' #, :github => 'luislavena/rb-readline'
   gem 'foreman'
   gem 'factory_girl_rails'
-  gem 'guard-livereload'
+  #gem 'guard-livereload'
   gem 'guard-ctags-bundler'
   gem 'guard-rspec'
   gem 'guard-spork'

@@ -1,0 +1,11 @@
+= simple_form_for(@interface) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :ip_address, :as => :string
+    = f.input :hostname
+    = f.input :snmp_index
+    = f.input :description
+
+  .form-actions
+    = f.button :submit, :id => 'create_interface'

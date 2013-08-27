@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :plugin do
-    name "MyString"
-    class_name "MyString"
+    name { ["SNMP", "Nagios"][rand(2)]}
+    class_name { |p| p.name }
   end
 end

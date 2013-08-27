@@ -1,7 +1,9 @@
 require 'pry'
 class ResourceController < ApplicationController
+  filter_access_to :datatable, :require => :read
   respond_to :html, :json, :xml
   before_filter :authenticate_user!
+  class_attribute :datatable_class
   class_attribute :resource_class
 
   def self.resource_name
@@ -74,4 +76,12 @@ class ResourceController < ApplicationController
     instance_variable_set("@#{self.class.resource_name.to_s}".to_sym, @node)
     respond_with(@node)
   end
+
+  def datatable
+    respond_to do |format|
+      logger.debug "datatable_class = #{self.class.datatable_class.to_s}"
+      format.json { render json: self.class.datatable_class.new(view_context)}
+    end
+  end
+
 end

@@ -19,6 +19,11 @@ module AuthHelper
   end
 
 
+  def login_as_user(user = nil)
+    user ||= create(:user, :email => 'user@netatlas.com')
+    authorize 'user@netatlas.com', 'password'
+  end
+
   def as_user(user=nil, &block)
     current_user = user || FactoryGirl.create(:user)
     if request.present?

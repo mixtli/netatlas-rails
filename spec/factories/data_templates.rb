@@ -4,11 +4,11 @@ FactoryGirl.define do
   factory :data_template do
     name "MyString"
     plugin nil
-    interval 1
-    warning_threshold 1.5
-    critical_threshold 1.5
-    operator "MyString"
-    description "MyText"
-    arguments nil
+    interval 60
+    warning_threshold 95
+    critical_threshold 99
+    operator ">"
+    description "Lorem Ipsum"
+    arguments {}
   end
 end

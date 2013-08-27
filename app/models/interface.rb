@@ -4,8 +4,14 @@ class Interface < Node
   attr_accessible :hostname, :ip_address 
   validates :ip_address, :presence => true
   before_create {|d| d.label = d.ip_address.to_s unless d.label }
+  after_save :notify_pollers
+
 
   def to_s; label;  end
+
+  def dependencies
+    super + [device]
+  end
 
   def as_json(options = {}) 
     result = super(options)

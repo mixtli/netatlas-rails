@@ -12,18 +12,36 @@ namespace :db do
     10.times { create(:user) }
     User.stamper = demo_user  # to auto set creator_id attributes
     Authorization::Maintenance::with_user(demo_user) do
-      create(:poller, :creator => demo_user, :hostname => `hostname`.chomp, :state => :unknown)
+      poller = create(:poller, :creator => demo_user, :hostname => `hostname`.chomp, :state => :unknown)
       100.times do
-        create(:device)
+        d = create(:device, :hostname => Faker::Internet.domain_word + ".lvh.me")
+        d.dependents << create(:device, :hostname => Faker::Internet.domain_word + ".lvh.me")
       end
       100.times do
-        create(:service)
+        s = create(:service)
+        s.dependencies << create(:device, :hostname => Faker::Internet.domain_word + ".lvh.me")
+        5.times do
+          create(:event, :node => s, :state => [:open, :acknowledged, :resolved][rand(2)], :severity => [:ok, :warning, :critical][rand(2)])
+        end
+
+        data_source = create(:data_source, :node_id => s.id, :plugin_id => Plugin.all.order("random()").first.id) 
+        data_stream = create(:data_stream, :data_source_id => data_source.id, :poller_id => poller.id)
+        graph = create(:graph)
+        graph.data_sources << data_source
+        graph.save
       end
       100.times do
-        create(:event)
+        create(:event, :state => [:open, :acknowledged, :resolved][rand(2)])
+      end
+      100.times do
+        create(:contact)
+      end
+      100.times do
+        create(:notification)
       end
     end
   end
 
-  task :repopulate => [:truncate, :seed_fu, :populate]
+  desc 'repopulate database from scratch'
+  task :repopulate => [:truncate, :seed, :populate]
 end

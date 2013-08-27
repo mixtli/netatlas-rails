@@ -5,6 +5,9 @@ describe NetAtlas::ServiceAPI do
   def app
     NetAtlas::ServiceAPI
   end
+  before do
+    login_as_user
+  end
 
   context 'list' do
     it "should get a list of services" do

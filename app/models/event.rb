@@ -53,7 +53,7 @@ class Event < ActiveRecord::Base
   end
 
   def filters
-    # This logic is the inverse of the logic in EventFilter.events.  Must be changed in both places.
+    # This logic is the inverse of the logic in EventFilter.events.  Must be changed in both places.  Should refactor.
     filter_scope = EventFilter.all
     filter_scope = filter_scope.where("node_ids IS NULL OR ? = ANY (node_ids)", node_id)
     filter_scope = filter_scope.where("severities IS NULL OR ? = ANY (severities)", severity)

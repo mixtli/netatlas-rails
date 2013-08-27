@@ -1,18 +1,8 @@
-%h2 Data Sources
-%table.table.table-striped.table-bordered
+%table#data_sources{:data => {:source => datatable_data_sources_path}}
   %thead
     %tr
+      %th ID
       %th Node
-      %th Template
-      %th Pollers
+      %th Plugin
       %th
-    - data_sources.each do |ds|
-      %tr
-        %td= ds.node
-        %td= ds.data_template
-        %td= ds.pollers.count
-        %td
-          = link_to 'Show', ds, :class => 'btn btn-mini'
-          = link_to 'Edit', edit_data_source_path(ds), :class => 'btn btn-mini'
-          = link_to 'Destroy', ds, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
-
+  %tbody

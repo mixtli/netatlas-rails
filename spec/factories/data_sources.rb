@@ -7,11 +7,12 @@ FactoryGirl.define do
     data_template nil
     state "MyString"
     last_polled_at "2012-06-26 00:33:43"
-    interval 1
+    interval 60
     description "MyText"
-    varbinds "MyText"
-    warning_threshold 1.5
-    critical_threshold 1.5
-    operator "MyString"
+    warning_threshold 90
+    critical_threshold 99
+    operator ">"
+    arguments {}
+    varbinds {}
   end
 end

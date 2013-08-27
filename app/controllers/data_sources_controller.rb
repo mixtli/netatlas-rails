@@ -1,5 +1,6 @@
 class DataSourcesController < ResourceController
   self.resource_class = DataSource
+  self.datatable_class = DataSourcesDatatable
 
   def index
     conditions = params.dup
@@ -16,20 +17,11 @@ class DataSourcesController < ResourceController
     logger.debug params.inspect
     @data_source = DataSource.new params[:data_source]
     @data_source.arguments ||= {}
-    if params[:data_source][:data_template_id]
-      template = DataTemplate.find(params[:data_source][:data_template_id])
-      if template.arguments
-        template.arguments.each do |k,v|
-          @data_source.arguments[k] ||= v
-        end
-      end
-      @data_source.plugin ||= template.plugin
-      @data_source.interval ||= template.interval
-      @data_source.warning_threshold ||= template.warning_threshold
-      @data_source.critical_threshold ||= template.critical_threshold
-      @data_source.operator ||= template.operator
+    if @data_source.valid?
+      @data_source.save!
+    else
+      #raise "invalid data source #{@data_source.errors}"
     end
-    @data_source.save!
     respond_with(@data_source)
   end
 end

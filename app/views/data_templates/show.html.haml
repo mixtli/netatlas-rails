@@ -1,0 +1,31 @@
+%h3 Data Template
+%table
+  %tr
+    %th Name
+    %td= @data_template.name
+  %tr
+    %th Plugin
+    %td= @data_template.plugin
+  %tr
+    %th Node Type
+    %td= @data_template.node_type
+  %tr
+    %th Interval
+    %td= @data_template.interval
+  %tr
+    %th Warning Threshold
+    %td= @data_template.warning_threshold
+  %tr
+    %th Critical Threshold
+    %td= @data_template.critical_threshold
+  %tr
+    %th Operator
+    %td= @data_template.operator
+  %tr
+    %th Description
+    %td= @data_template.description
+  %tr
+    %th Arguments
+    %td= @data_template.arguments.to_json
+
+=link_to 'Edit', edit_data_template_path(@data_template)

@@ -8,8 +8,9 @@ class CreateDataSources < ActiveRecord::Migration
       t.datetime :last_polled_at
       t.integer :interval, :default => 300, :null => false
       t.text :description
-      t.text :arguments
-      t.text :varbinds
+      t.string :data_type  #gauge, counter, etc
+      t.json :arguments, :default => {}
+      t.json :varbinds, :default => {}
       t.float :warning_threshold
       t.float :critical_threshold
       t.string :operator, :default => '>', :limit => 8

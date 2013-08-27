@@ -1,4 +1,5 @@
 class ServicesController < NodesController
-   self.resource_class = Service 
-   #self.default_scope = -> { Service.includes(:device) }
+  filter_access_to :datatable, :require => :read
+  self.resource_class = Service 
+  self.datatable_class = ServicesDatatable
 end

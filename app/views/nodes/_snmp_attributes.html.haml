@@ -1,0 +1,9 @@
+%table
+  %thead
+    %tr
+      %th{:colspan => 2} SNMP Attributes
+  %tbody
+  - snmp_attributes.each do |k, v|
+    %tr
+      %th= k
+      %td= v

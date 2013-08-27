@@ -1,0 +1,33 @@
+%div.large-6.column
+  = simple_form_for(@graph) do |f|
+    = f.error_notification
+    .form-inputs
+      = f.input :title
+      = f.input :options, :as => :text
+    .form-actions
+      = f.button :submit
+%div.large-6.column
+  %table
+    %thead
+      %tr
+        %th{:colspan=> 3} Graph Items
+      %tr
+        %th Data Source
+        %th Options
+        %th
+    %tbody
+      - @graph.items.each do |item|
+        %tr
+          %td= link_to item.data_source
+          %td= item.options
+          %td= link_to 'Delete', item, :method => :delete
+  =form_tag(graph_items_path, :method => :post) do
+    %input{:type => :hidden, :name => "graph_item[graph_id]", :value => @graph.id}
+    %select.expand_optgroup{:name => "graph_item[data_source_id]"}
+      - Node.all.each do |n|
+        %optgroup{:label => n.label}
+          - n.data_sources.includes(:plugin, :node).each do |ds|
+            %option{:value => ds.id}= ds.to_s
+    %input{:type => :submit}
+
+

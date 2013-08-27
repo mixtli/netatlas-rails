@@ -4,7 +4,7 @@ class CreateCommands < ActiveRecord::Migration
       t.string :name, :null => false
       t.belongs_to :poller, :null => false
       t.string :state, :null => false
-      t.hstore :arguments
+      t.json :arguments, :default => {}
       t.text :message
       t.timestamps
       t.userstamps

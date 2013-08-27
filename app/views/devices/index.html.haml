@@ -1,9 +1,9 @@
-= link_to 'Create a Device', new_device_path
-%table#devices.display{'data-source' => datatable_devices_url(:format => 'json')}
+%table#devices{:data => {:source => datatable_devices_path}}
   %thead
     %th Hostname
     %th SysName
     %th SysDescr
+    %th Actions
   %tbody
-
-
+%br
+= link_to 'Create a Device', new_device_path, :class => "button radius"

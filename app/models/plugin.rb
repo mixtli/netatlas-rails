@@ -13,4 +13,7 @@ class Plugin < ActiveRecord::Base
   def argument_list
     instance.class.argument_types
   end
+  def to_s
+    name
+  end
 end

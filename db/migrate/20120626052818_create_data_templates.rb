@@ -3,12 +3,13 @@ class CreateDataTemplates < ActiveRecord::Migration
     create_table :data_templates do |t|
       t.string :name, :null => false
       t.belongs_to :plugin, :null => false
+      t.string :node_type
       t.integer :interval, :default => 300, :null => false
       t.float :warning_threshold
       t.float :critical_threshold
       t.string :operator, :default => '>'
       t.text :description
-      t.text :arguments
+      t.json :arguments, :default => {}
       t.userstamps
       t.timestamps
     end

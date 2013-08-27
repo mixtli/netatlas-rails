@@ -1,6 +1,6 @@
+require 'userstamp'
 ActiveRecord::Base.include_root_in_json = true
-
-Dir["app/api/**"].each {|f| require_relative "../../#{f}" }
+Dir["#{Rails.root}/app/api/**"].each {|f| require "#{f}" }
 
 class NetAtlasAPI < Grape::API
   logger Rails.logger

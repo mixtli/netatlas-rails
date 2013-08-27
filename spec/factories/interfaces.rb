@@ -4,6 +4,7 @@ FactoryGirl.define do
   factory :interface do
     ip_address "127.0.0.1" 
     hostname "MyString"
+    state { %w(ok warning critical unknown)[rand(4)] }
     if_speed 1
     if_type 1
     if_name "MyString"

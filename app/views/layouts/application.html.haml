@@ -1,76 +1,70 @@
-%html
+!!!
+/ paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+/[if lt IE 7 ] <html class="ie6" lang="en">
+/[if IE 7 ] <html class="ie7" lang="en">
+/[if IE 8 ] <html class="ie8" lang="en">
+/ [if (gte IE 9)|!(IE)]><!
+%html{:lang => "en"}
+  / <![endif]
   %head
-    %title Netatlas
-    /[if lt IE 9]
-      %script{:src => "http://html5shim.googlecode.com/svn/trunk/html5.js", :type => 'text/javascript'}
-    
+    %meta{:charset => "utf-8"}/
+    / Uncomment to make IE8 render like IE7
+    / <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    / Set the viewport width to device width for mobile
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title= content_for?(:title) ? yield(:title) : "Untitled"
     = stylesheet_link_tag    "application"
-    = javascript_include_tag "application" 
+    = javascript_include_tag "application"
+    = javascript_include_tag "http://d3js.org/d3.v3.js"
     = csrf_meta_tags
-    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1.0'}
-  %body 
-    %div.navbar.navbar-fixed-top
-      %div.navbar-inner
-        %div.container
-          %a{:class => "btn btn-navbar", 'data-toggle'=> "collapse", 'data-target' => ".nav-collapse"}
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.brand{:href => '#'} NetAtlas
-          %div.nav-collapse
-            - if user_signed_in?
-              %ul.nav
-                %li.dropdown
-                  %a.dropdown-toggle{ 'data-toggle' => 'dropdown'}
-                    Nodes
-                    %b.caret
-                  %ul.dropdown-menu
-                    %li= link_to 'Devices', devices_path
-                    %li= link_to 'Services', services_path
-                    %li= link_to 'Interfaces', interfaces_path
-                %li 
-                  %a Outages
-                %li
-                  %a Dashboard
-                %li
-                  = link_to 'Events', events_path(:q => {:state_eq => 'open'})
-                %li
-                  = link_to 'Notifications', notifications_path
-                %li
-                  %a Charts
-                %li
-                  %a Map
-                - if current_user.admin?
-                  %li.dropdown
-                    %a.dropdown-toggle{ 'data-toggle' => 'dropdown' } 
-                      Admin
-                      %b.caret
-                    %ul.dropdown-menu
-                      %li
-                        = link_to 'Pollers', pollers_path
-                        = link_to 'Event Filters', event_filters_path
-                        = link_to 'Contacts', contacts_path
-                    
-            %ul.nav.pull-right
-              - if user_signed_in?
-                %li= link_to 'Sign Out', destroy_user_session_path, :method => "delete"
-                %li= current_user.email
-              -else
-                %li
-                  = link_to 'Sign In', new_user_session_path
-                %li
-                  = link_to 'Sign Up', new_user_registration_path
+  %body
+    %nav.top-bar
+      %ul.title-area
+        %li.name
+          %h1
+            %a{:href => "#"} NetAtlas
+        %li.toggle-topbar.menu-icon
+          %a{:href => "#"}
+            %span Menu
+      %section.top-bar-section
+        %ul.left
+          - if user_signed_in?
+            %li.divider
+            %li.has-dropdown
+              %a{:href => '#'} Nodes
+              %ul.dropdown
+                %li= link_to 'All Nodes', nodes_path
+                %li= link_to 'Devices', devices_path
+                %li= link_to 'Services', services_path
+                %li= link_to 'Interface', interfaces_path
+            %li= link_to 'Outages', outages_path
+            %li= link_to 'Dashboard', dashboard_path
+            %li= link_to 'Events', events_path(:q => {:state_eq => 'open'})
+            %li= link_to 'Notifications', notifications_path
+            %li= link_to 'Charts', graphs_path
+            %li= link_to 'Map', map_path
+            - if current_user.admin?
+              %li.has-dropdown
+                %a{:href => '#'} Admin
+                %ul.dropdown
+                  %li
+                    = link_to 'Pollers', pollers_path
+                    = link_to 'Event Filters', event_filters_path
+                    = link_to 'Contacts', contacts_path
+                    = link_to 'Data Sources', data_sources_path
+                    = link_to 'Data Templates', data_templates_path
+                    = link_to 'Chart Templates', graph_templates_path
+        %ul.right
+          - if user_signed_in?
+            %li= link_to 'Sign Out', destroy_user_session_path, :method => "delete"
+            %li= current_user.email
+          -else
+            %li= link_to 'Sign In', new_user_session_path
+            %li= link_to 'Sign Up', new_user_registration_path 
 
-    %div.container
-      - flash.each do |name, msg|
-        %div{:class => "alert alert-#{name == :notice ? 'success' : 'error'}"}
-          %a.close{'data-dismiss' => 'alert'}
-            x
-          = msg
 
-      %div.row
-        -#%div.span3
-          -#Sidebar
-        -#%div.span9
-        =yield
-
+    = flash.notice
+    = flash.alert
+    %div.large-12.column
+      = yield
+    

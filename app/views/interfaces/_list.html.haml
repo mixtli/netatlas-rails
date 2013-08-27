@@ -1,11 +1,14 @@
+- device_id ||= nil
 %h2 Interfaces
-%table.table.table-striped.table-bordered
+%table#interfaces{:data => {:source => datatable_interfaces_path(:q => {:device_id_eq => device_id })}}
   %thead
     %tr
       %th Device
       %th IP Address 
-      %th
-    - interfaces.each do |i|
+      %th State
+      %th Actions
+  %tbody
+    - interfaces.includes(:device).each do |i|
       %tr
         %td= link_to i.device.hostname, i.device
         %td= i.ip_address

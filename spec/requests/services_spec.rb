@@ -48,11 +48,12 @@ describe "Services List" do
       DataSource.first.pollers.count.should == 1
     end
 
-    it "should get service listing" do
+    it "should get service listing", :js, :truncate do
       page.should have_content("ServiceName")
     end
 
-    it "should go to service view when service clicked" do 
+    it "should go to service view when service clicked", :js, :truncate do 
+      sleep 1
       page.first(:link, 'Show').click
       page.should have_content('ServiceName 1')
     end

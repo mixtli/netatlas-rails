@@ -93,7 +93,7 @@ CREATE TABLE commands (
     name character varying(255) NOT NULL,
     poller_id integer NOT NULL,
     state character varying(255) NOT NULL,
-    arguments hstore,
+    arguments json DEFAULT '{}'::json,
     message text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
@@ -209,8 +209,9 @@ CREATE TABLE data_sources (
     last_polled_at timestamp without time zone,
     "interval" integer DEFAULT 300 NOT NULL,
     description text,
-    arguments text,
-    varbinds text,
+    data_type character varying(255),
+    arguments json DEFAULT '{}'::json,
+    varbinds json DEFAULT '{}'::json,
     warning_threshold double precision,
     critical_threshold double precision,
     operator character varying(8) DEFAULT '>'::character varying,
@@ -286,12 +287,13 @@ CREATE TABLE data_templates (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     plugin_id integer NOT NULL,
+    node_type character varying(255),
     "interval" integer DEFAULT 300 NOT NULL,
     warning_threshold double precision,
     critical_threshold double precision,
     operator character varying(255) DEFAULT '>'::character varying,
     description text,
-    arguments text,
+    arguments json DEFAULT '{}'::json,
     creator_id integer,
     updater_id integer,
     created_at timestamp without time zone,
@@ -366,7 +368,7 @@ CREATE TABLE nodes (
     state character varying(16) DEFAULT 'unknown'::character varying,
     device_id integer,
     snmp_index bigint,
-    snmp_attributes hstore,
+    snmp_attributes json DEFAULT '{}'::json,
     last_scan timestamp without time zone,
     creator_id integer,
     updater_id integer,
@@ -384,23 +386,11 @@ CREATE TABLE nodes (
 CREATE TABLE devices (
     hostname character varying(255),
     ip_address inet,
-    ip_forwarding boolean,
-    os character varying(255),
-    os_version character varying(255),
-    os_type character varying(255),
-    os_vendor character varying(255),
     community character varying(255),
     auth_protocol character varying(255),
     auth_password character varying(255),
     priv_protocol character varying(255),
     priv_password character varying(255),
-    sys_name character varying(255),
-    sys_descr character varying(255),
-    sys_contact character varying(255),
-    sys_location character varying(255),
-    sys_objectid character varying(255),
-    memory integer,
-    num_cpus integer,
     snmp_version character varying(255)
 )
 INHERITS (nodes);
@@ -460,9 +450,9 @@ CREATE TABLE events (
     repeats integer DEFAULT 0,
     severity character varying(255),
     description text,
-    additional text,
+    additional json DEFAULT '{}'::json,
     notes text,
-    arguments hstore,
+    arguments json DEFAULT '{}'::json,
     acknowledged_by_id integer,
     resolved_by_id integer,
     acknowledged_at timestamp without time zone,
@@ -492,6 +482,148 @@ CREATE SEQUENCE events_id_seq
 --
 
 ALTER SEQUENCE events_id_seq OWNED BY events.id;
+
+
+--
+-- Name: graph_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE graph_items (
+    id integer NOT NULL,
+    graph_id integer,
+    data_source_id integer,
+    options json DEFAULT '{}'::json,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: graph_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE graph_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: graph_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE graph_items_id_seq OWNED BY graph_items.id;
+
+
+--
+-- Name: graph_template_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE graph_template_items (
+    id integer NOT NULL,
+    graph_template_id integer,
+    data_template_id integer,
+    options json,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: graph_template_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE graph_template_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: graph_template_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE graph_template_items_id_seq OWNED BY graph_template_items.id;
+
+
+--
+-- Name: graph_templates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE graph_templates (
+    id integer NOT NULL,
+    title character varying(255),
+    options json,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
+    creator_id integer,
+    updater_id integer
+);
+
+
+--
+-- Name: graph_templates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE graph_templates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: graph_templates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE graph_templates_id_seq OWNED BY graph_templates.id;
+
+
+--
+-- Name: graphs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE graphs (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    options json DEFAULT '{}'::json,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: graphs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE graphs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: graphs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE graphs_id_seq OWNED BY graphs.id;
 
 
 --
@@ -539,17 +671,11 @@ CREATE TABLE interfaces (
     deleted_at timestamp without time zone,
     ip_address inet,
     hostname character varying(255),
-    if_speed integer,
-    if_type integer,
-    if_name character varying(255),
-    if_alias character varying(255),
-    if_descr character varying(255),
-    if_promiscuous boolean,
-    if_high_speed integer,
-    if_admin_status character varying(255),
     physical_address macaddr,
     mtu integer,
-    duplex character varying(255)
+    duplex character varying(255),
+    speed integer,
+    if_type character varying(255)
 )
 INHERITS (nodes);
 
@@ -679,6 +805,43 @@ CREATE SEQUENCE notifications_id_seq
 --
 
 ALTER SEQUENCE notifications_id_seq OWNED BY notifications.id;
+
+
+--
+-- Name: outages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE outages (
+    id integer NOT NULL,
+    node_id integer,
+    start_time timestamp without time zone,
+    end_time timestamp without time zone,
+    description text,
+    creator_id integer,
+    updater_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone
+);
+
+
+--
+-- Name: outages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE outages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: outages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE outages_id_seq OWNED BY outages.id;
 
 
 --
@@ -984,6 +1147,13 @@ ALTER TABLE ONLY devices ALTER COLUMN state SET DEFAULT 'unknown'::character var
 
 
 --
+-- Name: snmp_attributes; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY devices ALTER COLUMN snmp_attributes SET DEFAULT '{}'::json;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -995,6 +1165,34 @@ ALTER TABLE ONLY event_filters ALTER COLUMN id SET DEFAULT nextval('event_filter
 --
 
 ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY graph_items ALTER COLUMN id SET DEFAULT nextval('graph_items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY graph_template_items ALTER COLUMN id SET DEFAULT nextval('graph_template_items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY graph_templates ALTER COLUMN id SET DEFAULT nextval('graph_templates_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY graphs ALTER COLUMN id SET DEFAULT nextval('graphs_id_seq'::regclass);
 
 
 --
@@ -1016,6 +1214,13 @@ ALTER TABLE ONLY interfaces ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::
 --
 
 ALTER TABLE ONLY interfaces ALTER COLUMN state SET DEFAULT 'unknown'::character varying;
+
+
+--
+-- Name: snmp_attributes; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY interfaces ALTER COLUMN snmp_attributes SET DEFAULT '{}'::json;
 
 
 --
@@ -1044,6 +1249,13 @@ ALTER TABLE ONLY nodes ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::regcl
 --
 
 ALTER TABLE ONLY notifications ALTER COLUMN id SET DEFAULT nextval('notifications_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY outages ALTER COLUMN id SET DEFAULT nextval('outages_id_seq'::regclass);
 
 
 --
@@ -1086,6 +1298,13 @@ ALTER TABLE ONLY services ALTER COLUMN id SET DEFAULT nextval('nodes_id_seq'::re
 --
 
 ALTER TABLE ONLY services ALTER COLUMN state SET DEFAULT 'unknown'::character varying;
+
+
+--
+-- Name: snmp_attributes; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY services ALTER COLUMN snmp_attributes SET DEFAULT '{}'::json;
 
 
 --
@@ -1175,6 +1394,38 @@ ALTER TABLE ONLY events
 
 
 --
+-- Name: graph_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY graph_items
+    ADD CONSTRAINT graph_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: graph_template_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY graph_template_items
+    ADD CONSTRAINT graph_template_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: graph_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY graph_templates
+    ADD CONSTRAINT graph_templates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: graphs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY graphs
+    ADD CONSTRAINT graphs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1212,6 +1463,14 @@ ALTER TABLE ONLY nodes
 
 ALTER TABLE ONLY notifications
     ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: outages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY outages
+    ADD CONSTRAINT outages_pkey PRIMARY KEY (id);
 
 
 --
@@ -1396,6 +1655,34 @@ CREATE INDEX index_events_on_state ON events USING btree (state);
 
 
 --
+-- Name: index_graph_items_on_data_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_graph_items_on_data_source_id ON graph_items USING btree (data_source_id);
+
+
+--
+-- Name: index_graph_items_on_graph_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_graph_items_on_graph_id ON graph_items USING btree (graph_id);
+
+
+--
+-- Name: index_graph_template_items_on_data_template_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_graph_template_items_on_data_template_id ON graph_template_items USING btree (data_template_id);
+
+
+--
+-- Name: index_graph_template_items_on_graph_template_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_graph_template_items_on_graph_template_id ON graph_template_items USING btree (graph_template_id);
+
+
+--
 -- Name: index_groups_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1491,6 +1778,13 @@ CREATE INDEX index_notifications_on_event_filter_id ON notifications USING btree
 --
 
 CREATE INDEX index_notifications_on_event_id ON notifications USING btree (event_id);
+
+
+--
+-- Name: index_outages_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_outages_on_node_id ON outages USING btree (node_id);
 
 
 --
@@ -1623,3 +1917,13 @@ INSERT INTO schema_migrations (version) VALUES ('20121119050202');
 INSERT INTO schema_migrations (version) VALUES ('20121119051816');
 
 INSERT INTO schema_migrations (version) VALUES ('20121125031423');
+
+INSERT INTO schema_migrations (version) VALUES ('20130819225700');
+
+INSERT INTO schema_migrations (version) VALUES ('20130819231511');
+
+INSERT INTO schema_migrations (version) VALUES ('20130821045228');
+
+INSERT INTO schema_migrations (version) VALUES ('20130825021600');
+
+INSERT INTO schema_migrations (version) VALUES ('20130825021659');

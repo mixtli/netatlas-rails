@@ -1,6 +1,7 @@
 class DevicesController < NodesController
   filter_access_to :datatable, :require => :read
   self.resource_class = Device
+  self.datatable_class = DevicesDatatable
 
   def show
     @device = DeviceDecorator.find(params[:id])
@@ -17,14 +18,11 @@ class DevicesController < NodesController
       unless @device.new_record?
         @device.scan
       end
+      redirect_to devices_path
     else
+      flash[:alert] = "Invalid Device"
+      render :new
     end
-    respond_with(@device)
   end
 
-  def datatable
-    respond_to do |format|
-      format.json { render json: DevicesDatatable.new(view_context)}
-    end
-  end
 end

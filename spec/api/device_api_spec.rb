@@ -5,6 +5,9 @@ describe NetAtlas::DeviceAPI do
   def app
     NetAtlas::DeviceAPI
   end
+  before do
+    login_as_user
+  end
 
   context 'list' do
     it "should get a list of devices" do
@@ -12,6 +15,7 @@ describe NetAtlas::DeviceAPI do
       get '/devices'
       response.size.should == 10
     end
+
 
     it "should paginate list" do
       10.times { |i| create(:device, :hostname => "host#{i}.lvh.me") }
@@ -47,6 +51,12 @@ describe NetAtlas::DeviceAPI do
       post '/devices', {:device => attributes_for(:device)}.to_json, {'CONTENT_TYPE' => "application/json"}
       expect(last_response.status).to be(201)
       expect(Device.count).to eq(1)
+    end
+
+    it "should set the creator" do
+      post '/devices', {:device => attributes_for(:device)}.to_json, {'CONTENT_TYPE' => "application/json"}
+      expect(last_response.status).to be(201)
+      expect(Device.last.creator.email).to eql('user@netatlas.com')
     end
   end
 

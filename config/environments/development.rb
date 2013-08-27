@@ -18,6 +18,8 @@ NetatlasRails::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
+  config.serve_static_assets = true
+
   # Expands the lines which load the assets
   config.assets.debug = true
 

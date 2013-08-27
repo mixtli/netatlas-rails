@@ -1,0 +1,8 @@
+%table#data_templates{:data => {:source => datatable_data_templates_path}}
+  %thead
+    %th Name
+    %th Plugin
+    %th Actions
+  %tbody
+%br
+= link_to 'Create a Data Template', new_data_template_path, :class => "button radius"

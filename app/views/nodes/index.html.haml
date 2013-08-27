@@ -1,0 +1,23 @@
+%h1 All Nodes
+
+= search_form_for @q, :class => 'filter-bar' do |f|
+  = f.select :state_eq, options_for_select(Node::STATES, @q.state_eq), :include_blank => 'All Statuses'
+  = f.select :type_eq, options_for_select(Node::TYPES, @q.type_eq), :include_blank => 'All Types'
+
+%table#nodes{:data => {:source => datatable_nodes_path}}
+  %thead
+    %tr
+      %th= sort_link @q, :node_label, "Node" 
+      %th= sort_link @q, :state, "State"
+      %th= sort_link @q, :type, "Type"
+      %th Actions
+  %tbody
+    - @nodes.each do |n|
+      %tr
+        %th= link_to(n, n)
+        %th= n.state
+        %th= n.type
+        %th= link_to 'Show', n
+        %th= link_to 'Edit', polymorphic_path([:edit, n])
+        %th= link_to 'Delete', n, :method => :delete, :data => {:confirm => 'Are you sure?'}
+  

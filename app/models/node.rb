@@ -1,7 +1,9 @@
 class Node < ActiveRecord::Base
   #acts_as_citier
+  STATES = %w(ok warning critical unknown)
+  TYPES = %w(Device Service Interface)
   belongs_to :device
-  validates :state, :inclusion => %w(ok warning fail unknown)
+  validates :state, :inclusion => STATES
   attr_accessible :description, :label, :snmp_index, :state, :type, :snmp_attributes
   has_many :poller_nodes
   has_many :pollers, :through => :poller_nodes
@@ -13,8 +15,11 @@ class Node < ActiveRecord::Base
   has_many :data_sources
   has_many :memberships
   has_many :groups, :through => :memberships
+  has_many :events
   #serialize :snmp_attributes, ActiveRecord::Coders::Hstore
   store_accessor :snmp_attributes
+  after_save :notify_pollers
+
 
   class << self
     def klass(type)
@@ -93,6 +98,12 @@ class Node < ActiveRecord::Base
   def all_dependencies
     result = ActiveRecord::Base.connection.execute("SELECT * FROM node_dependencies(#{id})")
     Node.where(:id => result.map {|r| r["id"].to_i})
+  end
+
+  def notify_pollers
+    data_sources.each do |ds|
+      ds.queue_data_source
+    end
   end
 
 end

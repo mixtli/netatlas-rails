@@ -15,12 +15,28 @@ GIT
     userstamp (2.0.2)
 
 GIT
+  remote: git://github.com/mleinart/graphite_storage.git
+  revision: 0900f81ef15cc680cfd279a28323cc27fe0e2a6e
+  specs:
+    graphite_storage (0.0.1)
+
+GIT
   remote: git://github.com/plataformatec/simple_form.git
   revision: 359606f222fa0972a4a14ec70140ac00f7c80839
   specs:
     simple_form (3.0.0.rc)
       actionpack (>= 4.0.0, < 4.1)
       activemodel (>= 4.0.0, < 4.1)
+
+GIT
+  remote: git://github.com/remiprev/her.git
+  revision: e8d5d3127a715464d1bcda76a7bcde5c08dce7ba
+  specs:
+    her (0.6.8)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      faraday (~> 0.8)
+      multi_json (~> 1.7)
 
 GIT
   remote: git://github.com/sporkrb/spork-rails.git
@@ -45,7 +61,6 @@ PATH
       faraday
       faraday_middleware
       gli (= 2.0.0.rc4)
-      her
       i18n
       json
 
@@ -166,9 +181,6 @@ GEM
       activesupport (>= 3.0)
       request_store (~> 1.0.3)
     dynamic_form (1.1.4)
-    em-websocket (0.5.0)
-      eventmachine (>= 0.12.9)
-      http_parser.rb (~> 0.5.3)
     erubis (2.7.0)
     evented-spec (0.9.0)
     eventmachine (1.0.3)
@@ -208,6 +220,9 @@ GEM
       rack-accept
       rack-mount
       virtus
+    graphite-api (0.1.1)
+      eventmachine (>= 0.3.3)
+      zscheduler (>= 0.0.3)
     guard (1.8.2)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
@@ -225,10 +240,6 @@ GEM
     guard-jasmine-headless-webkit (0.3.2)
       guard (>= 0.4.0)
       jasmine-headless-webkit (>= 0.7.0)
-    guard-livereload (1.4.0)
-      em-websocket (>= 0.5.0)
-      guard (>= 1.8.0)
-      multi_json (~> 1.7)
     guard-migrate (0.1.7)
       guard (>= 1.3.0)
     guard-process (1.0.5)
@@ -257,11 +268,6 @@ GEM
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
     hashie (2.0.5)
-    her (0.6.8)
-      activemodel (>= 3.0.0)
-      activesupport (>= 3.0.0)
-      faraday (~> 0.8)
-      multi_json (~> 1.7)
     highline (1.6.19)
     hike (1.2.3)
     http_parser.rb (0.5.3)
@@ -431,6 +437,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     state_machine (1.2.0)
+    statsd-ruby (1.2.1)
     temple (0.6.6)
     terminal-notifier-guard (1.5.3)
     therubyracer (0.11.4)
@@ -462,6 +469,8 @@ GEM
     will_paginate (3.0.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
+    zscheduler (0.0.3)
+      eventmachine
     zurb-foundation (4.3.1)
       sass (>= 3.2.0)
 
@@ -490,11 +499,12 @@ DEPENDENCIES
   faker
   foreman
   grape
+  graphite-api
+  graphite_storage!
   guard-bundler
   guard-coffeescript
   guard-ctags-bundler
   guard-jasmine-headless-webkit
-  guard-livereload
   guard-migrate
   guard-process
   guard-rails-assets
@@ -502,6 +512,7 @@ DEPENDENCIES
   guard-sidekiq
   guard-spork
   haml-rails
+  her!
   jasmine-rails
   jquery-rails
   jquery-ui-rails
@@ -533,6 +544,7 @@ DEPENDENCIES
   slim
   spork-rails!
   state_machine
+  statsd-ruby
   terminal-notifier-guard
   therubyracer
   thin

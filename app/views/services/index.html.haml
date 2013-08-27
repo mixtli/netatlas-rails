@@ -1,16 +1,8 @@
 = link_to 'Create a Service', new_service_path
-%table.table.table-striped
+%table#services{:data => {:source => datatable_services_path}}
   %thead
     %tr
       %th Name
       %th Device
-      %th{:colspan => 3}
+      %th Actions
   %tbody
-    - @services.each do |service|
-      %tr
-        %td= service.label
-        %td= service.device
-        %td= link_to 'Show', service, :class => 'btn btn-mini'
-        %td= link_to 'Edit', edit_service_path(service), :class => 'btn btn-mini'
-        %td= link_to 'Destroy', service, :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'
-= will_paginate @services

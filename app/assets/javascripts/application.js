@@ -12,14 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
-//
+//= require foundation
+//= require media/js/jquery.dataTables
+//= require jquery.flot
+//= require jquery.flot.time
+//= require raphael-min
 //= require devices
-//
-//= require_self
+//= require_tree
 //
 
-$('.datatable').dataTable({
-  "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-  "sPaginationType": "bootstrap"
-});
-
+$(function(){ $(document).foundation(); });

@@ -9,11 +9,43 @@ NetatlasRails::Application.routes.draw do
       get "datatable"
     end
   end
-  resources :nodes
+  resources :nodes do
+    collection do
+      get "datatable"
+    end
+  end
+  resources :graph_items
+  resources :graph_templates do
+    collection do
+      get 'datatable'
+    end
+  end
   resources :pollers
-  resources :data_sources
-  resources :interfaces
-  resources :events
+  resources :outages do
+    collection do
+      get 'datatable'
+    end
+  end
+  resources :data_sources do
+    collection do
+      get 'datatable'
+    end
+  end
+  resources :data_templates do
+    collection do
+      get 'datatable'
+    end
+  end
+  resources :interfaces do
+    collection do
+      get "datatable"
+    end
+  end
+  resources :events do
+    collection do
+      get "datatable"
+    end
+  end
   resources :event_filters
   resources :notifications
   resources :contacts
@@ -22,6 +54,16 @@ NetatlasRails::Application.routes.draw do
       get 'datatable'
     end
   end
+  resources :graphs do
+    collection do
+      get "datatable"
+    end
+    member do
+      get "data"
+    end
+  end
+  get 'map' => "map#index"
+  get 'dashboard' => "dashboard#index"
 
   mount JasmineRails::Engine => "/specs" unless Rails.env.production?
   get "main/index"

@@ -2,6 +2,24 @@ module NetAtlas
   module Base
     def self.included(base)
       base.class_eval do
+        http_basic do |email, password|
+          user = User.find_by_email(email)
+          user && user.valid_password?(password)
+        end
+        helpers do
+          def current_user
+            @current_user ||= User.find_by_email(env['REMOTE_USER'])
+          end
+        end
+
+        before do
+          User.stamper = current_user
+          Authorization.current_user = current_user
+        end
+        after do
+          User.reset_stamper
+        end
+
         def self.resource_class=(klass)
           @resource_class = klass
         end
@@ -13,16 +31,16 @@ module NetAtlas
         end
         format :json
         get do
+          conditions = params[:q] ? params[:q].dup : {}
+          conditions[:data_streams_poller_id_eq] = params[:poller_id] if params[:poller_id]
           limit = params[:limit] || 100
           offset = params[:offset] || 0
-          base.resource_class.all.limit(limit).offset(offset).search(params[:q]).result.all
+          base.resource_class.search(conditions).result.limit(limit).offset(offset)
         end
 
         get ':id' do
           begin
             res = base.resource_class.find(params[:id])
-            Rails.logger.debug "params = #{params.inspect}"
-            Rails.logger.debug "res = #{res.as_json.inspect}"
             res.as_json
           rescue ActiveRecord::RecordNotFound
             error! "Resource not found!", 404
