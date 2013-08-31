@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'declarative_authorization/maintenance'
-if User.where(:email => 'admin@netatlas.com')
+if User.where(:email => 'admin@netatlas.com').first
   puts "Database already seeded"
   exit 0
 end
