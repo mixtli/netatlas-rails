@@ -36,16 +36,13 @@ gem 'sinatra', :require => false
 gem 'slim'
 gem 'her', :github => 'remiprev/her'
 
-#if ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
+if ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
   gem 'netatlas-poller', :path => "#{ENV['HOME']}/Projects/netatlas-poller"
-#else
-#  gem 'netatlas-poller', :git => 'git@github.com:mixtli/netatlas-poller.git'
-#end
-#if ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
   gem 'netatlas-client', :path => "#{ENV['HOME']}/Projects/netatlas-client", :require => 'netatlas/client'
-#else
-#  gem 'netatlas-client', :git => 'git@github.com:mixtli/netatlas-client.git'
-#end
+else
+  gem 'netatlas-poller', :git => 'git@github.com:mixtli/netatlas-poller.git', :branch => :staging
+  gem 'netatlas-client', :git => 'git@github.com:mixtli/netatlas-client.git', :branch => :staging
+end
 
 gem 'coffee-rails'
 gem 'uglifier'

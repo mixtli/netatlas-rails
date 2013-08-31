@@ -1,0 +1,4 @@
+# pack-refs with: peeled 
+1bedef2917c10db8fc61ec5391ed8a254f3ffa85 refs/heads/celluloid
+d4e33059edb090d27701177f3a7eef22ab71877e refs/heads/master
+1bedef2917c10db8fc61ec5391ed8a254f3ffa85 refs/heads/staging

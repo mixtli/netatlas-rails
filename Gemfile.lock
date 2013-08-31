@@ -47,13 +47,9 @@ GIT
       spork (>= 1.0rc0)
 
 GIT
-  remote: git@github.com:mixtli/rabbit_manager.git
-  revision: c3d057f39dfebe3b24edee177fa74b7a2cddbdfa
-  specs:
-    rabbit_manager (0.0.1)
-
-PATH
-  remote: /Users/rmcclain/Projects/netatlas-client
+  remote: git@github.com:mixtli/netatlas-client.git
+  revision: ef352217edbab18d3678b966bf2aa82c824a86b1
+  branch: staging
   specs:
     netatlas-client (0.0.1)
       activesupport (~> 4.0.0)
@@ -64,8 +60,10 @@ PATH
       i18n
       json
 
-PATH
-  remote: /Users/rmcclain/Projects/netatlas-poller
+GIT
+  remote: git@github.com:mixtli/netatlas-poller.git
+  revision: 1bedef2917c10db8fc61ec5391ed8a254f3ffa85
+  branch: staging
   specs:
     netatlas-poller (0.0.1)
       activesupport (~> 4.0.0)
@@ -80,6 +78,12 @@ PATH
       net-snmp
       netatlas-client
       open4
+
+GIT
+  remote: git@github.com:mixtli/rabbit_manager.git
+  revision: c3d057f39dfebe3b24edee177fa74b7a2cddbdfa
+  specs:
+    rabbit_manager (0.0.1)
 
 GEM
   remote: https://rubygems.org/
