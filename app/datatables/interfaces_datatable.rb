@@ -1,7 +1,7 @@
 class InterfacesDatatable < Datatable
   self.model = Interface
   self.columns = [:device, :ip_address, :state]
-  self.default_scope = Interface.includes(:device)
+  self.default_scope = -> {Interface.includes(:device) }
   self.sort_columns = {
     :device => 'devices.hostname'
   }

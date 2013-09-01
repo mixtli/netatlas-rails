@@ -1,7 +1,7 @@
 class NodesDatatable < Datatable
   self.model = Node
   self.columns = [:label, :state, :type ]
-  self.default_scope = Node
+  self.default_scope = ->{ Node }
   def row(node)
     [
       node.label,

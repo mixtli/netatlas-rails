@@ -28,7 +28,7 @@ class Datatable
   end
 
   def fetch_resources
-    resources = default_scope.search(params[:q]).result.order("#{sort_column} #{sort_direction}")
+    resources = default_scope.call.search(params[:q]).result.order("#{sort_column} #{sort_direction}")
     resources = resources.page(page).per_page(per_page)
     if params[:sSearch].present?
       resources = resources.term_search(params[:sSearch])
