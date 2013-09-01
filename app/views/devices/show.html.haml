@@ -11,50 +11,8 @@
         %th Hostname
         %td= @device.hostname
       %tr
-        %th OS 
-        %td= @device.os
-      %tr
-        %th OS Version
-        %td= @device.os_version
-      %tr
-        %th OS Type
-        %td= @device.os_type
-      %tr
-        %th OS Vendor
-        %td= @device.os_vendor
-      %tr
-        %th Memory
-        %td= @device.memory
-      %tr
-        %th Num of CPUs
-        %td= @device.num_cpus
-      %tr
         %th SNMP Version
         %td= @device.snmp_version
-      %tr
-        %th IP Forwarding?
-        %td= @device.ip_forwarding
-  
-  %table.table.table-striped.table-bordered
-    %thead
-      %tr
-        %th{colspan: 2}  SNMP Attributes
-    %tbody
-      %tr
-        %th Name
-        %td= @device.sys_name
-      %tr
-        %th Object ID
-        %td= @device.sys_objectid
-      %tr
-        %th Location
-        %td= @device.sys_location
-      %tr
-        %th Contact
-        %td= @device.sys_contact
-      %tr
-        %th Description
-        %td= @device.sys_descr
   
 = render 'interfaces/list', :interfaces => @device.interfaces, :device_id => @device.id
   

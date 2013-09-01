@@ -37,6 +37,14 @@
     - node.dependencies.each do |n|
       %tr
         %td= link_to(n, n)
+%table
+  %thead
+    %tr
+      %th SNMP Attributes
+    - node.snmp_attributes.each do |k, v|
+      %tr
+        %th= k
+        %td= v
 
 %table
   %thead
