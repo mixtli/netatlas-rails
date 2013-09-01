@@ -1,0 +1,48 @@
+0c2d641bd51fb8aba252ce25875a7d72458d3972		branch 'api-refactor' of git://github.com/remiprev/her
+3cdc157c0d16b5846ea80c1ee78a73dbdf9a6b9e		branch 'faraday-0.9' of git://github.com/remiprev/her
+80f273bf022ec9943a7cf8ca1901c60e1224bf99		branch 'fix-dirty-and-dynamic-attributes' of git://github.com/remiprev/her
+bcd1231d29053793d88c2bb0dc09e4cf5d492379		branch 'gh-pages' of git://github.com/remiprev/her
+e8d5d3127a715464d1bcda76a7bcde5c08dce7ba		branch 'master' of git://github.com/remiprev/her
+ebbb1b1507c1e91885db51deabbf1d6348f744e1		branch 'rewrite-test-suite' of git://github.com/remiprev/her
+e0a6653f6f6eda56ef0d541a791154fbcf1b19a4		branch 'test-am-4' of git://github.com/remiprev/her
+5caf1a35ab54ea9105dd4218f25bca1735b2fb87	not-for-merge	tag 'v0.0.1' of git://github.com/remiprev/her
+af6bf4366bd60dd2bd4b3af5c62143f44aa8f6a6	not-for-merge	tag 'v0.1' of git://github.com/remiprev/her
+f86d72b42ae9e62a193fb76a932eaba6d4529c85	not-for-merge	tag 'v0.1.1' of git://github.com/remiprev/her
+1b93205b03b26af29464d91fe4d0c13800648f6e	not-for-merge	tag 'v0.1.5' of git://github.com/remiprev/her
+134b2a1b3c877387fce087223e3557484ed6f18c	not-for-merge	tag 'v0.1.6' of git://github.com/remiprev/her
+83753a17fe1e3beaca653591f3338120fc4ced41	not-for-merge	tag 'v0.1.7' of git://github.com/remiprev/her
+dae9266e75eab36a0aa05c2b69661bd94f292bef	not-for-merge	tag 'v0.1.8' of git://github.com/remiprev/her
+6b522516c77eab88ee96e63aba586416e47d22ed	not-for-merge	tag 'v0.1.8.1' of git://github.com/remiprev/her
+3761ab32c78fe3d5ef02abf5284b2e55f50e83b3	not-for-merge	tag 'v0.2' of git://github.com/remiprev/her
+7a308a557ec06fd0fc59645912fe8b5d2db2f560	not-for-merge	tag 'v0.2.1' of git://github.com/remiprev/her
+bfc80b4a92a9b14e533efacf21128a6412c949ad	not-for-merge	tag 'v0.2.2' of git://github.com/remiprev/her
+f8b252aa0588a994f781938e16aaa20ef09bd8d4	not-for-merge	tag 'v0.2.3' of git://github.com/remiprev/her
+3a6aa7f7e394a787af98cdcb49539df6ba384416	not-for-merge	tag 'v0.2.4' of git://github.com/remiprev/her
+be07cd8ed86c485dbb61af9d52fb44e6b15bd3c9	not-for-merge	tag 'v0.2.5' of git://github.com/remiprev/her
+8b4a88f0a4311e61b5937d25545bcf6e9241ac6a	not-for-merge	tag 'v0.2.6' of git://github.com/remiprev/her
+71f41f23652095fc7a58ce6d9dfb0af65f4a29df	not-for-merge	tag 'v0.3' of git://github.com/remiprev/her
+5c694a422b3b73835dc95960b0c94a0982780768	not-for-merge	tag 'v0.3.1' of git://github.com/remiprev/her
+4feb6e61e6587c5e8508d5c88127cd3179a250e7	not-for-merge	tag 'v0.3.2' of git://github.com/remiprev/her
+f5f765e380f7db260e6aa7bad7c7fea0c4d546b0	not-for-merge	tag 'v0.3.3' of git://github.com/remiprev/her
+62743ef26ce29b6b461167709b7be275c4bc1a8c	not-for-merge	tag 'v0.3.4' of git://github.com/remiprev/her
+b53e614b3d91f680aaa7697d2fccc6bd85740e9d	not-for-merge	tag 'v0.3.5' of git://github.com/remiprev/her
+369d52fcc84bd364731d619bbdbc13ffc89f48a6	not-for-merge	tag 'v0.3.6' of git://github.com/remiprev/her
+5d16c8d46f52709685f520dfafc712dcc58009d8	not-for-merge	tag 'v0.3.7' of git://github.com/remiprev/her
+7c71e715cffcea9f7d90b386b4c84135e6e9d687	not-for-merge	tag 'v0.3.8' of git://github.com/remiprev/her
+00cec96eecdb3a42c335e1103ca09749e62b63a1	not-for-merge	tag 'v0.4' of git://github.com/remiprev/her
+a21672a600a20c08d78c8ba11e715914e17325dd	not-for-merge	tag 'v0.4.1' of git://github.com/remiprev/her
+0f9947256572b556db00b8cda7660caf6ea88ab1	not-for-merge	tag 'v0.5' of git://github.com/remiprev/her
+ff630f0cf00e427bc8726203bc86a2d7c610db58	not-for-merge	tag 'v0.5.1' of git://github.com/remiprev/her
+e251a3ff5bd705579a7dc38c1ad3af33673c7bc5	not-for-merge	tag 'v0.5.2' of git://github.com/remiprev/her
+d94b7857280683df26fb9ca0efd43f7d8189a33d	not-for-merge	tag 'v0.5.3' of git://github.com/remiprev/her
+77446cf2276d128c94e5205d497dd64788f8f271	not-for-merge	tag 'v0.5.4' of git://github.com/remiprev/her
+e5348a74d0946a15141d634dcdc3db7f35412908	not-for-merge	tag 'v0.5.5' of git://github.com/remiprev/her
+e7ca94cbd7979c671bff1a2d7038e92b600031a0	not-for-merge	tag 'v0.6' of git://github.com/remiprev/her
+a09ef3e501b8a0d4e4f7dd765ae6aa77b1f391ec	not-for-merge	tag 'v0.6.1' of git://github.com/remiprev/her
+4f90170ff52cd0e81f20f7290fbe4ed7d2e24138	not-for-merge	tag 'v0.6.2' of git://github.com/remiprev/her
+4ef51454b62dda7dd682dc71da75cd2fee2559b6	not-for-merge	tag 'v0.6.3' of git://github.com/remiprev/her
+0ed02ae594ff285a79fee84a0f112cbc207e741e	not-for-merge	tag 'v0.6.4' of git://github.com/remiprev/her
+5a2add6a9507965a91b17909cc56c5c6eca0a368	not-for-merge	tag 'v0.6.5' of git://github.com/remiprev/her
+30c7fafded821a88d33cab65e21e3b1663cea017	not-for-merge	tag 'v0.6.6' of git://github.com/remiprev/her
+7b05502d985308c7a4762c6d8e64d7690894024e	not-for-merge	tag 'v0.6.7' of git://github.com/remiprev/her
+221aacafa468f34a12b1acfed7ffe4d8dd4cd16a	not-for-merge	tag 'v0.6.8' of git://github.com/remiprev/her
