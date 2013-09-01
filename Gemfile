@@ -3,7 +3,7 @@ if RUBY_VERSION =~ /1.9/
   Encoding.default_internal = Encoding::UTF_8
 end
 source 'https://rubygems.org'
-gem 'thin'
+gem 'puma'
 gem 'rails', '~> 4.0.0'
 gem 'pg', :require => 'pg'
 #gem 'postgres_ext'
