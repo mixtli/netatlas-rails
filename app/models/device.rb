@@ -23,11 +23,9 @@ class Device < Node
   def to_s; label; end
 
   def scan
-     AMQP::Channel.new do |channel|
-       puts "publishing"
-       channel.direct("").publish self.to_json(:only => [:hostname, :ip_address], :methods => :type), :routing_key => 'command'
-       puts "done publishing"
-     end
+    pollers.each do |p|
+      SendCommandService.call(p.id, :scan, self.as_json)
+    end
   end
 private
   def fix_ip_address

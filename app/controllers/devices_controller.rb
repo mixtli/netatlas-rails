@@ -16,7 +16,7 @@ class DevicesController < NodesController
     if @device.valid?
       @device.save
       unless @device.new_record?
-        @device.scan
+        #@device.scan
       end
       redirect_to devices_path
     else
