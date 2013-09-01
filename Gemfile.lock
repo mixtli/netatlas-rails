@@ -62,7 +62,7 @@ GIT
 
 GIT
   remote: git@github.com:mixtli/netatlas-poller.git
-  revision: 1bedef2917c10db8fc61ec5391ed8a254f3ffa85
+  revision: f77fcc298102a84c92bae59a2702a9c8ec671fbb
   branch: staging
   specs:
     netatlas-poller (0.0.1)
