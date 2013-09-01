@@ -15,6 +15,14 @@ GIT
     userstamp (2.0.2)
 
 GIT
+  remote: git://github.com/mixtli/net-snmp.git
+  revision: 490fa59d1a8b46c9d26b7288b2f9d4b2a47ff70f
+  specs:
+    net-snmp (0.2.5)
+      ffi-inliner
+      nice-ffi
+
+GIT
   remote: git://github.com/mleinart/graphite_storage.git
   revision: 0900f81ef15cc680cfd279a28323cc27fe0e2a6e
   specs:
@@ -62,7 +70,7 @@ GIT
 
 GIT
   remote: git@github.com:mixtli/netatlas-poller.git
-  revision: f77fcc298102a84c92bae59a2702a9c8ec671fbb
+  revision: 87cbe56447634bbfc5d09d4a1b24008a63bcaeca
   branch: staging
   specs:
     netatlas-poller (0.0.1)
@@ -316,9 +324,6 @@ GEM
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
-    net-snmp (0.2.5)
-      ffi-inliner
-      nice-ffi
     net-ssh (2.6.8)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
@@ -521,6 +526,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   launchy
+  net-snmp!
   netatlas-client!
   netatlas-poller!
   pg

@@ -15,6 +15,7 @@ gem 'haml-rails'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'exception_notification'
 gem 'state_machine'
+gem 'net-snmp', :github => 'mixtli/net-snmp'
 gem 'ransack', github: "ernie/ransack", branch: "rails-4" 
 gem 'will_paginate'
 gem 'jquery-rails'
