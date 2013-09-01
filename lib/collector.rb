@@ -12,5 +12,9 @@ class Collector < QueueProcessor
     puts "stream = #{stream.inspect}"
     AddDataService.call(stream.id, timestamp.to_i, msg['value'])
     puts "done adding data"
+  rescue => e
+    puts e.message
+    puts e.stacktrace
+    raise e
   end
 end
