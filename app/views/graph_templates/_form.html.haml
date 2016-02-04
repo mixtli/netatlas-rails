@@ -1,0 +1,34 @@
+%div.large-6.column
+  = simple_form_for(@graph_template) do |f|
+    = f.error_notification
+    .form-inputs
+      = f.input :title
+      = f.input :options, :as => :text
+    .form-actions
+      = f.button :submit
+%div.large-6.column
+  %table
+    %thead
+      %tr
+        %th{:colspan=> 5} Graph Template Items
+      %tr
+        %th Data Template
+        %th Units
+        %th Options
+        %th{:colspan => 2}
+    %tbody
+      - @graph_template.items.includes(:data_template).each do |item|
+        %tr
+          %td= link_to item.data_template
+          %th= item.units
+          %td= item.options
+          %td= link_to 'Delete', item, :method => :delete
+          %td= link_to 'Edit', edit_graph_template_item_path(item)
+  =form_tag(graph_template_items_path, :method => :post) do
+    %input{:type => :hidden, :name => "graph_template_item[graph_template_id]", :value => @graph_template.id}
+    %select{:name => "graph_template_item[data_template_id]"}
+      - DataTemplate.all.each do |ds|
+        %option{:value => ds.id}= ds.to_s
+    %input{:type => :submit, :value => 'Add Data Template'}
+
+

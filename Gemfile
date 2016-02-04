@@ -29,7 +29,7 @@ gem 'grape'
 gem 'rabbit_manager', :git => 'git@github.com:mixtli/rabbit_manager.git'
 #gem 'rabbit_manager', :path => '/Users/rmcclain/Projects/rabbit_manager'
 gem 'rest-client'
-gem 'seed-fu'
+gem 'seed-fu', :github => 'mbleigh/seed-fu'
 gem 'statsd-ruby', :require => 'statsd'
 gem 'graphite-api'
 

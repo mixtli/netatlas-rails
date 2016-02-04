@@ -16,6 +16,7 @@
 //= require media/js/jquery.dataTables
 //= require jquery.flot
 //= require jquery.flot.time
+//= require jsviews.min
 //= require raphael-min
 //= require devices
 //= require_tree

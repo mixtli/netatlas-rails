@@ -1,0 +1,10 @@
+%table
+  %thead
+    %tr
+      %th Node
+      %th Delete
+  %tbody
+    - @group.nodes.each do |node|
+      %tr
+        %td= link_to node, node
+        %td= link_to 'Remove', remove_node_groups_path(:group_id => @group.id, :node_id => node.id), :method => :delete

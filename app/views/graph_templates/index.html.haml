@@ -1,0 +1,12 @@
+%h1 Listing Graph Templates
+
+%table#graphs{:data => {:source => datatable_graph_templates_path}}
+  %thead
+    %tr
+      %th Title
+      %th Created At
+      %th Actions
+  %tbody
+  
+%br
+= link_to 'New Graph', new_graph_template_path, :class => "button radius"

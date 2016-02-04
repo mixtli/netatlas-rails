@@ -20,8 +20,6 @@ describe CreateEventService do
       :type => :device,
       :hostname => 'foo.lvh.me',
       :ip_address => '127.0.0.1',
-      :os => 'Mountain Lion',
-      :os_version => "10.7",
       :snmp_version => '2c'
     }
     event = subject.call(:type => 'discovery', :arguments => node_hash)

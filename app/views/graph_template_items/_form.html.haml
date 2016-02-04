@@ -1,0 +1,11 @@
+= simple_form_for(@graph_template_item, :html => {:class => 'form-horizontal'}) do |f|
+  = f.error_messages
+  .form-inputs
+    = f.association :data_template
+    = f.input :label
+    = f.input :units
+    = f.input :cdef
+    = f.input :options, :as => :text
+
+  .form-actions
+    = f.button :submit, :id => 'create_data_template'

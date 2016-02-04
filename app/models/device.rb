@@ -12,6 +12,7 @@ class Device < Node
   after_create :create_primary_interface
   before_create :fix_ip_address
   has_many :interfaces
+  validate :ip_address_must_be_valid
   scope :term_search, ->(term) { where("hostname like ?", "%#{term}%")}
 
   class << self
@@ -21,6 +22,13 @@ class Device < Node
   end
 
   def to_s; label; end
+
+  def ip_address_must_be_valid
+    fix_ip_address
+    unless ip_address
+      errors.add(:ip_address, "IP Address is not valid")
+    end
+  end
 
   def scan
     pollers.each do |p|

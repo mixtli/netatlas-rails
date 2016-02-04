@@ -36,6 +36,7 @@ describe "Services List" do
       visit service_path(service)
       click_link 'Create Data Source'
       select 'HTTP Latency', :from => 'data_source_data_template_id'
+      select 'Nagios', :from => 'Plugin'
       select 'poller1', :from => 'Pollers'
       # XXX: I don't understand why I have to mock this.  It should be set by bunny.rb initializer
       # but for some reason ::BUNNY is nil here

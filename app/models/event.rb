@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   belongs_to :resolved_by, :class_name => 'User'
   stampable
   attr_accessible :acknowledged_at, :additional, :description, :notes, :repeats, :resolved_at, :severity, :state, :node, :node_id, :arguments
-
+  
   state_machine :state, :initial => :open do
     state :acknowledged
     state :resolved

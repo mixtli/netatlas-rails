@@ -1,11 +1,15 @@
+= render :partial => 'template_item'
 %div.large-6.column
   = simple_form_for(@graph) do |f|
     = f.error_notification
     .form-inputs
+      = f.association :graph_template, :input_html => {:data => {'template-url' => graph_templates_path}}
       = f.input :title
       = f.input :options, :as => :text
     .form-actions
       = f.button :submit
+%table#graph-items-table
+
 %div.large-6.column
   %table
     %thead

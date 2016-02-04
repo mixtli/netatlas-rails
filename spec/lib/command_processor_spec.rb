@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'command_processor'
+Thread.abort_on_exception = true
 
 describe CommandProcessor do
   let(:poller) { create(:poller)}

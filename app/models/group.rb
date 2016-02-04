@@ -3,4 +3,6 @@ class Group < ActiveRecord::Base
   has_many :memberships
   has_many :nodes, :through => :memberships
   attr_accessible :name
+
+  def to_s; name; end
 end

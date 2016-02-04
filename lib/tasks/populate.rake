@@ -43,5 +43,5 @@ namespace :db do
   end
 
   desc 'repopulate database from scratch'
-  task :repopulate => [:truncate, :seed, :populate]
+  task :repopulate => [:truncate, :seed_fu, :populate]
 end

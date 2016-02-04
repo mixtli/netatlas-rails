@@ -3,14 +3,7 @@ describe "Show a device" do
   let(:user) { FactoryGirl.create(:user) }
   let(:device) { FactoryGirl.create(:device, 
                                     hostname: 'test.lvh.me', 
-                                    sys_descr: 'Darwin localhost', 
-                                    sys_name: 'localhost', 
-                                    sys_objectid: '.1.3.6.1', 
-                                    sys_location: 'Test Lab',
-                                    sys_contact: 'Bill',
                                     snmp_version: '2c',
-                                    memory: 4000
-
                                    )}
 
 
@@ -26,18 +19,9 @@ describe "Show a device" do
       visit device_path(device)
     end
 
-    it "should display snnp attributes" do
-      #pending
-      page.should have_content('Darwin')
-      page.should have_content('.1.3.6.1')
-      page.should have_content('localhost')
-      page.should have_content('Test Lab')
-      page.should have_content('Bill')
-    end
 
     it "should display host attributes" do
       page.should have_content('test.lvh.me')
-      page.should have_content('4000')
       page.should have_content('2c')
     end
 

@@ -1,0 +1,15 @@
+= simple_form_for(@group) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :name
+  .form-actions
+    = f.button :submit, :id => 'create_group'
+
+
+%h2 Add Node 
+%select{:id => 'add-node', :data => {'group-id' => @group.id}}
+  - Node.all.each do |n|
+    %option{:value => n.id}= n.label
+
+
+= render 'group'

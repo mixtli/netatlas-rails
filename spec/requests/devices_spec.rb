@@ -15,7 +15,7 @@ describe "Devices List" do
       sleep 1
       login_as(user)
       1.upto(25) do |n|
-        create(:device,  :hostname => "host#{n}.lvh.me", :sys_contact => 'Bob')
+        create(:device,  :hostname => "host#{n}.lvh.me")
       end
       sleep 1
       visit devices_path
@@ -47,7 +47,6 @@ describe "Devices List" do
       pending "test is bombing with spurious webkit error"
       click_link 'host1.lvh.me'
       page.should have_content('host1.lvh.me')
-      page.should have_content('Bob')
     end
   end
 end

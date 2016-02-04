@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -36,7 +37,62 @@ CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
 COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
 
 
+--
+-- Name: postgres_fdw; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS postgres_fdw WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION postgres_fdw; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION postgres_fdw IS 'foreign-data wrapper for remote PostgreSQL servers';
+
+
 SET search_path = public, pg_catalog;
+
+--
+-- Name: crc32(text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION crc32(word text) RETURNS bigint
+    LANGUAGE plpgsql IMMUTABLE
+    AS $$
+          DECLARE tmp bigint;
+          DECLARE i int;
+          DECLARE j int;
+          DECLARE byte_length int;
+          DECLARE word_array bytea;
+          BEGIN
+            IF COALESCE(word, '') = '' THEN
+              return 0;
+            END IF;
+
+            i = 0;
+            tmp = 4294967295;
+            byte_length = bit_length(word) / 8;
+            word_array = decode(replace(word, E'\\', E'\\\\'), 'escape');
+            LOOP
+              tmp = (tmp # get_byte(word_array, i))::bigint;
+              i = i + 1;
+              j = 0;
+              LOOP
+                tmp = ((tmp >> 1) # (3988292384 * (tmp & 1)))::bigint;
+                j = j + 1;
+                IF j >= 8 THEN
+                  EXIT;
+                END IF;
+              END LOOP;
+              IF i >= byte_length THEN
+                EXIT;
+              END IF;
+            END LOOP;
+            return (tmp # 4294967295);
+          END
+        $$;
+
 
 --
 -- Name: node_dependencies(integer); Type: FUNCTION; Schema: public; Owner: -
@@ -78,6 +134,27 @@ CREATE FUNCTION node_dependents(id integer) RETURNS TABLE(id integer)
        )
        SELECT node_id FROM deps
      $_$;
+
+
+--
+-- Name: core_service_test; Type: SERVER; Schema: -; Owner: -
+--
+
+CREATE SERVER core_service_test FOREIGN DATA WRAPPER postgres_fdw OPTIONS (
+    dbname 'core_service_test',
+    host 'localhost',
+    port '5432'
+);
+
+
+--
+-- Name: USER MAPPING demandbase SERVER core_service_test; Type: USER MAPPING; Schema: -; Owner: -
+--
+
+CREATE USER MAPPING FOR demandbase SERVER core_service_test OPTIONS (
+    password 'MwrdGXgBm3vZ',
+    "user" 'demandbase'
+);
 
 
 SET default_tablespace = '';
@@ -497,7 +574,10 @@ CREATE TABLE graph_items (
     updater_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    label character varying(255),
+    cdef character varying(255),
+    units character varying(255)
 );
 
 
@@ -533,7 +613,10 @@ CREATE TABLE graph_template_items (
     updater_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    label character varying(255),
+    cdef character varying(255),
+    units character varying(255)
 );
 
 
@@ -603,7 +686,8 @@ CREATE TABLE graphs (
     updater_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    graph_template_id integer
 );
 
 
@@ -1683,6 +1767,13 @@ CREATE INDEX index_graph_template_items_on_graph_template_id ON graph_template_i
 
 
 --
+-- Name: index_graphs_on_graph_template_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_graphs_on_graph_template_id ON graphs USING btree (graph_template_id);
+
+
+--
 -- Name: index_groups_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1927,3 +2018,7 @@ INSERT INTO schema_migrations (version) VALUES ('20130821045228');
 INSERT INTO schema_migrations (version) VALUES ('20130825021600');
 
 INSERT INTO schema_migrations (version) VALUES ('20130825021659');
+
+INSERT INTO schema_migrations (version) VALUES ('20130902040725');
+
+INSERT INTO schema_migrations (version) VALUES ('20130902090817');

@@ -24,3 +24,15 @@ jQuery ->
     bServerSide: true
     sAjaxSource: $('#graphs').data('source')
   flot_generate_graphs()
+
+  $('#graph_graph_template_id').bind 'change', ->
+    return unless $(this).val()
+    $.get $(this).data('template-url') + "/" + $(this).val() + ".json", (json)->
+      $.each json['graph_template'], (k, v)->
+        id = '#graph_' + k
+        $(id).val(json['graph_template'][k])
+      $('#graph_options').val(JSON.stringify(json['graph_template']['options']))
+      tpl = $.templates('#graph-item-row')
+      $.each json['graph_template']['graph_template_items'], (k, item) ->
+        $('#graph-items-table').append(tpl.render(item))
+ 

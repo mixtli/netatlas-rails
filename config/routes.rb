@@ -15,11 +15,19 @@ NetatlasRails::Application.routes.draw do
     end
   end
   resources :graph_items
+  resources :groups do
+    collection do
+      get 'datatable'
+      post 'add_node'
+      delete 'remove_node'
+    end
+  end
   resources :graph_templates do
     collection do
       get 'datatable'
     end
   end
+  resources :graph_template_items
   resources :pollers
   resources :outages do
     collection do
@@ -67,7 +75,7 @@ NetatlasRails::Application.routes.draw do
 
   mount JasmineRails::Engine => "/specs" unless Rails.env.production?
   get "main/index"
-  root :to => "main#index"
+  root :to => "dashboard#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

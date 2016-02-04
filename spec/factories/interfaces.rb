@@ -5,14 +5,8 @@ FactoryGirl.define do
     ip_address "127.0.0.1" 
     hostname "MyString"
     state { %w(ok warning critical unknown)[rand(4)] }
-    if_speed 1
+    speed 100000000
     if_type 1
-    if_name "MyString"
-    if_alias "MyString"
-    if_descr "MyString"
-    if_promiscuous false
-    if_high_speed 1
-    if_admin_status "MyString"
     #physical_address "MyString"
     mtu 1
     duplex "MyString"

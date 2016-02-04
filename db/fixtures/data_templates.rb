@@ -19,10 +19,32 @@ data_templates = [
     critical_threshold: 10,
     operator: '>',
     description: 'HTTP Response Time'
+  },
+  {
+    id: 3,
+    name: 'Inbound Traffic',
+    plugin_id: 3,
+    warning_threshold: 90,
+    critical_threshold: 95,
+    node_type: 'Interface',
+    operator: '>',
+    description: 'Inbound Traffic',
+    arguments: {:oid => 'ifInOctets'}
+  },
+  {
+    id: 4,
+    name: 'Outbound Traffic',
+    plugin_id: 3,
+    warning_threshold: 90,
+    critical_threshold: 95,
+    node_type: 'Interface',
+    operator: '>',
+    description: 'Outbound Traffic',
+    arguments: {:oid => 'ifOutOctets'}
   }
 ]
 Authorization::Maintenance::without_access_control do
-  DataTemplate.seed(:name, *data_templates)
+  DataTemplate.seed(:id, *data_templates)
 end
 Authorization.current_user = admin
 

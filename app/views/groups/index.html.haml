@@ -1,0 +1,5 @@
+%h2 Groups
+= render :partial => 'list', :locals => {:groups => @groups }
+%br
+
+= link_to 'Create a Group', new_group_path, :class => "button radius"
